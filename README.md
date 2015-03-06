@@ -36,3 +36,9 @@ Do not push to this branch please. We'll have a session and merge in the code to
 ## JavaFX
 
 Please use Java 8 ONLY. You can see a sample project that I made, playing around with JavaFX here: https://github.com/jamireh/PlayingWithJavaFX
+
+## SceneBuilder
+
+Scene Builder 2.0:
+
+http://www.oracle.com/technetwork/java/javafxscenebuilder-1x-archive-2199384.html#javafx-scenebuilder-2.0-oth-JPR
