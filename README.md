@@ -11,11 +11,13 @@ git checkout [YOUR FEATURE BRANCH HERE]
 
 `gradebook` - Alex
 
-`toolbar` - Greg
+`toplevel-ui` - Greg
+
+`find` - Greg
 
 `assignments` - Jon
 
-`categories` - Greg
+`categories` - Jon
 
 `statistics` - Quan
 
