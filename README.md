@@ -26,3 +26,8 @@ git checkout [YOUR FEATURE BRANCH HERE]
 `gradescheme` - Connor
 
 `students` - Tobias
+
+## `master` branch
+
+Do not push to this branch please. We'll have a session and merge in the code together to this `master` branch.
+
