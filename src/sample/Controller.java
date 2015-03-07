@@ -14,16 +14,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML
-    ComboBox cbCatParent;
-    @FXML
-    TextField tfCatName;
-    @FXML
-    Button bAdd;
-    @FXML
-    ComboBox cbWeights;
-    @FXML
-    TextField tfWeight;
+    @FXML ComboBox cbCatParent;
+    @FXML TextField tfCatName;
+    @FXML Button bAdd;
+    @FXML ComboBox cbWeights;
+    @FXML TextField tfWeight;
 
 
     @Override
