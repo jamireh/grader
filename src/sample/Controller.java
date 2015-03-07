@@ -45,7 +45,7 @@ public class Controller implements Initializable {
 
     }
 
-    public void handleButtonPress(ActionEvent actionEvent)
+    public void onAddButtonClick(ActionEvent actionEvent)
     {
         System.out.println("Name: " + tfCatName.getText());
         System.out.println("Parent: " + cbCatParent.getValue());

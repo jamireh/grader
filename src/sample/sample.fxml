@@ -99,7 +99,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT">
                <children>
-                  <Button fx:id="bAdd" mnemonicParsing="false" onAction="#handleButtonPress" text="Add">
+                  <Button fx:id="bAdd" mnemonicParsing="false" onAction="#onAddButtonClick" text="Add">
                      <padding>
                         <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
                      </padding>
