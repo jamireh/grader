@@ -14,11 +14,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML ComboBox cbCatParent;
-    @FXML TextField tfCatName;
+    @FXML TextField tfCourseNum;
+    @FXML ComboBox cbDept;
     @FXML Button bAdd;
-    @FXML ComboBox cbWeights;
-    @FXML TextField tfWeight;
 
 
     @Override
@@ -26,26 +24,17 @@ public class Controller implements Initializable {
     {
         ObservableList<String> parentOptions =
                 FXCollections.observableArrayList(
-                        "CPE 309"
+                        "CPE"
                 );
-        cbCatParent.setValue(parentOptions.get(0));
-        cbCatParent.setItems(parentOptions);
-        ObservableList<String> weightOptions =
-                FXCollections.observableArrayList(
-                        "Evenly within the category",
-                        "According to raw scores"
-                );
-        cbWeights.setValue(weightOptions.get(0));
-        cbWeights.setItems(weightOptions);
+        cbDept.setValue(parentOptions.get(0));
+        cbDept.setItems(parentOptions);
 
     }
 
     public void onAddButtonClick(ActionEvent actionEvent)
     {
-        System.out.println("Name: " + tfCatName.getText());
-        System.out.println("Parent: " + cbCatParent.getValue());
-        System.out.println("Weight: " + tfWeight.getText());
-        System.out.println("Weight Behavior: " + cbWeights.getValue());
+        System.out.println("Department: " + cbDept.getValue());
+        System.out.println("Course Number: " + tfCourseNum.getText());
         Stage stage = (Stage) bAdd.getScene().getWindow();
         stage.close();
     }
