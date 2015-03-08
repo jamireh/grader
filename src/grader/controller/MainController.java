@@ -1,6 +1,22 @@
-package grader;
+package grader.controller;
 
-public class Controller {
+import grader.find;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class MainController
+{
+    private Stage stage;
+
+    public MainController()
+    {
+        stage = new Stage();
+    }
+
     /* FILE MENU COMMANDS */
     public void fileNewClass() {
         System.out.println("File->New Class clicked!");
@@ -76,12 +92,18 @@ public class Controller {
     }
 
     /* GRADES MENU COMMANDS */
-    public void gradesAddCategory() {
+    public void gradesAddCategory() throws IOException {
         System.out.println("Grades->Add Category clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("../view/categories.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-    public void gradesAddAssignment() {
+    public void gradesAddAssignment() throws IOException {
         System.out.println("Grades->Add Assignment clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("../view/assignments.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void gradesManage() {
