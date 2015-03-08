@@ -59,9 +59,7 @@
             </Menu>
         </menus>
       </MenuBar>
-   </children>
-   <children>
-       <Accordion fx:id="aCourses" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+       <Accordion fx:id="aCourses" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
            <panes>
                <TitledPane fx:id="tpCourses" animated="false" text="CPE 309">
                    <content>
@@ -69,13 +67,10 @@
                            <children>
                                <Label layoutX="83.0" layoutY="6.0" text="Section 1" />
                            </children>
-                  </AnchorPane>
+                       </AnchorPane>
                    </content>
                </TitledPane>
            </panes>
-         <padding>
-            <Insets top="30.0" />
-         </padding>
        </Accordion>
    </children>
 </Pane>
