@@ -48,6 +48,7 @@ public class MainController implements Initializable
 
     public void fileQuit() {
         System.out.println("File->Quit clicked!");
+        System.exit(0);
     }
 
     /* EDIT MENU COMMANDS */
