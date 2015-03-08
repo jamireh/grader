@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 public class FindController implements Initializable {
     @FXML ComboBox findType;
     @FXML ComboBox courseBox;
+    @FXML Button findButton;
+    @FXML Button cancelButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -36,9 +38,15 @@ public class FindController implements Initializable {
         courseBox.setItems(courseOptions);
     }
 
-    public void onAddButtonPress(ActionEvent actionEvent)
+    public void onFindButtonPress(ActionEvent actionEvent)
     {
-        //Stage stage = (Stage) bAdd.getScene().getWindow();
-        //stage.close();
+        Stage stage = (Stage) findButton.getScene().getWindow();
+        stage.close();
+    }
+
+    public void onCancelButtonPress(ActionEvent actionEvent)
+    {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
 }
