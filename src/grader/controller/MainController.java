@@ -63,11 +63,11 @@ public class MainController
         System.out.println("Edit->Paste clicked!");
     }
 
-    public void editFind() {
+    public void editFind() throws IOException {
         System.out.println("Edit->Find clicked!");
-        find dialog = new find();
-        dialog.pack();
-        dialog.setVisible(true);
+        Parent root = FXMLLoader.load(getClass().getResource("../view/find.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     /* STUDENTS MENU COMMANDS */
