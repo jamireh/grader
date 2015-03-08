@@ -9,9 +9,7 @@ public class find extends JDialog {
     private JButton buttonCancel;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    private JTextField textField1;
     private JTextField textField2;
-    private JSpinner spinner1;
 
     public find() {
         setContentPane(contentPane);
