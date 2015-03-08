@@ -83,6 +83,7 @@ public class MainController implements Initializable
     public void studentsAddNew() throws IOException {
         System.out.println("Students->Add New clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("../view/students.fxml"));
+        stage.setTitle("Add Student");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -107,6 +108,7 @@ public class MainController implements Initializable
     public void gradesAddCategory() throws IOException {
         System.out.println("Grades->Add Category clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("../view/categories.fxml"));
+        stage.setTitle("Add Category");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -114,6 +116,7 @@ public class MainController implements Initializable
     public void gradesAddAssignment() throws IOException {
         System.out.println("Grades->Add Assignment clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("../view/assignments.fxml"));
+        stage.setTitle("Add Assignment");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -138,6 +141,7 @@ public class MainController implements Initializable
     public void curveGradeScheme() throws IOException {
         System.out.println("Grades->Grade Scheme clicked!");
         Parent root = FXMLLoader.load(getClass().getResource("../view/gradescheme.fxml"));
+        stage.setTitle("Grade Scheme");
         stage.setScene(new Scene(root));
         stage.show();
     }
