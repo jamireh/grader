@@ -79,8 +79,11 @@ public class MainController implements Initializable
     }
 
     /* STUDENTS MENU COMMANDS */
-    public void studentsAddNew() {
+    public void studentsAddNew() throws IOException {
         System.out.println("Students->Add New clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("../view/students.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void studentsSyncRoster() {
