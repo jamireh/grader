@@ -1,15 +1,14 @@
 package grader.controller;
 
+import grader.model.BasicModel;
 import grader.model.StudentEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,14 +36,43 @@ public class MainController implements Initializable
     @FXML Button bRevert;
     @FXML Button bSavePost;
 
+    boolean addCourse = false;
+
     public MainController()
     {
         stage = new Stage();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        aCourses.setExpandedPane(tpCourses);
+        tpCourses.setExpanded(true);
+        aCourses.setVisible(false);
+        setupGradebook();
+        vbContainer.setVisible(false);
+    }
+
     /* FILE MENU COMMANDS */
-    public void fileNewClass() {
-        System.out.println("File->New Class clicked!");
+    public void fileNewCourse() throws IOException {
+        System.out.println("File->New Course clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("../view/course.fxml"));
+        stage.setTitle("New Course");
+        stage.setScene(new Scene(root));
+        stage.show();
+        BasicModel.setCallback(new Callback<String, Boolean>()
+        {
+            @Override
+            public Boolean call(String param)
+            {
+                if(param.equals("309"))
+                {
+                    addCourse = true;
+                    aCourses.setVisible(true);
+                }
+                return true;
+            }
+        });
     }
 
     public void fileExport() {
@@ -105,6 +135,14 @@ public class MainController implements Initializable
 
     public void studentsSyncRoster() {
         System.out.println("Students->Sync Roster clicked!");
+        if(addCourse)
+        {
+            vbContainer.setVisible(true);
+        }
+        else
+        {
+            System.out.println("Try File->New Course and add a \'CPE 309\' course, then come back.");
+        }
     }
 
     public void studentsEditRoster() {
@@ -174,14 +212,6 @@ public class MainController implements Initializable
     public void onSavePostButtonClicked(ActionEvent event)
     {
         System.out.println("Save & Post button clicked");
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-        aCourses.setExpandedPane(tpCourses);
-        tpCourses.setExpanded(true);
-        setupGradebook();
     }
 
     public void setupGradebook()
