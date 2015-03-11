@@ -5,7 +5,6 @@ import grader.model.StudentEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -217,10 +215,6 @@ public class MainController implements Initializable
     public void setupGradebook()
     {
         TableView table = new TableView();
-        //Scene scene = new Scene(new Group());
-        //stage.setTitle("Gradebook");
-        //stage.setWidth(1200);
-        //stage.setHeight(600);
 
         final Button b1 = new Button("Revert");
         b1.setFont(new Font("Arial", 16));
@@ -333,22 +327,9 @@ public class MainController implements Initializable
         table.getColumns().addAll(nameCol, groupCol,
                 projectCol, quizCol, midtermCol, finalCol, participationCol, totalCol, letterGradeCol);
 
-
-        //final VBox vbox = new VBox();
-        //final HBox hbox = new HBox();
-        //hbox.setAlignment(Pos.CENTER_RIGHT);
-        //hbox.setSpacing(5);
-        //hbox.setMinWidth(1000);
-        //hbox.setStyle("-fx-background-color: #334455");
         hbTable.setSpacing(5);
-        //hbox.setPadding(new Insets(0, 0, 0, 0));
-        //vbox.setPadding(new Insets(0, 0, 0, 0));
-        //hbox.getChildren().addAll(b1, b2, b3);
+
         hbTable.getChildren().addAll(table);
 
-        //((Group) scene.getRoot()).getChildren().addAll(vbox);
-
-        //stage.setScene(scene);
-        //stage.show();
     }
 }
