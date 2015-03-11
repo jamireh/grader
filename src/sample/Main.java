@@ -5,24 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Main extends Application {
 
-
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("histogram.fxml"));
-        primaryStage.setTitle("Histogram");
+        Parent root = FXMLLoader.load(getClass().getResource("piechart.fxml"));
+        primaryStage.setTitle("Pie Chart");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 
 
