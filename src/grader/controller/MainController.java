@@ -181,8 +181,12 @@ public class MainController implements Initializable
     }
 
     /* CURVE MENU COMMANDS */
-    public void curvePieChart() {
+    public void curvePieChart() throws IOException {
         System.out.println("Grades->Pie Chart clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("../view/piechart.fxml"));
+        stage.setTitle("Pie Chart");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void curveHistogram() {
