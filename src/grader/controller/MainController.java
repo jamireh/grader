@@ -189,8 +189,12 @@ public class MainController implements Initializable
         stage.show();
     }
 
-    public void curveHistogram() {
+    public void curveHistogram() throws IOException {
         System.out.println("Grades->Histogram clicked!");
+        Parent root = FXMLLoader.load(getClass().getResource("../view/histogram.fxml"));
+        stage.setTitle("Histogram");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void curveGradeScheme() throws IOException {
