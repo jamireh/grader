@@ -31,7 +31,6 @@ public class FindController implements Initializable {
         ObservableList<String> courseOptions =
                 FXCollections.observableArrayList(
                         "All",
-                        "CPE 308",
                         "CPE 309"
                 );
         courseBox.setValue(courseOptions.get(0));
