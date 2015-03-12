@@ -1,5 +1,6 @@
 package grader.controller;
 
+import grader.Main;
 import grader.model.BasicModel;
 import grader.model.StudentEntry;
 import javafx.collections.FXCollections;
@@ -54,7 +55,7 @@ public class MainController implements Initializable
     /* FILE MENU COMMANDS */
     public void fileNewCourse() throws IOException {
         System.out.println("File->New Course clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/course.fxml"));
+        Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
         stage.setScene(new Scene(root));
         stage.show();
@@ -117,7 +118,7 @@ public class MainController implements Initializable
 
     public void editFind() throws IOException {
         System.out.println("Edit->Find clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/find.fxml"));
+        Parent root = FXMLLoader.load(Main.findResource);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -125,7 +126,7 @@ public class MainController implements Initializable
     /* STUDENTS MENU COMMANDS */
     public void studentsAddNew() throws IOException {
         System.out.println("Students->Add New clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/students.fxml"));
+        Parent root = FXMLLoader.load(Main.studentsResource);
         stage.setTitle("Add Student");
         stage.setScene(new Scene(root));
         stage.show();
@@ -158,7 +159,7 @@ public class MainController implements Initializable
     /* GRADES MENU COMMANDS */
     public void gradesAddCategory() throws IOException {
         System.out.println("Grades->Add Category clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/categories.fxml"));
+        Parent root = FXMLLoader.load(Main.categoriesResource);
         stage.setTitle("Add Category");
         stage.setScene(new Scene(root));
         stage.show();
@@ -166,7 +167,7 @@ public class MainController implements Initializable
 
     public void gradesAddAssignment() throws IOException {
         System.out.println("Grades->Add Assignment clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/assignments.fxml"));
+        Parent root = FXMLLoader.load(Main.assignmentsResource);
         stage.setTitle("Add Assignment");
         stage.setScene(new Scene(root));
         stage.show();
@@ -183,7 +184,7 @@ public class MainController implements Initializable
     /* CURVE MENU COMMANDS */
     public void curvePieChart() throws IOException {
         System.out.println("Grades->Pie Chart clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/piechart.fxml"));
+        Parent root = FXMLLoader.load(Main.piechartResource);
         stage.setTitle("Pie Chart");
         stage.setScene(new Scene(root));
         stage.show();
@@ -191,7 +192,7 @@ public class MainController implements Initializable
 
     public void curveHistogram() throws IOException {
         System.out.println("Grades->Histogram clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/histogram.fxml"));
+        Parent root = FXMLLoader.load(Main.histogramResource);
         stage.setTitle("Histogram");
         stage.setScene(new Scene(root));
         stage.show();
@@ -199,7 +200,7 @@ public class MainController implements Initializable
 
     public void curveGradeScheme() throws IOException {
         System.out.println("Grades->Grade Scheme clicked!");
-        Parent root = FXMLLoader.load(getClass().getResource("../view/gradescheme.fxml"));
+        Parent root = FXMLLoader.load(Main.gradeSchemeResource);
         stage.setTitle("Grade Scheme");
         stage.setScene(new Scene(root));
         stage.show();
