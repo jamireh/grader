@@ -1,0 +1,42 @@
+package grader.model.curve;
+
+import grader.model.gradebook.GradeScheme;
+import grader.model.gradebook.LetterGrade;
+import grader.model.gradebook.Percentage;
+
+/**
+ * The Histogram class defines the necessary components for graphically changing the GradeScheme
+ *
+ * Derived from the requirements documentation regarding visuals.
+ */
+public abstract class Histogram extends AbstractGraph
+{
+	/**
+	 * GradeScheme used to project how a particular adjustment will propagate. Pushed to the Section once the user finalizes their choice with apply().
+	 */
+	GradeScheme tempGradeScheme;
+	/**
+	 * Given a particular letter grade and new lowerbound, this method will apply them to the temporary GradeScheme.
+	 * 
+	 * @param letterGrade The LetterGrade that has been changed
+	 * @param newLowerBound The new Percentage that denotes the LetterGrade's new lower bound.
+	 * <pre>
+	 post:
+	   //The LetterGrade and Percentage have been properly applied to the tempGradeScheme and no other changes have been made
+	   forall (DivisionBar divisionBar; 
+	    	tempGradeScheme'.divisions.contains(divisionBar) iff 
+	   			(divisionBar.letterGrade.equals(letterGrade) && divisionBar.low.equals(newLowerBound))
+	   			||
+	   			tempGradeScheme.divisions.contains(divisionBar));
+	 */
+	abstract void adjustCurve(LetterGrade letterGrade, Percentage newLowerBound);
+	/**
+	 * Changes made via the GUI manipulations will be pushed over to the full model.
+	 post:
+	 	//The GradeScheme of the Section must be identical to the tempGradeScheme.
+	 	forall (DivisionBar divisionBar;
+	 		tempGradeScheme.contains(divisionBar);
+	 		exists(DivisionBar sDivisionBar; section'.gradeScheme.divisions.contains(sDivisionBar); divisionBar.equals(sDivisionBar)));	
+	 */
+	abstract void apply();
+}
