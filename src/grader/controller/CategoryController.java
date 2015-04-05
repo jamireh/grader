@@ -26,7 +26,11 @@ public class CategoryController implements Initializable {
     {
         ObservableList<String> parentOptions =
                 FXCollections.observableArrayList(
-                        "CPE 309"
+                        "CPE 309",
+                        "Tests",
+                        "Projects",
+                        "Quizzes",
+                        "Midterms"
                 );
         cbCatParent.setValue(parentOptions.get(0));
         cbCatParent.setItems(parentOptions);
