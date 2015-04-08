@@ -12,6 +12,7 @@ public class Course
 	{
 		categories = new ArrayList<Category>();
 		assignments = new ArrayList<Assignment>();
+		System.out.println("gradebook.Course() called");
 	}
 	/**
 	*Name of course.
@@ -49,5 +50,10 @@ public class Course
 	{
 		System.out.println("gradebook.Course.add(Assignment) called");
 		assignments.add(assign);
+	}
+
+	public void syncRoster()
+	{
+		System.out.println("gradebook.Course.syncRoster() called");
 	}
 }

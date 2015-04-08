@@ -4,7 +4,6 @@ import grader.Main;
 import grader.model.BasicModel;
 import grader.model.StudentEntry;
 import grader.model.gradebook.Course;
-import grader.model.gradebook.Section;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,12 +53,12 @@ public class MainController implements Initializable
         aCourses.setVisible(false);
         setupGradebook();
         vbContainer.setVisible(false);
-        course = new Course();
     }
 
     /* FILE MENU COMMANDS */
     public void fileNewCourse() throws IOException {
         System.out.println("File->New Course clicked!");
+        course = new Course();
         Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
         stage.setScene(new Scene(root));
@@ -139,6 +138,7 @@ public class MainController implements Initializable
 
     public void studentsSyncRoster() {
         System.out.println("Students->Sync Roster clicked!");
+        course.syncRoster();
         if(addCourse)
         {
             vbContainer.setVisible(true);
