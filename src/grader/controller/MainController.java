@@ -3,6 +3,8 @@ package grader.controller;
 import grader.Main;
 import grader.model.BasicModel;
 import grader.model.StudentEntry;
+import grader.model.gradebook.Course;
+import grader.model.gradebook.Section;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +39,8 @@ public class MainController implements Initializable
 
     boolean addCourse = false;
 
+    static Course course;
+
     public MainController()
     {
         stage = new Stage();
@@ -50,6 +54,7 @@ public class MainController implements Initializable
         aCourses.setVisible(false);
         setupGradebook();
         vbContainer.setVisible(false);
+        course = new Course();
     }
 
     /* FILE MENU COMMANDS */

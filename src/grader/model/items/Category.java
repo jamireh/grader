@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * Represents a category of assignments.
  */
-public abstract class Category
+public class Category
 {
     /** the name of this category */
     String name;
@@ -29,7 +29,10 @@ public abstract class Category
        // the Collection now contains the added subcategory
        subcategories'.contains(subcategory);
      */
-    public abstract void add(Category subcategory);
+    public void add(Category subcategory)
+    {
+        System.out.println("items.Category.add(Category) called");
+    }
 
     /**
      * Adds the given item to this category.
@@ -38,5 +41,8 @@ public abstract class Category
        // the Collection now contains the new item
        items'.contains(assignment);
      */
-    public abstract void add(Assignment assignment);
+    public void add(Assignment assignment)
+    {
+        System.out.println("items.Category.add(Assignment) called");
+    }
 }

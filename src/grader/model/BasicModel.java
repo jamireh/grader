@@ -10,7 +10,4 @@ public class BasicModel
     {
         mCallback = callback;
     }
-
-
-
 }

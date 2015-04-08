@@ -1,5 +1,6 @@
 package grader.controller;
 
+import grader.model.items.Assignment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,6 +48,16 @@ public class AssignmentController implements Initializable {
         System.out.println("Weight: " + tfWeight.getText());
         System.out.println("Due Date: " + dpDueDate.getValue());
         System.out.println("Handin: " + chbHandin.isSelected() + (chbHandin.isSelected() ? " directory: " + tfHandin.getText() : ""));
+
+        if(cbCatParent.getValue().equals("CPE 309"))
+        {
+            MainController.course.add(new Assignment());
+        }
+        else
+        {
+            MainController.course.categories.get(0).add(new Assignment());
+        }
+
         Stage stage = (Stage) bAdd.getScene().getWindow();
         stage.close();
     }

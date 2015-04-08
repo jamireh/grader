@@ -1,5 +1,6 @@
 package grader.controller;
 
+import grader.model.items.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,6 +51,14 @@ public class CategoryController implements Initializable {
         System.out.println("Parent: " + cbCatParent.getValue());
         System.out.println("Weight: " + tfWeight.getText());
         System.out.println("Weight Behavior: " + cbWeights.getValue());
+        if(cbCatParent.getValue().equals("CPE 309"))
+        {
+            MainController.course.add(new Category());
+        }
+        else
+        {
+            MainController.course.categories.get(0).add(new Category());
+        }
         Stage stage = (Stage) bAdd.getScene().getWindow();
         stage.close();
     }

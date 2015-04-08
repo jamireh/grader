@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
 *Collection of objects that are necessary for Section functionality.
 */
-public abstract class Section
+public class Section
 {
 	/**
 	*Scores associated with students and assignments in this Section.
@@ -53,12 +53,18 @@ public abstract class Section
 	*pre:
 	*	!students.contains(stu);
 	*/
-	public abstract void addStudent(Student stu);
+	public void addStudent(Student stu)
+	{
+
+	}
 
 	/**
 	*Add new TA.
 	*pre:
 	*	!tas.contains(ta);
 	*/
-	public abstract void addTA(TA ta);
+	public void addTA(TA ta)
+	{
+
+	}
 }

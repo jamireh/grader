@@ -3,7 +3,7 @@ package grader.model.items;
 /**
  * Represents an assignment of a specific category.
  */
-public abstract class Assignment
+public class Assignment
 {
     /** the category to which this item belongs */
     Category category;
@@ -27,18 +27,27 @@ public abstract class Assignment
        // the raw point value of this Item is adjusted
        this.rawPoints == newValue
      */
-    public abstract void adjustPointValue(int newValue);
+    public void adjustPointValue(int newValue)
+    {
+
+    }
 
     /**
      * Curves this item's point value based on some given value.
      * @param value some value with which to curve this item
      */
-    public abstract void curve(Object value);
+    public void curve(Object value)
+    {
+
+    }
 
     /**
      * Assigns this item to the courses it is associated with.
      */
-    public abstract void assign();
+    public void assign()
+    {
+
+    }
 
     /**
      * Finds the maximum score of an item.
@@ -47,7 +56,10 @@ public abstract class Assignment
        // this Item must have at least one score associated with it
        exists(RawScore score ; score.getAssignment().equals(this))
      */
-    public abstract int findMax();
+    public int findMax()
+    {
+        return 0;
+    }
 
     /**
      * Finds the minimum score of an item.
@@ -56,7 +68,10 @@ public abstract class Assignment
        // this Item must have at least one score associated with it
        exists(RawScore score ; score.getAssignment().equals(this))
      */
-    public abstract int findMin();
+    public int findMin()
+    {
+       return 0;
+    }
 
     /**
      * Finds the median score of an item.
@@ -65,7 +80,10 @@ public abstract class Assignment
        // this Item must have at least one score associated with it
        exists(RawScore score ; score.getAssignment().equals(this))
      */
-    public abstract int findMedian();
+    public int findMedian()
+    {
+        return 0;
+    }
 
     /**
      * Calculates the mean score of an item.
@@ -74,5 +92,8 @@ public abstract class Assignment
        // this Item must have at least one score associated with it
        exists(RawScore score ; score.getAssignment().equals(this))
      */
-    public abstract double calculateMean();
+    public double calculateMean()
+    {
+        return 0.0;
+    }
 }

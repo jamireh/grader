@@ -3,11 +3,16 @@ package grader.model.gradebook;
 import grader.model.items.Assignment;
 import grader.model.items.Category;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class Course
+public class Course
 {
-
+	public Course()
+	{
+		categories = new ArrayList<Category>();
+		assignments = new ArrayList<Assignment>();
+	}
 	/**
 	*Name of course.
 	*/
@@ -22,17 +27,27 @@ public abstract class Course
 	*Collection of the various grade categories associated with this course.
 	*Grade categories are fixed at the course level.  All categories must be represented in all sections.
 	*/
-	public Collection<Category> categories;
+	public ArrayList<Category> categories;
 
 	/**
 	*Collection of assignments associated with each category.
 	*/
-	public Collection<Assignment> assignments;
+	public ArrayList<Assignment> assignments;
 
 	/**
 	*Add category to collection.
 	*pre:
 	*	!categories.contains(cate);
 	*/
-	public abstract void addCategory(Category cate);
+	public void add(Category cate)
+	{
+		System.out.println("gradebook.Course.add(Category) called");
+		categories.add(cate);
+	}
+
+	public void add(Assignment assign)
+	{
+		System.out.println("gradebook.Course.add(Assignment) called");
+		assignments.add(assign);
+	}
 }
