@@ -3,8 +3,10 @@ package grader.model.edit;
 /**
  * The Edit class represents the underlying model for the Edit menu.
  * Included are methods for edit operations.
+ *
+ * @author Gregory Davis
  */
-public abstract class Edit {
+public class Edit {
    /**
     * Undoes the most recent change to the gradebook.
     *                                                             <pre>
@@ -23,7 +25,9 @@ public abstract class Edit {
       && WorkSpace.prevGradebook' == null
       && WorkSpace.futureGradebook.equals(WorkSpace.gradebook);
     */
-   abstract void undo();
+   public void undo() {
+       System.out.println("Edit->Undo");
+   }
 
    /**
     * Redoes the most recently undone change to the gradebook.
@@ -44,7 +48,9 @@ public abstract class Edit {
       && WorkSpace.futureGradebook' == null
       && WorkSpace.prevGradebook.equals(WorkSpace.gradebook);
     */
-   abstract void redo();
+    public void redo() {
+        System.out.println("Edit->Redo");
+    }
 
    /**
     * Cuts the selected item.
@@ -57,7 +63,9 @@ public abstract class Edit {
       WorkSpace.clipboard.equals(WorkSpace.selectedContext)
       && WorkSpace.selectedContext'.empty();
     */
-   abstract void cut();
+    public void cut() {
+        System.out.println("Edit->Cut");
+    }
 
    /**
     * Copies the selected item.
@@ -68,7 +76,9 @@ public abstract class Edit {
       //
       WorkSpace.clipboard.equals(WorkSpace.selectedContext);
     */
-   abstract void copy();
+    public void copy() {
+        System.out.println("Edit->Copy");
+    }
 
    /**
     * Pastes the most recently copied/cut item.
@@ -86,5 +96,7 @@ public abstract class Edit {
       //
       WorkSpace.selectedContext.equals(WorkSpace.clipboard);
     */
-   abstract void paste();
+    public void paste() {
+        System.out.println("Edit->Paste");
+    }
 }

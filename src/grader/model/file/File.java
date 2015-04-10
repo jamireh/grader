@@ -2,10 +2,12 @@ package grader.model.file;
 /**
  * The File class represents the underlying model for the File menu.
  * Included are methods for file operations.
+ *
+ * @author Gregory Davis
  */
-public abstract class File {
+public class File {
    /**
-    * Creates a new class.
+    * Creates a new course.
     * Adds the course to the current workspace Gradebook.
     *                                                             <pre>
     pre:
@@ -26,25 +28,33 @@ public abstract class File {
       && exists (Course course; WorkSpace.gradebook.courses'.contains(course);
                  course.name.equals(name));
     */
-   abstract void newClass(String name);
+   public void newCourse(String name) {
+       System.out.println("File->New Course:  " + name);
+   }
 
    /**
     * Opens the "export" menu.
     * *Planned functionality -- NOT MODELED*
     */
-   abstract void exportGradebook();
+   public void exportGradebook() {
+       System.out.println("File->Export");
+   }
 
    /**
     * Opens the "import" menu.
     * *Planned functionality -- NOT MODELED*
     */
-   abstract void importGradebook();
+   public void importGradebook() {
+       System.out.println("File->Import");
+   }
 
    /**
     * Opens the "print" menu.
     * *Planned functionality -- NOT MODELED*
     */
-   abstract void print();
+   public void print() {
+       System.out.println("File->Print");
+   }
 
    /**
     * Logs the user out, terminating the authenticated session.
@@ -61,10 +71,14 @@ public abstract class File {
       //
       WorkSpace.user == null;
     */
-   abstract void logout();
+   public void logout() {
+       System.out.println("File->Logout");
+   }
 
    /**
     * Quits the application.
     */
-   abstract void quit();
+   public void quit() {
+       System.out.println("File->Quit");
+   }
 }
