@@ -1,3 +1,7 @@
+/**
+ * @author Jon Amireh
+ */
+
 package grader.model.items;
 
 /**
