@@ -1,5 +1,6 @@
 /**
  * @author Jon Amireh
+ * @author Mallika Potter
  */
 
 package grader.model.gradebook;

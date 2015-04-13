@@ -1,5 +1,9 @@
 package grader.controller;
 
+/**
+ * @author Mallika Potter
+ */
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

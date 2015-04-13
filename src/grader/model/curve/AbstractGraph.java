@@ -1,6 +1,8 @@
 
 package grader.model.curve;
-
+/**
+ * @author Mallika Potter
+ */
 
 
 import grader.model.gradebook.Section;
