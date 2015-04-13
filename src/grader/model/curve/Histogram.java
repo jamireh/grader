@@ -1,5 +1,9 @@
 package grader.model.curve;
 
+/**
+ * @author Mallika Potter
+ */
+
 import grader.model.gradebook.GradeScheme;
 import grader.model.gradebook.LetterGrade;
 import grader.model.gradebook.Percentage;
@@ -9,8 +13,10 @@ import grader.model.gradebook.Percentage;
  *
  * Derived from the requirements documentation regarding visuals.
  */
-public abstract class Histogram extends AbstractGraph
+public class Histogram extends AbstractGraph
 {
+
+
 	/**
 	 * GradeScheme used to project how a particular adjustment will propagate. Pushed to the Section once the user finalizes their choice with apply().
 	 */
@@ -29,7 +35,10 @@ public abstract class Histogram extends AbstractGraph
 	   			||
 	   			tempGradeScheme.divisions.contains(divisionBar));
 	 */
-	abstract void adjustCurve(LetterGrade letterGrade, Percentage newLowerBound);
+	public void adjustCurve(LetterGrade letterGrade, Percentage newLowerBound)
+    {
+
+    }
 	/**
 	 * Changes made via the GUI manipulations will be pushed over to the full model.
 	 post:
@@ -38,5 +47,32 @@ public abstract class Histogram extends AbstractGraph
 	 		tempGradeScheme.contains(divisionBar);
 	 		exists(DivisionBar sDivisionBar; section'.gradeScheme.divisions.contains(sDivisionBar); divisionBar.equals(sDivisionBar)));	
 	 */
-	abstract void apply();
+
+    /**
+     * Uses the Section to find the Scores necessary to draw the chart as well as categorizes them into numScores
+     * <pre>
+     post:
+     //Ensure that the numScores list is correct by summing the contents of the list and verifying that it is the
+     //same size as the number of students
+     countCollection(numScores) == countStudents(sections);
+     */
+    public void categorizeScores()
+    {
+
+    }
+
+	public void apply()
+    {
+        System.out.println("Apply method called.");
+    }
+
+    /**
+     * Returns changed gradescheme to Section.
+     */
+    public GradeScheme push()
+    {
+        return tempGradeScheme;
+    }
+
+
 }

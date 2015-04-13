@@ -1,5 +1,6 @@
 /**
  * @author Jon Amireh
+ * @author Mallika Potter
  */
 
 package grader.model.gradebook;
@@ -10,6 +11,8 @@ import grader.model.people.TA;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import grader.model.curve.*;
 
 /**
 *Collection of objects that are necessary for Section functionality.
@@ -55,6 +58,11 @@ public class Section
 	*/
 	GradeScheme gradeScheme;
 
+    /**
+     * Histogram associated with this section.
+     */
+    Histogram histogram;
+
 	/**
 	*Add unenrolled student.
 	*pre:
@@ -74,4 +82,21 @@ public class Section
 	{
 
 	}
+
+    /**
+     * Handles updating histogram.
+     */
+    public void applyHistogram()
+    {
+        histogram.apply();
+    }
+
+    /**
+     * Takes in new pushed grade-scheme.
+     */
+    public void pushGradeScheme()
+    {
+        gradeScheme = histogram.push();
+        System.out.println("Updated GradeScheme saved in Section.");
+    }
 }
