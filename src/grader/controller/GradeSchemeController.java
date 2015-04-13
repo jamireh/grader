@@ -21,9 +21,14 @@ public class GradeSchemeController
 
     public void onTextFieldEdited(ActionEvent event)
     {
-        //MainController.course.sections.get(0).gradeScheme.updateDivisions();
-        TextField textField = (TextField) event.getSource();
-        System.out.println("Updated information: " + textField.getCharacters());
+        try {
+            MainController.course.sections.get(0).gradeScheme.updateDivisions();
+            TextField textField = (TextField) event.getSource();
+            System.out.println("Updated information: " + textField.getCharacters());
+        }
+        catch (NullPointerException except) {
+            System.out.println("Please create a new course first...");
+        }
     }
 
     public void onColorChosen(ActionEvent event)
