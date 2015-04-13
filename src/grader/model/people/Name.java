@@ -3,8 +3,10 @@ package grader.model.people;
 /**
  * A Name is the set of words by which a Person is
  * addressed.
+ *
+ * @author Connor Batch
  */
-public abstract class Name
+public class Name
 {
 	/**
 	 * The first name of this Person.
@@ -25,4 +27,12 @@ public abstract class Name
 	 * A shorthand name for this Person.
 	 */
 	String nickName;
+
+    public Name(String firstName, String middleName, String lastName, String nickName)
+    {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.nickName = nickName;
+    }
 }

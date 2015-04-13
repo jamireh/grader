@@ -4,10 +4,13 @@ import grader.model.people.Group;
 import grader.model.people.Student;
 import grader.model.people.TA;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
 *Collection of objects that are necessary for Section functionality.
+ *
+ * @author Jon Amireh
 */
 public class Section
 {
@@ -19,7 +22,7 @@ public class Section
 	/**
 	*Collection of all students associated with this Section.
 	*/
-	public Collection<Student> students;
+	public ArrayList<Student> students;
 
 	/**
 	*Collection of all groups associated with this section.
@@ -53,9 +56,9 @@ public class Section
 	*pre:
 	*	!students.contains(stu);
 	*/
-	public void addStudent(Student stu)
+	public void addStudent(Student student)
 	{
-
+        System.out.println("gradebook/Section.addStudent called");
 	}
 
 	/**
