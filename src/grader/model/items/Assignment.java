@@ -1,12 +1,11 @@
 /**
- * @author Jon Amireh
+ * @author Quan Tran
  */
 
 package grader.model.items;
 
 /**
  * Represents an assignment of a specific category.
- * @author Quan Tran
  */
 public class Assignment
 {

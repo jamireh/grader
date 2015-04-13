@@ -1,5 +1,5 @@
 /**
- * @author Jon Amireh
+ * @author Quan Tran
  */
 
 package grader.model.items;
