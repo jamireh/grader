@@ -12,6 +12,10 @@ public class GradeSchemeController
 {
     @FXML Button bDone;
 
+    /**
+     * Closes the GradeScheme menu GUI upon click of the "Done" button.
+     * @param event The ActionEvent that kicks off this mehtod.
+     */
     public void onDoneButtonClicked(ActionEvent event)
     {
         System.out.println("Done button clicked");
@@ -19,6 +23,10 @@ public class GradeSchemeController
         stage.close();
     }
 
+    /**
+     * Updates the divisions of the GradeScheme for the chosen Section.
+     * @param event The ActionEvent that kicks off this mehtod.
+     */
     public void onTextFieldEdited(ActionEvent event)
     {
         try {
@@ -31,6 +39,10 @@ public class GradeSchemeController
         }
     }
 
+    /**
+     * Updates the Color of the chosen division for the chosen Section.
+     * @param event The ActionEvent that kicks off this method.
+     */
     public void onColorChosen(ActionEvent event)
     {
         System.out.println("Color updated: " + ((ColorPicker)event.getSource()).getValue());
