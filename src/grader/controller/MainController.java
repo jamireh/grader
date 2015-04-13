@@ -3,6 +3,8 @@ package grader.controller;
 import grader.Main;
 import grader.model.BasicModel;
 import grader.model.StudentEntry;
+import grader.model.edit.Edit;
+import grader.model.file.File;
 import grader.model.gradebook.Course;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,15 +41,17 @@ public class MainController implements Initializable
     boolean addCourse = false;
 
     static Course course;
+    static File file;
+    static Edit edit;
 
-    public MainController()
-    {
+    public MainController() {
         stage = new Stage();
+        file = new File();
+        edit = new Edit();
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
+    public void initialize(URL location, ResourceBundle resources) {
         aCourses.setExpandedPane(tpCourses);
         tpCourses.setExpanded(true);
         aCourses.setVisible(false);
@@ -57,7 +61,6 @@ public class MainController implements Initializable
 
     /* FILE MENU COMMANDS */
     public void fileNewCourse() throws IOException {
-        System.out.println("File->New Course clicked!");
         course = new Course();
         Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
@@ -68,6 +71,7 @@ public class MainController implements Initializable
             @Override
             public Boolean call(String param)
             {
+                file.newCourse(param);
                 if(param.equals("309"))
                 {
                     addCourse = true;
@@ -78,47 +82,29 @@ public class MainController implements Initializable
         });
     }
 
-    public void fileExport() {
-        System.out.println("File->Export clicked!");
-    }
+    public void fileExport() { file.exportGradebook(); }
 
-    public void fileImport() {
-        System.out.println("File->Import clicked!");
-    }
+    public void fileImport() { file.importGradebook(); }
 
-    public void filePrint() {
-        System.out.println("File->Print clicked!");
-    }
+    public void filePrint() { file.print(); }
 
-    public void fileLogout() {
-        System.out.println("File->Logout clicked!");
-    }
+    public void fileLogout() { file.logout(); }
 
     public void fileQuit() {
-        System.out.println("File->Quit clicked!");
+        file.quit();
         System.exit(0);
     }
 
     /* EDIT MENU COMMANDS */
-    public void editUndo() {
-        System.out.println("Edit->Undo clicked!");
-    }
+    public void editUndo() { edit.undo(); }
 
-    public void editRedo() {
-        System.out.println("Edit->Redo clicked!");
-    }
+    public void editRedo() { edit.redo(); }
 
-    public void editCut() {
-        System.out.println("Edit->Cut clicked!");
-    }
+    public void editCut() { edit.cut(); }
 
-    public void editCopy() {
-        System.out.println("Edit->Copy clicked!");
-    }
+    public void editCopy() { edit.copy(); }
 
-    public void editPaste() {
-        System.out.println("Edit->Paste clicked!");
-    }
+    public void editPaste() { edit.paste(); }
 
     public void editFind() throws IOException {
         System.out.println("Edit->Find clicked!");

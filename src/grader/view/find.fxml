@@ -17,7 +17,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox prefHeight="25.0" prefWidth="281.0" promptText="Student" fx:id="findType">
+                  <ComboBox fx:id="findType" prefHeight="25.0" prefWidth="281.0" promptText="Student">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -31,7 +31,7 @@
                         <Insets left="50.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField alignment="CENTER_RIGHT">
+                  <TextField fx:id="nameField" alignment="CENTER_RIGHT">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -48,7 +48,7 @@
                         <Insets left="50.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox prefHeight="25.0" prefWidth="172.0" promptText="All" fx:id="courseBox">
+                  <ComboBox fx:id="courseBox" prefHeight="25.0" prefWidth="172.0" promptText="All">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -57,8 +57,8 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="466.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Find" fx:id="findButton" onAction="#onFindButtonPress"/>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Cancel" fx:id="cancelButton" onAction="#onCancelButtonPress">
+                  <Button fx:id="findButton" mnemonicParsing="false" onAction="#onFindButtonPress" prefHeight="25.0" prefWidth="75.0" text="Find" />
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonPress" prefHeight="25.0" prefWidth="75.0" text="Cancel">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>

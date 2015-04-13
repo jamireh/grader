@@ -1,5 +1,6 @@
 package grader.controller;
 
+import grader.model.edit.Find;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,8 +15,15 @@ import java.util.ResourceBundle;
 public class FindController implements Initializable {
     @FXML ComboBox findType;
     @FXML ComboBox courseBox;
+    @FXML TextField nameField;
     @FXML Button findButton;
     @FXML Button cancelButton;
+
+    static Find find;
+
+    public FindController() {
+        find = new Find();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -39,6 +47,13 @@ public class FindController implements Initializable {
 
     public void onFindButtonPress(ActionEvent actionEvent)
     {
+        String courseName = (String) courseBox.getValue();
+        String name = nameField.getText();
+        if (findType.getValue().equals("Student")) {
+            find.findStudents(name, courseName);
+        } else {
+            find.findAssignments(name, courseName);
+        }
         Stage stage = (Stage) findButton.getScene().getWindow();
         stage.close();
     }

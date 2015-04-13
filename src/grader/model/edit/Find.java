@@ -8,8 +8,10 @@ import java.util.Collection;
 
 /**
  * The Find class is responsible for managing the Find operation.
+ *
+ * @author Gregory Davis
  */
-public abstract class Find {
+public class Find {
 	/**
 	 * The currently open Gradebook.
 	 */
@@ -44,7 +46,10 @@ public abstract class Find {
                               exists (Student student; section.students.contains(student);
                                       student.name.contains(name)))))
     */
-   abstract Collection<Student> findStudents(String name, String courseName);
+   public Collection<Student> findStudents(String name, String courseName) {
+       System.out.println("Find student " + name + " in " + courseName);
+       return null;
+   }
 
    /**
     * Finds the Assignment associated with the given name and course.
@@ -74,5 +79,8 @@ public abstract class Find {
                       exists (Assignment assignment; course.assignments.contains(assignment);
                               assignment.name.contains(name))));
     */
-   abstract Collection<Assignment> findAssignments(String name, String courseName);
+   public Collection<Assignment> findAssignments(String name, String courseName) {
+       System.out.println("Find assignment " + name + " in " + courseName);
+       return null;
+   }
 }
