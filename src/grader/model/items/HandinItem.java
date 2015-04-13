@@ -7,6 +7,7 @@ import java.util.Collection;
 /**
  * Represents an assignment of a specific category handed in via
  * an online handin tool.
+ * @author Quan Tran
  */
 
 public abstract class HandinItem extends Assignment
