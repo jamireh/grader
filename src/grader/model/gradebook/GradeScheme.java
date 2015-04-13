@@ -5,7 +5,7 @@ import java.util.*;
  * The model containing the range breakdown for each letter-grade 
  * as well as the associated colors.
  */
-public abstract class GradeScheme
+public class GradeScheme
 {   
     /**
      * Comprised of every available grade range.
@@ -20,5 +20,9 @@ public abstract class GradeScheme
      *    divisions.contains(bar);
      *    bar != null);
      */
-    public abstract void updateDivisions(); 
+    public void updateDivisions()
+    {
+
+    }
+
 }
