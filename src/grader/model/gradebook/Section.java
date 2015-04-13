@@ -21,6 +21,11 @@ import grader.model.curve.*;
 */
 public class Section
 {
+
+    public Section()
+    {
+        gradeScheme = new GradeScheme();
+    }
 	/**
 	*Scores associated with students and assignments in this Section.
 	*/
@@ -56,7 +61,7 @@ public class Section
 	/**
 	*GradeScheme associated with this section.
 	*/
-	GradeScheme gradeScheme;
+	public GradeScheme gradeScheme;
 
     /**
      * Histogram associated with this section.
