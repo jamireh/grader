@@ -18,6 +18,7 @@ import grader.model.curve.*;
 *Collection of objects that are necessary for Section functionality.
  *
  * @author Jon Amireh
+ * @author Mallika Potter
 */
 public class Section
 {
@@ -61,7 +62,7 @@ public class Section
     /**
      * Histogram associated with this section.
      */
-    Histogram histogram;
+    Histogram histogram = new Histogram();
 
 	/**
 	*Add unenrolled student.
