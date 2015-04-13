@@ -10,14 +10,14 @@ import grader.model.items.Category;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Course data structure, holds all relevant info about the course.
+ *
+ * @author Jon Amireh
+ * @author Connor Batch
+ */
 public class Course
 {
-	public Course()
-	{
-		categories = new ArrayList<Category>();
-		assignments = new ArrayList<Assignment>();
-		System.out.println("gradebook.Course() called");
-	}
 	/**
 	*Name of course.
 	*/
@@ -26,7 +26,7 @@ public class Course
 	/**
 	*Collectiion of sections of this course taught by the Instructor associated with this Gradebook.
 	*/
-	public Collection<Section> sections;
+	public ArrayList<Section> sections;
 
 	/**
 	*Collection of the various grade categories associated with this course.
@@ -38,6 +38,16 @@ public class Course
 	*Collection of assignments associated with each category.
 	*/
 	public ArrayList<Assignment> assignments;
+
+
+    public Course()
+    {
+        categories = new ArrayList<Category>();
+        assignments = new ArrayList<Assignment>();
+        sections = new ArrayList<Section>();
+        sections.add(new Section());
+        System.out.println("gradebook.Course() called");
+    }
 
 	/**
 	*Add category to collection.
