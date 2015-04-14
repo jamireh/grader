@@ -55,6 +55,14 @@ public class Assignment
     }
 
     /**
+     * Gets the total points this assignment is worth.
+     * @return the total raw points this assignment is worth
+     */
+    public int getPoints() {
+        return rawPoints;
+    }
+
+    /**
      * Finds the maximum score of an item.
      * @return the maximum score of an item
      pre:
