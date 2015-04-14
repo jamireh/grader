@@ -22,7 +22,6 @@ public class GradeScheme
      */
     public void updateDivisions()
     {
-
+        System.out.println("Divisions have been updated.");
     }
-
 }

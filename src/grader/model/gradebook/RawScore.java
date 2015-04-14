@@ -6,6 +6,8 @@ import grader.model.people.Student;
 /**
  * A RawScore represents the raw score given to a student for a particular
  * assignment.
+ *
+ * @author Gregory Davis
  */
 public abstract class RawScore {
    /**
