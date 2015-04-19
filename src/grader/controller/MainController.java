@@ -26,6 +26,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Main controller class for the Grader application.
+ *
+ * @author Gregory Davis
+ */
 public class MainController implements Initializable
 {
     private Stage stage;

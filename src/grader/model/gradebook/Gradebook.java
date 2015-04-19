@@ -21,6 +21,11 @@ public abstract class Gradebook {
 	public Instructor instructor;
 
 	/**
+	 * The gradebook's master score table.
+	 */
+	public Scores scores;
+
+	/**
 	*Set Instructor associated with this gradebook.
 	*pre:
 	*	instructor.equals(null);

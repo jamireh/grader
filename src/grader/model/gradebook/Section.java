@@ -67,4 +67,18 @@ public class Section
 	{
 
 	}
+
+	/**
+	 * Returns this section's grade scheme.
+	 */
+	public GradeScheme getGradeScheme() {
+	   return gradeScheme;
+   }
+
+   /**
+    * Sets the section's grade scheme.
+    */
+   public void setGradeScheme(GradeScheme gradeScheme) {
+      this.gradeScheme = gradeScheme;
+   }
 }
