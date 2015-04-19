@@ -9,11 +9,7 @@ import grader.model.people.Student;
  *
  * @author Gregory Davis
  */
-<<<<<<< HEAD
-public class RawScore {
-=======
-public abstract class RawScore implements Comparable<RawScore> {
->>>>>>> 1303e5d17d0443762777cde97148319fb7b2db58
+public class RawScore implements Comparable<RawScore> {
    /**
     * The student to whom the score belongs.
     */
@@ -22,7 +18,7 @@ public abstract class RawScore implements Comparable<RawScore> {
    /**
     * The assignment for which the student got the raw score.
     */
-   private final assignment;
+   private final Assignment assignment;
 
    /**
     * The actual raw score for the gradable item.
@@ -91,7 +87,8 @@ public abstract class RawScore implements Comparable<RawScore> {
       this.score' == score;
     */
    public void setScore(double score) {
-      this.score = score;
+       this.score = score;
+   }
 
     /**
      * Compares this RawScore to another by the score it wraps.
