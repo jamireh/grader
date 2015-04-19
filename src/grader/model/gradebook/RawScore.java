@@ -9,7 +9,7 @@ import grader.model.people.Student;
  *
  * @author Gregory Davis
  */
-public abstract class RawScore {
+public abstract class RawScore implements Comparable<RawScore> {
    /**
     * The student to whom the score belongs.
     */
@@ -72,4 +72,15 @@ public abstract class RawScore {
       this.score' == score;
     */
    abstract void setScore(double score);
+
+    /**
+     * Compares this RawScore to another by the score it wraps.
+     * @param other the other raw score
+     * @return a negative integer, zero, or a positive integer as this object
+     *         is less than, equal to, or greater than the specified object.
+     */
+   @Override
+   public int compareTo(RawScore other) {
+       return (int) (other.getScore() - score);
+   }
 }

@@ -1,65 +1,52 @@
-/**
- * @author Quan Tran
- */
-
 package grader.model.gradebook;
 
-import grader.model.items.Assignment;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A composite container that aggregates various statistical values for an
  * assignment or category.
+ *
+ * @author Quan Tran
  */
-public abstract class Statistics {
-    double min, max, average;
+public class Statistics {
+    public final double min, max, mean;
 
     /**
-     * Constructs a new set of Statistics for the given assignment.
-     * @param scores the Scores data structure
-     * @param assignment the assignment to calculate scores for
+     * Constructs a new set of Statistics for the given data collection.
+     * @param scores a list of the raw scores for the item
      */
-    public Statistics(Scores scores, Assignment assignment) {
-        int count = 0;
-        double total = 0;
+    /*
+    public Statistics(List<RawScore> scores) {
+        Collections.sort(scores);
 
-        min = assignment.getPoints();
-        max = 0;
+        // get min and max values
+        min = scores.get(0).getScore();
+        max = scores.get(scores.size() - 1).getScore();
 
-        // iterate through all of the raw scores
-        for (RawScore score : scores.rawScores) {
-            // check if the assignment matches the one given
-            if (score.getAssignment().equals(assignment)) {
-                double current = score.getScore();
-
-                // update total and count
-                total += current;
-                count++;
-
-                // update max score
-                if (current > max)
-                    max = current;
-                else if (current < min)
-                    min = current;
-            }
-        }
-        average = total / count;
+        // calculate mean value
+        double total = 0.0;
+        for (RawScore score : scores)
+            total += score.getScore();
+        mean = total / scores.size();
     }
+    */
 
     /**
-     * Gets the minimum score for the given item.
-     * @return the average score
+     * Constructs a new set of Statistics for the given data collection.
+     * @param scores a list of the scores as doubles for the item
      */
-    public double getMin() { return min; }
+    public Statistics(List<Double> scores) {
+        Collections.sort(scores);
 
-    /**
-     * Gets the average score for the given item.
-     * @return the average score
-     */
-    public double getMax() { return max; }
+        // get min and max values
+        min = scores.get(0);
+        max = scores.get(scores.size() - 1);
 
-    /**
-     * Gets the average score for the given item.
-     * @return the average score
-     */
-    public double getAverage() { return average; }
+        // calculate mean value
+        double total = 0.0;
+        for (Double score : scores)
+            total += score;
+        mean = total / scores.size();
+    }
 }
