@@ -1,5 +1,9 @@
 package grader.controller;
 
+/**
+ * @author Mallika Potter
+ */
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +24,15 @@ import java.awt.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import grader.model.curve.*;
+import grader.model.gradebook.*;
+
+
 public class HistogramController implements Initializable{
 
     private boolean smallData = true;
+
+    private Section section = new Section();
 
     @FXML
     ObservableList<Entry> data = FXCollections.observableArrayList(
@@ -165,13 +175,13 @@ public class HistogramController implements Initializable{
     @FXML
     private void saveButtonAction(ActionEvent event)
     {
-        System.out.println("Save Button Selected.");
+        section.pushGradeScheme();
     }
 
     @FXML
     private void updateButtonAction(ActionEvent event)
     {
-        System.out.println("Update Button Selected.");
+        section.applyHistogram();
     }
 
     @FXML

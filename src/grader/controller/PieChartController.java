@@ -1,4 +1,7 @@
 package grader.controller;
+/**
+ * @author Mallika Potter
+ */
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

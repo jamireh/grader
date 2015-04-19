@@ -1,3 +1,8 @@
+/**
+ * @author Quan Tran
+ * @author Jon Amireh
+ */
+
 package grader.model.items;
 
 /**
@@ -47,6 +52,14 @@ public class Assignment
     public void assign()
     {
 
+    }
+
+    /**
+     * Gets the total points this assignment is worth.
+     * @return the total raw points this assignment is worth
+     */
+    public int getPoints() {
+        return rawPoints;
     }
 
     /**

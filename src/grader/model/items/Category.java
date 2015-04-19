@@ -1,9 +1,15 @@
+/**
+ * @author Quan Tran
+ * @author Jon Amireh
+ */
+
 package grader.model.items;
 
 import java.util.Collection;
 
 /**
  * Represents a category of assignments.
+ * @author Quan Tran
  */
 public class Category
 {

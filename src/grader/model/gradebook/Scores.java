@@ -8,6 +8,8 @@ import java.util.Collection;
 
 /**
  * The Scores class represents a collection of raw scores for assignments.
+ *
+ * @author Gregory Davis
  */
 public abstract class Scores {
    /**

@@ -6,8 +6,14 @@ import grader.model.people.Student;
 /**
  * A RawScore represents the raw score given to a student for a particular
  * assignment.
+ *
+ * @author Gregory Davis
  */
+<<<<<<< HEAD
 public class RawScore {
+=======
+public abstract class RawScore implements Comparable<RawScore> {
+>>>>>>> 1303e5d17d0443762777cde97148319fb7b2db58
    /**
     * The student to whom the score belongs.
     */
@@ -86,5 +92,15 @@ public class RawScore {
     */
    public void setScore(double score) {
       this.score = score;
+
+    /**
+     * Compares this RawScore to another by the score it wraps.
+     * @param other the other raw score
+     * @return a negative integer, zero, or a positive integer as this object
+     *         is less than, equal to, or greater than the specified object.
+     */
+   @Override
+   public int compareTo(RawScore other) {
+       return (int) (other.getScore() - score);
    }
 }

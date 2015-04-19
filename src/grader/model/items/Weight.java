@@ -1,5 +1,8 @@
-package grader.model.items;
+/**
+ * @author Quan Tran
+ */
 
+package grader.model.items;
 
 import grader.model.gradebook.Percentage;
 

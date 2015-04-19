@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * The WorkSpace class is a singleton contains all the information for the
  * current user session, including the open Gradebook, active user,
  * undo/redo history, and the clipboard.
+ *
+ * @author Gregory Davis
  */
 public class WorkSpace {
 	/**
