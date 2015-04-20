@@ -42,12 +42,20 @@ public class Course
 	public ArrayList<Assignment> assignments;
 
 
-    public Course()
+    public Course() {
+        categories = new ArrayList<Category>();
+        assignments = new ArrayList<Assignment>();
+        sections = new ArrayList<Section>();
+        System.out.println("gradebook.Course() called");
+    }
+
+    public Course(String name)
     {
         categories = new ArrayList<Category>();
         assignments = new ArrayList<Assignment>();
         sections = new ArrayList<Section>();
-        sections.add(new Section());
+        //sections.add(new Section());
+        this.name = name;
         System.out.println("gradebook.Course() called");
     }
 
@@ -86,4 +94,12 @@ public class Course
 
       return students;
    }
+
+   public void addSection(Section section) {
+      this.sections.add(section);
+   }
+
+    public void addAssignment(Assignment assignment) {
+        assignments.add(assignment);
+    }
 }

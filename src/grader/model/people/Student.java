@@ -29,6 +29,10 @@ public class Student extends Person implements Comparable<Student>
 	 */
 	String emplID;
 
+   public Student(Name name) {
+      this.name = name;
+   }
+
    public Student(Name name, String phoneNumber)
    {
        this.name = name;

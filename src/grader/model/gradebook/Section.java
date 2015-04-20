@@ -29,6 +29,11 @@ public class Section
         gradeScheme = new GradeScheme();
     }
 
+    public Section(String number) {
+       this.sectionNumber = number;
+        gradeScheme = new GradeScheme();
+    }
+
 	/**
 	*Collection of all students associated with this Section.
 	*/
@@ -73,6 +78,7 @@ public class Section
 	*/
 	public void addStudent(Student student)
 	{
+	   students.add(student);
         System.out.println("gradebook/Section.addStudent called");
 	}
 

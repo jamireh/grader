@@ -52,7 +52,7 @@ public class WorkSpace {
 	/**
 	 * The currently open Gradebook.
 	 */
-	public static Gradebook gradebook;
+	public static Gradebook gradebook = Gradebook.getCannedGradebook();
 
 	/**
 	 * The Course currently selected in the sidebar.

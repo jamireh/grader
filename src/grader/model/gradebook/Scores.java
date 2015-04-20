@@ -4,6 +4,7 @@ import grader.model.items.Assignment;
 import grader.model.people.Student;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 
 /**
@@ -11,11 +12,11 @@ import java.util.Collection;
  *
  * @author Gregory Davis
  */
-public abstract class Scores {
+public class Scores {
    /**
     * Collection of raw scores, each associated with a student and assignments.
     */
-   Collection<RawScore> rawScores;
+   private HashMap<Student, HashMap<Assignment, RawScore>> rawScores;
 
    /**
     * Retrieves the raw score for an assignment given to a particular student.
@@ -33,7 +34,9 @@ public abstract class Scores {
       && forall (RawScore score; rawScores'.contains(score)
                                  iff rawScores.contains(score));
     */
-   abstract public double getRawScore(Student student, Assignment assignment);
+   public double getRawScore(Student student, Assignment assignment) {
+      return rawScores.get(student).get(assignment).getScore();
+   }
 
    /**
     * Enters a raw score for an assignment for a particular student.
@@ -64,8 +67,14 @@ public abstract class Scores {
                           || rawScores.contains(score)));
  
     */
-   abstract void addRawScore(Student student, Assignment assignment,
-                             double score);
+   public void addRawScore(Student student, Assignment assignment,
+                             double score) {
+      if (!rawScores.containsKey(student)) {
+         rawScores.put(student, new HashMap<Assignment, RawScore>());
+      }
+
+      rawScores.get(student).put(assignment, new RawScore(student, assignment, score));
+   }
 
    /**
     * Updates a raw score for an assignment for a particular student.
@@ -98,8 +107,10 @@ public abstract class Scores {
                            && score.getScore() == newScore)
                           || rawScores.contains(score)));
     */
-   abstract void updateRawScore(Student student, Assignment assignment,
-                                double newScore);
+   public void updateRawScore(Student student, Assignment assignment,
+                                double newScore) {
+      rawScores.get(student).get(assignment).setScore(newScore);
+   }
 
    /**
     * Removes a raw score for an assignment for a particular student.
@@ -128,7 +139,9 @@ public abstract class Scores {
                       && !(score.getStudent().equals(student)
                             && score.getAssignment().equals(assignment))));
     */
-   abstract void removeRawScore(Student student, Assignment assignment);
+   public void removeRawScore(Student student, Assignment assignment) {
+       rawScores.get(student).remove(assignment);
+   }
 
    /**
     * Gets the average of all of the raw scores for a given assignment.
@@ -150,5 +163,18 @@ public abstract class Scores {
       forall (RawScore score; rawScores'.contains(score)
                      iff rawScores.contains(score));
     */
-   abstract double getAverageScore(Assignment assignment);
+   public double getAverageScore(Assignment assignment) {
+      int count = 0;
+      double totalScore = 0.0;
+
+      for (Student student : rawScores.keySet()) {
+         HashMap<Assignment, RawScore> assignments = rawScores.get(student);
+         if (assignments.containsKey(assignment)) {
+            ++count;
+            totalScore += assignments.get(assignment).getScore();
+         }
+      }
+
+      return totalScore / count;
+   }
 }

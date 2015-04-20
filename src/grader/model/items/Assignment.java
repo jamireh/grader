@@ -25,6 +25,11 @@ public class Assignment
     /** the curved number of points this item is worth */
     int curvedPoints;
 
+    public Assignment() {}
+    public Assignment(String name) {
+       this.name = name;
+    }
+
     /**
      * Adjusts an item's point value.
      * @param newValue the new value to adjust to
