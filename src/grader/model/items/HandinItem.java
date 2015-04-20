@@ -13,7 +13,7 @@ import java.util.Collection;
  * an online handin tool.
  */
 
-public abstract class HandinItem extends Assignment
+public abstract class HandinItem
 {
     /** the handin submission associated with this item */
     Submission submission;

@@ -3,11 +3,7 @@ package grader.model.gradebook;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * A container class for gradebook statistics aggregating all individual
@@ -32,7 +28,7 @@ public class StatsContainer {
         this.assignments = assignments;
         this.scores = scores;
 
-        buildStats();
+        //buildStats();
     }
 
     /**

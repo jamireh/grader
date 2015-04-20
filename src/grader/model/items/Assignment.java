@@ -5,16 +5,19 @@
 
 package grader.model.items;
 
+import grader.model.errors.PercentageFormatException;
+import grader.model.errors.RawScoreFormatException;
+import grader.model.gradebook.Percentage;
+
+import java.time.LocalDate;
+
 /**
  * Represents an assignment of a specific category.
  */
 public class Assignment
 {
-    /** the category to which this item belongs */
-    Category category;
-
     /** the date and time at which this item is due */
-    DateTime dueDate;
+    LocalDate dueDate;
 
     /** the name of this particular item */
     String name;
@@ -22,8 +25,27 @@ public class Assignment
     /** the number of points this item is worth */
     int rawPoints;
 
-    /** the curved number of points this item is worth */
-    int curvedPoints;
+    /** weight for this particular assignment **/
+    Percentage weight;
+
+    public Assignment(String name, LocalDate dueDate, String rawPoints, String weight) throws PercentageFormatException, RawScoreFormatException
+    {
+        this.name = name;
+        this.dueDate = dueDate;
+        try
+        {
+            this.rawPoints = Integer.valueOf(rawPoints);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new RawScoreFormatException(rawPoints);
+        }
+        if(this.rawPoints < 0)
+        {
+            throw new RawScoreFormatException(this.rawPoints);
+        }
+        this.weight = new Percentage(weight);
+    }
 
     public Assignment() {}
     public Assignment(String name) {
@@ -38,23 +60,6 @@ public class Assignment
        this.rawPoints == newValue
      */
     public void adjustPointValue(int newValue)
-    {
-
-    }
-
-    /**
-     * Curves this item's point value based on some given value.
-     * @param value some value with which to curve this item
-     */
-    public void curve(Object value)
-    {
-
-    }
-
-    /**
-     * Assigns this item to the courses it is associated with.
-     */
-    public void assign()
     {
 
     }

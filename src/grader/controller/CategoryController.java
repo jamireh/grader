@@ -1,5 +1,7 @@
 package grader.controller;
 
+import grader.model.errors.PercentageFormatException;
+import grader.model.errors.WeightTotalException;
 import grader.model.items.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,15 +53,40 @@ public class CategoryController implements Initializable {
         System.out.println("Parent: " + cbCatParent.getValue());
         System.out.println("Weight: " + tfWeight.getText());
         System.out.println("Weight Behavior: " + cbWeights.getValue());
+        boolean exceptionThrown = false;
         if(cbCatParent.getValue().equals("CPE 309"))
         {
-            MainController.course.add(new Category());
+            try
+            {
+                MainController.course.add(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
+            }
+            catch(PercentageFormatException e)
+            {
+                exceptionThrown = true;
+                tfWeight.requestFocus();
+            }
         }
         else
         {
-            MainController.course.categories.get(0).add(new Category());
+            try
+            {
+                MainController.course.categories.get(0).add(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
+            }
+            catch(PercentageFormatException e)
+            {
+                exceptionThrown = true;
+                tfWeight.requestFocus();
+            }
+            catch(WeightTotalException e)
+            {
+                exceptionThrown = true;
+                tfWeight.requestFocus();
+            }
         }
-        Stage stage = (Stage) bAdd.getScene().getWindow();
-        stage.close();
+        if(!exceptionThrown)
+        {
+            Stage stage = (Stage) bAdd.getScene().getWindow();
+            stage.close();
+        }
     }
 }

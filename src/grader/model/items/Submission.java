@@ -3,6 +3,7 @@ package grader.model.items;
 import grader.model.people.Student;
 
 import java.io.File;
+import java.time.ZonedDateTime;
 
 /**
  * A Submission represents a file and completion for an assignment with
@@ -18,7 +19,7 @@ public abstract class Submission
 	/**
  	* The date and time a file is submitted.
  	*/
-	DateTime dateTime;
+	ZonedDateTime dateTime;
 
 	/**
  	* The Student who is handing in a submission
