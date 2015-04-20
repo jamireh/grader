@@ -28,10 +28,13 @@ public class Category
     /** whether uncategorized assignments are graded by raw score or not */
     boolean uncategorizedByRawScore;
 
-    public Category(String name, String weight) throws PercentageFormatException
+    public Category(String name, String weight, boolean uncategorizedByRawScore) throws PercentageFormatException
     {
         this.name = name;
         this.weight = new Percentage(weight);
+        this.uncategorizedByRawScore = uncategorizedByRawScore;
+        subcategories = new ArrayList<Category>();
+        items = new ArrayList<Assignment>();
     }
 
     /**
@@ -43,6 +46,7 @@ public class Category
      */
     public void add(Category subcategory) throws WeightTotalException
     {
+        subcategories.add(subcategory);
         System.out.println("items.Category.add(Category) called");
     }
 
@@ -55,6 +59,7 @@ public class Category
      */
     public void add(Assignment assignment) throws WeightTotalException
     {
+        items.add(assignment);
         System.out.println("items.Category.add(Assignment) called");
     }
 }

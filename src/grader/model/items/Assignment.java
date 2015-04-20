@@ -24,6 +24,7 @@ public class Assignment
 
     /** the number of points this item is worth */
     int rawPoints;
+
     /** weight for this particular assignment **/
     Percentage weight;
 

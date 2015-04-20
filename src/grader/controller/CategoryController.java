@@ -58,7 +58,7 @@ public class CategoryController implements Initializable {
         {
             try
             {
-                MainController.course.add(new Category(tfCatName.getText(), tfWeight.getText()));
+                MainController.course.add(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
             }
             catch(PercentageFormatException e)
             {
@@ -70,7 +70,7 @@ public class CategoryController implements Initializable {
         {
             try
             {
-                MainController.course.categories.get(0).add(new Category(tfCatName.getText(), tfWeight.getText()));
+                MainController.course.categories.get(0).add(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
             }
             catch(PercentageFormatException e)
             {
