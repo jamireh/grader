@@ -39,6 +39,10 @@ public class Assignment
         {
             throw new RawScoreFormatException(rawPoints);
         }
+        if(this.rawPoints < 0)
+        {
+            throw new RawScoreFormatException(this.rawPoints);
+        }
         this.weight = new Percentage(weight);
     }
 
