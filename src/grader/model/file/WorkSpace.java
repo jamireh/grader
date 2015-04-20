@@ -1,6 +1,7 @@
 package grader.model.file;
 
 import grader.model.gradebook.*;
+import grader.model.items.Assignment;
 import grader.model.people.*;
 import grader.model.curve.*;
 import java.util.List;
@@ -87,7 +88,7 @@ public class WorkSpace {
 	/**
 	 * The statistics model.
 	 */
-	public static Statistics statistics;
+	//public static Statistics statistics;
 
 	/**
 	 * The pie chart model.
@@ -144,9 +145,9 @@ public class WorkSpace {
     */
    public static void sidebarSelect(Course course, Section section,
                                     Group group) {
-      this.course = course;
-      this.section = section;
-      this.group = group;
+      WorkSpace.course = course;
+      WorkSpace.section = section;
+      WorkSpace.group = group;
    }
 
    /**

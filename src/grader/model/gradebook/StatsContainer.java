@@ -45,12 +45,12 @@ public class StatsContainer {
      * Builds the stats map, mapping Assignments to Statistics.
      */
     private void buildStats() {
-        stats = new HashMap<>();
+        stats = new HashMap<Assignment, Statistics>();
 
         // iterate through each assignment in the scope
         for (Assignment ass : assignments) {
             //List<RawScore> rawScores = new Vector<>();
-            List<Double> rawScores = new Vector<>();
+            List<Double> rawScores = new Vector<Double>();
 
             // iterate through each student in the scope
             for (Student student : students)

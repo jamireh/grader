@@ -1,5 +1,6 @@
 package grader.model.curve;
 
+import grader.model.gradebook.Gradebook;
 import grader.model.gradebook.Section;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
@@ -84,7 +85,7 @@ public abstract class Statistics
 		{
 			for(Student student : section.students)
 			{
-				toReturn.add(section.scores.getRawScore(student, assignment));
+				toReturn.add(gradebook.getScores().getRawScore(student, assignment));
 			}
 		}
 		return toReturn;
@@ -93,6 +94,12 @@ public abstract class Statistics
 	 * Context Section to apply these operations to.
 	 */
 	Collection<Section> sections;
+
+    /**
+     * Gradebook to apply these operations to.
+     */
+    Gradebook gradebook;
+
 	/**
 	 * Calculates the average Score for the Assignment in the Section.
      * @param assignment assignment you wish to calculate the average for

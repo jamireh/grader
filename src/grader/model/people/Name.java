@@ -35,4 +35,18 @@ public class Name
         this.lastName = lastName;
         this.nickName = nickName;
     }
+
+    /**
+     * Gets this student's last name.
+     */
+    public String getLastName() {
+       return lastName;
+    }
+
+    /**
+     * Gets this student's first name.
+     */
+    public String getFirstName() {
+       return firstName;
+    }
 }

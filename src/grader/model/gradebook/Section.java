@@ -9,6 +9,7 @@ import grader.model.people.Group;
 import grader.model.people.Student;
 import grader.model.people.TA;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,10 +28,6 @@ public class Section
     {
         gradeScheme = new GradeScheme();
     }
-	/**
-	*Scores associated with students and assignments in this Section.
-	*/
-	public Scores scores;
 
 	/**
 	*Collection of all students associated with this Section.
@@ -118,5 +115,12 @@ public class Section
     {
         gradeScheme = histogram.push();
         System.out.println("Updated GradeScheme saved in Section.");
+    }
+
+    /**
+     * Returns this section's students.
+     */
+    public List<Student> getStudents() {
+       return students;
     }
 }

@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
  *
  * @author Connor Batch
  */
-public class Student extends Person
+public class Student extends Person implements Comparable<Student>
 {	
 	/**
 	 * The Name of this Student.
@@ -29,11 +29,32 @@ public class Student extends Person
 	 */
 	String emplID;
 
-    public Student(Name name, String phoneNumber)
-    {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        photo = null;
-        emplID = null;
+   public Student(Name name, String phoneNumber)
+   {
+       this.name = name;
+       this.phoneNumber = phoneNumber;
+       photo = null;
+       emplID = null;
+   }
+
+    /**
+     * Returns this student's name.
+     */
+    public Name getName() {
+        return name;
     }
+
+   /**
+    * Compares two students by last, then first name, lexicographically.
+    */
+   @Override
+   public int compareTo(Student other) {
+      int compareLast = name.getLastName().compareTo(
+                           other.getName().getLastName());
+      int compareFirst = name.getFirstName().compareTo(
+                           other.getName().getFirstName());
+
+      if (compareLast != 0)  return compareLast;
+      else return compareFirst;
+   }
 }

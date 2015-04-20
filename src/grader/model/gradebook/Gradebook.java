@@ -39,5 +39,9 @@ public abstract class Gradebook {
 	*/
 	public abstract void addCourse(Course cor);
 
+	public Scores getScores() {
+	   return scores;
+   }
+
 }
 
