@@ -105,6 +105,9 @@ public class WorkSpace {
 	 * in the grade spreadsheet.
 	 */
 	public static List<Student> getStudents() {
+	   if (group != null) return group.getStudents();
+	   if (section != null) return section.getStudents();
+	   if (course != null) return course.getStudents();
 	   return null;
    }
 

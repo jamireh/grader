@@ -39,9 +39,11 @@ public abstract class Gradebook {
 	*/
 	public abstract void addCourse(Course cor);
 
+	/**
+	 * Returns the master scores object for the gradebook.
+	 */
 	public Scores getScores() {
 	   return scores;
    }
-
 }
 
