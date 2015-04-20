@@ -1,5 +1,9 @@
 package grader.model.people;
 
+import grader.model.errors.NameFormatException;
+
+import javax.naming.InvalidNameException;
+
 /**
  * A Name is the set of words by which a Person is
  * addressed.
@@ -28,12 +32,15 @@ public class Name
 	 */
 	String nickName;
 
-    public Name(String firstName, String middleName, String lastName, String nickName)
+    public Name(String firstName, String middleName, String lastName, String nickName) throws InvalidNameException
     {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.nickName = nickName;
+
+        if (firstName.length() == 0 || lastName.length() == 0)
+            throw new InvalidNameException("");
     }
 
     /**

@@ -4,7 +4,9 @@ import grader.model.items.Assignment;
 import grader.model.people.Instructor;
 import grader.model.people.Name;
 import grader.model.people.Student;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
+import javax.naming.InvalidNameException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -102,7 +104,15 @@ public class Gradebook {
 
       for (String name : Arrays.asList(names)) {
          String[] tokens = name.split(" ");
-         Student student = new Student(new Name(tokens[0], null, tokens[1], null));
+          Student student = null;
+          try
+          {
+              student = new Student(new Name(tokens[0], null, tokens[1], null));
+          }
+          catch (InvalidNameException e)
+          {
+              System.out.println("name exception occured in gradebook");
+          }
          students.add(student);
          section.addStudent(student);
       }

@@ -1,4 +1,6 @@
 package grader.model.people;
+import grader.model.errors.InvalidPhoneNumberException;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -33,8 +35,10 @@ public class Student extends Person implements Comparable<Student>
       this.name = name;
    }
 
-   public Student(Name name, String phoneNumber)
+   public Student(Name name, String phoneNumber) throws InvalidPhoneNumberException
    {
+       if (phoneNumber.length() != 10 || !phoneNumber.matches("^[0-9]+$"))
+           throw new InvalidPhoneNumberException(phoneNumber);
        this.name = name;
        this.phoneNumber = phoneNumber;
        photo = null;
