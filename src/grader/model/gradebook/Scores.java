@@ -3,7 +3,6 @@ package grader.model.gradebook;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
 
-import java.util.Collection;
 import java.util.HashMap;
 
 
@@ -16,7 +15,12 @@ public class Scores {
    /**
     * Collection of raw scores, each associated with a student and assignments.
     */
-   private HashMap<Student, HashMap<Assignment, RawScore>> rawScores;
+    private HashMap<Student, HashMap<Assignment, RawScore>> rawScores;
+
+    public Scores()
+    {
+        rawScores = new HashMap<Student, HashMap<Assignment, RawScore>>();
+    }
 
    /**
     * Retrieves the raw score for an assignment given to a particular student.

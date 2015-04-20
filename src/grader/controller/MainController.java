@@ -6,6 +6,7 @@ import grader.model.StudentEntry;
 import grader.model.edit.Edit;
 import grader.model.file.File;
 import grader.model.gradebook.Course;
+import grader.model.gradebook.Gradebook;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,7 +67,7 @@ public class MainController implements Initializable
 
     /* FILE MENU COMMANDS */
     public void fileNewCourse() throws IOException {
-        course = new Course();
+        course = Gradebook.getCannedGradebook().courses.get(0);
         Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
         stage.setScene(new Scene(root));
@@ -77,7 +78,7 @@ public class MainController implements Initializable
             public Boolean call(String param)
             {
                 file.newCourse(param);
-                if(param.equals("309"))
+                if (param.equals("309"))
                 {
                     addCourse = true;
                     aCourses.setVisible(true);

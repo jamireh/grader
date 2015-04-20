@@ -5,15 +5,14 @@
 
 package grader.model.gradebook;
 
+import grader.model.curve.Histogram;
 import grader.model.people.Group;
 import grader.model.people.Student;
 import grader.model.people.TA;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import grader.model.curve.*;
+import java.util.List;
 
 /**
 *Collection of objects that are necessary for Section functionality.
@@ -30,7 +29,8 @@ public class Section
     }
 
     public Section(String number) {
-       this.sectionNumber = number;
+        this.sectionNumber = number;
+        students = new ArrayList<Student>();
         gradeScheme = new GradeScheme();
     }
 
@@ -78,7 +78,7 @@ public class Section
 	*/
 	public void addStudent(Student student)
 	{
-	   students.add(student);
+	    students.add(student);
         System.out.println("gradebook/Section.addStudent called");
 	}
 

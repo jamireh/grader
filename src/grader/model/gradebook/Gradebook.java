@@ -7,7 +7,6 @@ import grader.model.people.Student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class Gradebook {
 	/**
 	*The courses associated with this gradebook.
 	*/
-	public Collection<Course> courses;
+	public ArrayList<Course> courses;
 
 	/**
 	*The Instructor associated with this gradebook.
@@ -57,6 +56,11 @@ public class Gradebook {
    }
 
    private static Gradebook cannedGradebook;
+
+   public Gradebook()
+   {
+      courses = new ArrayList<Course>();
+   }
 
    static {
       cannedGradebook = new Gradebook();
