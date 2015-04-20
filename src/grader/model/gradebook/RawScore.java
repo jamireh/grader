@@ -9,21 +9,30 @@ import grader.model.people.Student;
  *
  * @author Gregory Davis
  */
-public abstract class RawScore implements Comparable<RawScore> {
+public class RawScore implements Comparable<RawScore> {
    /**
     * The student to whom the score belongs.
     */
-   Student student;
+   private final Student student;
 
    /**
     * The assignment for which the student got the raw score.
     */
-   Assignment assignment;
+   private final Assignment assignment;
 
    /**
     * The actual raw score for the gradable item.
     */
-   public double score;
+   private double score;
+
+   /**
+    * Constructor.
+    */
+   public RawScore(Student student, Assignment assignment, double score) {
+      this.student = student;
+      this.assignment = assignment;
+      this.score = score;
+   }
 
    /**
     * Gets the student associated with this score.
@@ -35,7 +44,9 @@ public abstract class RawScore implements Comparable<RawScore> {
       //
       return.equals(this.student);
     */
-   abstract Student getStudent();
+   public Student getStudent() {
+      return student;
+   }
 
    /**
     * Gets the gradable item associated with this score.
@@ -47,7 +58,9 @@ public abstract class RawScore implements Comparable<RawScore> {
       //
       return.equals(this.assignment);
    	*/
-   abstract Assignment getAssignment();
+   public Assignment getAssignment() {
+      return assignment;
+   }
 
    /**
     * Gets the raw numerical score.
@@ -59,7 +72,9 @@ public abstract class RawScore implements Comparable<RawScore> {
       //
       return == this.score;
     */
-   abstract double getScore();
+   public double getScore() {
+      return score;
+   }
 
    /**
     * Sets the raw numerical score.
@@ -71,7 +86,9 @@ public abstract class RawScore implements Comparable<RawScore> {
       //
       this.score' == score;
     */
-   abstract void setScore(double score);
+   public void setScore(double score) {
+       this.score = score;
+   }
 
     /**
      * Compares this RawScore to another by the score it wraps.

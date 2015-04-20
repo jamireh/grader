@@ -6,6 +6,7 @@ import grader.model.StudentEntry;
 import grader.model.edit.Edit;
 import grader.model.file.File;
 import grader.model.gradebook.Course;
+import grader.model.gradebook.Gradebook;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +30,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Main controller class for the Grader application.
+ *
+ * @author Gregory Davis
+ */
 public class MainController implements Initializable
 {
     private Stage stage;
@@ -64,7 +70,7 @@ public class MainController implements Initializable
 
     /* FILE MENU COMMANDS */
     public void fileNewCourse() throws IOException {
-        course = new Course();
+        course = Gradebook.getCannedGradebook().courses.get(0);
         Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
         stage.setScene(new Scene(root));

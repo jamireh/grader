@@ -6,7 +6,9 @@ package grader.model.gradebook;
 
 import grader.model.items.Assignment;
 import grader.model.items.Category;
+import grader.model.people.Student;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -40,12 +42,20 @@ public class Course
 	public ArrayList<Assignment> assignments;
 
 
-    public Course()
+    public Course() {
+        categories = new ArrayList<Category>();
+        assignments = new ArrayList<Assignment>();
+        sections = new ArrayList<Section>();
+        System.out.println("gradebook.Course() called");
+    }
+
+    public Course(String name)
     {
         categories = new ArrayList<Category>();
         assignments = new ArrayList<Assignment>();
         sections = new ArrayList<Section>();
-        sections.add(new Section());
+        //sections.add(new Section());
+        this.name = name;
         System.out.println("gradebook.Course() called");
     }
 
@@ -70,4 +80,26 @@ public class Course
 	{
 		System.out.println("gradebook.Course.syncRoster() called");
 	}
+
+	/**
+	 * Gets all the students in this course.
+	 * Crawls through sections to populate list.
+	 */
+	public List<Student> getStudents() {
+	   List<Student> students = new ArrayList<Student>();
+
+	   for (Section section : sections) {
+	      students.addAll(section.getStudents());
+      }
+
+      return students;
+   }
+
+   public void addSection(Section section) {
+      this.sections.add(section);
+   }
+
+    public void addAssignment(Assignment assignment) {
+        assignments.add(assignment);
+    }
 }

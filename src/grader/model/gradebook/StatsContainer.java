@@ -3,8 +3,7 @@ package grader.model.gradebook;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A container class for gradebook statistics aggregating all individual
@@ -41,13 +40,13 @@ public class StatsContainer {
     /**
      * Builds the stats map, mapping Assignments to Statistics.
      */
-    /*private void buildStats() {
-        stats = new HashMap<>();
+    private void buildStats() {
+        stats = new HashMap<Assignment, Statistics>();
 
         // iterate through each assignment in the scope
         for (Assignment ass : assignments) {
             //List<RawScore> rawScores = new Vector<>();
-            List<Double> rawScores = new Vector<>();
+            List<Double> rawScores = new Vector<Double>();
 
             // iterate through each student in the scope
             for (Student student : students)
@@ -56,5 +55,5 @@ public class StatsContainer {
             // add the value to the map
             stats.put(ass, new Statistics(rawScores));
         }
-    }*/
+    }
 }

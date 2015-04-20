@@ -46,6 +46,11 @@ public class Assignment
         this.weight = new Percentage(weight);
     }
 
+    public Assignment() {}
+    public Assignment(String name) {
+       this.name = name;
+    }
+
     /**
      * Adjusts an item's point value.
      * @param newValue the new value to adjust to

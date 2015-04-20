@@ -12,19 +12,32 @@ public abstract class Group
 	/**
 	 * Abstract Collection of Students to hold in this Group.
 	 */
-	Collection<Student> students;
+	private List<Student> students;
 	/**
 	 * Name assigned to this Group.
 	 */
-	String groupName;
+	private String groupName;
+
 	/**
 	 * Modifies the group name to the one provided.
 	 * @param newGroupName String representing the new group name.
 	 */
-	abstract void editGroupName(String newGroupName);
+	public void editGroupName(String newGroupName) {
+	   groupName = newGroupName;
+   }
+
 	/**
 	 * Adds a new Student to the underlying Collection.
 	 * @param studentToAdd Student to add to this Group.
 	 */
-	abstract void addStudent(Student studentToAdd);
+	public void addStudent(Student studentToAdd) {
+	   students.add(studentToAdd);
+   }
+
+	/**
+	 * Returns the group's student list.
+	 */
+	public List<Student> getStudents() {
+	   return students;
+   }
 }

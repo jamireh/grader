@@ -5,14 +5,14 @@
 
 package grader.model.gradebook;
 
+import grader.model.curve.Histogram;
 import grader.model.people.Group;
 import grader.model.people.Student;
 import grader.model.people.TA;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
-import grader.model.curve.*;
+import java.util.List;
 
 /**
 *Collection of objects that are necessary for Section functionality.
@@ -27,10 +27,12 @@ public class Section
     {
         gradeScheme = new GradeScheme();
     }
-	/**
-	*Scores associated with students and assignments in this Section.
-	*/
-	public Scores scores;
+
+    public Section(String number) {
+        this.sectionNumber = number;
+        students = new ArrayList<Student>();
+        gradeScheme = new GradeScheme();
+    }
 
 	/**
 	*Collection of all students associated with this Section.
@@ -76,6 +78,7 @@ public class Section
 	*/
 	public void addStudent(Student student)
 	{
+	    students.add(student);
         System.out.println("gradebook/Section.addStudent called");
 	}
 
@@ -88,6 +91,20 @@ public class Section
 	{
 
 	}
+
+	/**
+	 * Returns this section's grade scheme.
+	 */
+	public GradeScheme getGradeScheme() {
+	   return gradeScheme;
+   }
+
+   /**
+    * Sets the section's grade scheme.
+    */
+   public void setGradeScheme(GradeScheme gradeScheme) {
+      this.gradeScheme = gradeScheme;
+   }
 
     /**
      * Handles updating histogram.
@@ -104,5 +121,12 @@ public class Section
     {
         gradeScheme = histogram.push();
         System.out.println("Updated GradeScheme saved in Section.");
+    }
+
+    /**
+     * Returns this section's students.
+     */
+    public List<Student> getStudents() {
+       return students;
     }
 }
