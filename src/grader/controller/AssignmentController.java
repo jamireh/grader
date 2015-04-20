@@ -1,5 +1,8 @@
 package grader.controller;
 
+import grader.model.errors.PercentageFormatException;
+import grader.model.errors.RawScoreFormatException;
+import grader.model.errors.WeightTotalException;
 import grader.model.items.Assignment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,17 +52,53 @@ public class AssignmentController implements Initializable {
         System.out.println("Due Date: " + dpDueDate.getValue());
         System.out.println("Handin: " + chbHandin.isSelected() + (chbHandin.isSelected() ? " directory: " + tfHandin.getText() : ""));
 
+        boolean exceptionThrown = false;
+
         if(cbCatParent.getValue().equals("CPE 309"))
         {
-            MainController.course.add(new Assignment());
+            try
+            {
+                MainController.course.add(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
+
+            }
+            catch(PercentageFormatException e)
+            {
+                exceptionThrown = true;
+                tfWeight.requestFocus();
+            }
+            catch(RawScoreFormatException e)
+            {
+                exceptionThrown = true;
+                tfRawScore.requestFocus();
+            }
         }
         else
         {
-            MainController.course.categories.get(0).add(new Assignment());
+            try
+            {
+                MainController.course.categories.get(0).add(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
+            }
+            catch(PercentageFormatException e)
+            {
+                exceptionThrown = true;
+                tfWeight.requestFocus();
+            }
+            catch(RawScoreFormatException e)
+            {
+                exceptionThrown = true;
+                tfRawScore.requestFocus();
+            }
+            catch(WeightTotalException e)
+            {
+                exceptionThrown = true;
+                tfWeight.requestFocus();
+            }
         }
-
-        Stage stage = (Stage) bAdd.getScene().getWindow();
-        stage.close();
+        if(!exceptionThrown)
+        {
+            Stage stage = (Stage) bAdd.getScene().getWindow();
+            stage.close();
+        }
     }
 
     public void onHandinChecked(ActionEvent event)

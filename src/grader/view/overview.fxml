@@ -59,19 +59,7 @@
             </Menu>
         </menus>
       </MenuBar>
-       <Accordion fx:id="aCourses" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-           <panes>
-               <TitledPane fx:id="tpCourses" animated="false" text="CPE 309">
-                   <content>
-                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="215.0">
-                           <children>
-                               <Label layoutX="83.0" layoutY="6.0" text="Section 1" />
-                           </children>
-                       </AnchorPane>
-                   </content>
-               </TitledPane>
-           </panes>
-       </Accordion>
+      <fx:include fx:id="sidebar" source="sidebar.fxml"/>
       <VBox fx:id="vbContainer" layoutX="220.0" layoutY="30.0" prefHeight="590.0" prefWidth="1200.0">
          <children>
              <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">

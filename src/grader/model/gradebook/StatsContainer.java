@@ -4,10 +4,7 @@ import grader.model.items.Assignment;
 import grader.model.people.Student;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * A container class for gradebook statistics aggregating all individual
@@ -32,7 +29,7 @@ public class StatsContainer {
         this.assignments = assignments;
         this.scores = scores;
 
-        buildStats();
+        //buildStats();
     }
 
     /**
@@ -44,7 +41,7 @@ public class StatsContainer {
     /**
      * Builds the stats map, mapping Assignments to Statistics.
      */
-    private void buildStats() {
+    /*private void buildStats() {
         stats = new HashMap<>();
 
         // iterate through each assignment in the scope
@@ -59,5 +56,5 @@ public class StatsContainer {
             // add the value to the map
             stats.put(ass, new Statistics(rawScores));
         }
-    }
+    }*/
 }
