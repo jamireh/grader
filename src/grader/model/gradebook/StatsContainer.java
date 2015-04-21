@@ -1,6 +1,8 @@
 package grader.model.gradebook;
 
+import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
 
 import java.util.*;

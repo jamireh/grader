@@ -3,7 +3,10 @@ package grader.model.gradebook;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -188,7 +191,7 @@ public class Scores {
    /**
     * Gets a list of RawScores for the given assignment.
     */
-   public List<Double> getScores(Assignment assignment) {
+   public List<RawScore> getScores(Assignment assignment) {
       List<RawScore> scoresList = new ArrayList<RawScore>();
       for (Student student : rawScores.keySet()) {
          HashMap<Assignment, RawScore> assignments = rawScores.get(student);
@@ -202,7 +205,7 @@ public class Scores {
    /**
     * Gets the Assignment to RawScore map for the given student.
     */
-   public Map<Assignment, RawScore> getScoresMap(Student student) {
+   public HashMap<Assignment, RawScore> getScoresMap(Student student) {
       return rawScores.get(student);
    }
 
@@ -210,7 +213,7 @@ public class Scores {
     * Adds all the scores from the given Assignment to RawScore map for the
     * given student.
     */
-   public void addScoresMap(Student student, Map<Assignment, RawScore> scores) {
+   public void addScoresMap(Student student, HashMap<Assignment, RawScore> scores) {
       rawScores.put(student, scores);
    }
 }

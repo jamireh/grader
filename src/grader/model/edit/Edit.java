@@ -1,5 +1,7 @@
 package grader.model.edit;
 
+import grader.model.file.WorkSpace;
+
 /**
  * The Edit class represents the underlying model for the Edit menu.
  * Included are methods for edit operations.

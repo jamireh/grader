@@ -5,10 +5,8 @@ import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.*;
 import grader.model.curve.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+
+import java.util.*;
 
 /**
  * The WorkSpace class is a singleton contains all the information for the
@@ -248,7 +246,7 @@ public class WorkSpace extends Observable {
       Scores gradebookScores = gradebook.getScores();
       for (RawScore raw : deltas) {
          gradebookScores.updateRawScore(
-            raw.getStudent(), raw.getAssignment(), score);
+            raw.getStudent(), raw.getAssignment(), raw.getScore());
       }
       deltas.clear();
       futureDeltas.clear();
@@ -316,7 +314,7 @@ public class WorkSpace extends Observable {
 
          // Reupdate score.
          scores.updateRawScore(redoneDelta.getStudent(),
-            redoneDelta.getAssignment, redoneDelta);
+            redoneDelta.getAssignment(), redoneDelta.getScore());
       }
    }
 
@@ -359,7 +357,7 @@ public class WorkSpace extends Observable {
 
       // Add in scores for relevant students.
       for (Student student : scopedStudents) {
-         scoresMap = gradebookScores.getScoresMap(student);
+         HashMap<Assignment, RawScore> scoresMap = gradebookScores.getScoresMap(student);
          scores.addScoresMap(student, scoresMap);
       }
    }
