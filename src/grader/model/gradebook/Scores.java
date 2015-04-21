@@ -10,7 +10,8 @@ import java.util.Map;
 
 
 /**
- * The Scores class represents a collection of raw scores for assignments.
+ * The Scores class represents a collection of raw scores for students
+ * and assignments.
  *
  * @author Gregory Davis
  */
@@ -190,6 +191,8 @@ public class Scores {
 
    /**
     * Gets a list of RawScores for the given assignment.
+    * @param assignment assignment to get scores for
+    * @return list of scores for the given assignment
     */
    public List<RawScore> getScores(Assignment assignment) {
       List<RawScore> scoresList = new ArrayList<RawScore>();
@@ -204,6 +207,8 @@ public class Scores {
 
    /**
     * Gets the Assignment to RawScore map for the given student.
+    * @param student student to retrieve map for
+    * @return map of assignments to scores for the given student
     */
    public HashMap<Assignment, RawScore> getScoresMap(Student student) {
       return rawScores.get(student);
@@ -212,8 +217,11 @@ public class Scores {
    /**
     * Adds all the scores from the given Assignment to RawScore map for the
     * given student.
+    * @param student student to add scores for
+    * @param scores assignment to scores map
     */
-   public void addScoresMap(Student student, HashMap<Assignment, RawScore> scores) {
+   public void addScoresMap(Student student,
+      HashMap<Assignment, RawScore> scores) {
       rawScores.put(student, scores);
    }
 }
