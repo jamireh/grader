@@ -11,5 +11,9 @@ import java.util.Observer;
 public class PieChart extends AbstractGraph implements Observer
 {
    public void categorizeScores() {}
+
+   /**
+    * Updates the Pie Chart.
+    */
    public void update(Observable obj, Object args) {}
 }

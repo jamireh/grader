@@ -46,6 +46,11 @@ public class StatsContainer implements Observer {
     }
 
     /**
+     * Renders the statistics spreadsheet in the view.
+     */
+    public void render() {}
+
+    /**
      * Observe update method.
      * Queries the WorkSpace for necessary data.
      */
@@ -54,5 +59,6 @@ public class StatsContainer implements Observer {
        assignmentTree = WorkSpace.instance.getAssignmentTree();
        scores = WorkSpace.instance.getScores();
        buildStats();
+       render();
     }
 }
