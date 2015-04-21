@@ -11,25 +11,11 @@ import java.util.*;
  * @author Quan Tran
  */
 public class StatsContainer implements Observer {
-    Collection<Student> students;
-    Collection<Assignment> assignments;
-    Scores scores;
-    Map<Assignment, Statistics> stats;
-
-    /**
-     * Constructs a new StatsContainer for the given scope and scores.
-     * @param students    the students scope
-     * @param assignments the assignments scope
-     * @param scores      the score data
-     */
-    public StatsContainer(Collection<Student> students,
-                          Collection<Assignment> assignments, Scores scores) {
-        this.students = students;
-        this.assignments = assignments;
-        this.scores = scores;
-
-        //buildStats();
-    }
+    private Collection<Student> students;
+    private Collection<Assignment> assignments;
+    private AssignmentTree assignmentTree;
+    private Scores scores;
+    private Map<Assignment, Statistics> stats;
 
     /**
      * Gets the map of statistics in this container.
@@ -57,5 +43,14 @@ public class StatsContainer implements Observer {
         }
     }
 
-    public void update(Observable obj, Object args) {}
+    /**
+     * Observe update method.
+     * Queries the WorkSpace for necessary data.
+     */
+    public void update(Observable obj, Object args) {
+       students = WorkSpace.instance.getStudents();
+       assignmentTree = WorkSpace.instance.getAssignmentTree();
+       scores = WorkSpace.instance.getScores();
+       buildStats();
+    }
 }

@@ -18,6 +18,9 @@ import java.util.Observer;
  * @author Gregory Davis
  */
 public class WorkSpace extends Observable {
+   /**
+    * Singleton WorkSpace instance.
+    */
    public static final WorkSpace instance = new WorkSpace();
 
    /**
@@ -26,10 +29,13 @@ public class WorkSpace extends Observable {
     */
    private WorkSpace() {
       gradebook = Gradebook.getCannedGradebook();
-      sidebar = new Sidebar();
+	   deltas = new ArrayList<RawScore>();
+	   futureDeltas = new ArrayList<RawScore>();
+
+      sidebar = new Sidebar(gradebook);
       spreadsheet = new Spreadsheet();
-      statistics = new StatsContainer(null, null, null);
-      pieChart = new PieChart();;
+      statistics = new StatsContainer();
+      pieChart = new PieChart();
       histogram = new Histogram();
 
       addObserver(sidebar);
@@ -44,21 +50,10 @@ public class WorkSpace extends Observable {
 	 */
 	public Person user;
 
-	/**
-	 * The previous Gradebook for undoing.
-	 * Will be null if no changes have been made this session.
-	 * This will reset to null when undo is called, since history only goes back
-	 * one operation.
-	 */
-	public Gradebook prevGradebook;
 
-	/**
-	 * The future Gradebook for redoing.
-	 * Will be null if undo has not been called.
-	 * This will reset to null when redo is called, since history only goes back
-	 * one operation.
-	 */
-	public Gradebook futureGradebook;
+	////////////////////////////////////
+	/* CLIPBOARD -- MOVE TO NEW CLASS */
+	////////////////////////////////////
 
 	/**
 	 * The value stored in the clipboard.
@@ -70,9 +65,12 @@ public class WorkSpace extends Observable {
 	 * The contents of the currently selected item.
 	 */
 	public String selectedContext;
+	////////////////////////////////////
 
-	//////////////////////////////
 
+   /////////////////////////////
+   /* CURRENT GRADEBOOK SCOPE */
+   /////////////////////////////
 	/**
 	 * The currently open Gradebook.
 	 */
@@ -102,12 +100,22 @@ public class WorkSpace extends Observable {
 	 * A list of new raw score changes to be applied to the
 	 * grade spreadsheet.
 	 */
-	public List<RawScore> deltas = new ArrayList<RawScore>();
+	public List<RawScore> deltas;
 
-    /**
-     * The gradebook sidebar model.
-     */
-    public Sidebar sidebar;
+	/**
+	 * A list of undone deltas for undo/redo operations.
+	 */
+	public List<RawScore> futureDeltas;
+   /////////////////////////////
+
+
+   //////////////////////
+   /* COMPONENT MODELS */
+   //////////////////////
+   /**
+    * The gradebook sidebar model.
+    */
+   public Sidebar sidebar;
 
 	/**
 	 * The grade spreadsheet model.
@@ -128,35 +136,12 @@ public class WorkSpace extends Observable {
 	 * The histogram model.
 	 */
 	public Histogram histogram;
+   //////////////////////
 
-	/**
-	 * Returns a list of students whose grades are being displayed
-	 * in the grade spreadsheet.
-	 */
-	public List<Student> getStudents() {
-	   if (group != null) return group.getStudents();
-	   if (section != null) return section.getStudents();
-	   if (course != null) return course.getStudents();
-	   return null;
-   }
 
-	/**
-	 * Returns a map of the assignments of which grades are being
-	 * displayed in the grade spreadsheet.
-	 */
-	public AssignmentTree getAssignmentTree() {
-	   if (course != null) return course.getAssignmentTree();
-	   else return null;
-   }
-
-	/**
-	 * Returns the scores object for the scores being displayed
-	 * in the grade spreadsheet.
-	 */
-	public Scores getScores() {
-	   return scores;
-   }
-
+	/////////////////////////////////
+	/* QUERY METHODS FOR OBSERVERS */
+	/////////////////////////////////
 	/**
 	 * Returns a reference to the currently open gradebook.
 	 */
@@ -165,13 +150,51 @@ public class WorkSpace extends Observable {
    }
 
 	/**
-	 * Returns the gradescheme for the currently selected section.
+	 * Returns a list of students whose grades are being displayed
+	 * in the grade spreadsheet.
+	 * Returns an empty list if nothing is in scope.
 	 */
-	public GradeScheme getGradeScheme() {
-	   if (section == null) return null;
-	   return section.getGradeScheme();
+	public List<Student> getStudents() {
+	   if (group != null) return group.getStudents();
+	   if (section != null) return section.getStudents();
+	   if (course != null) return course.getStudents();
+	   return new ArrayList<Student>();
    }
 
+	/**
+	 * Returns a map of the assignments of which grades are being
+	 * displayed in the grade spreadsheet.
+	 * Returns an empty tree if nothing is in scope.
+	 */
+	public AssignmentTree getAssignmentTree() {
+	   if (course != null) return course.getAssignmentTree();
+	   return new AssignmentTree();
+   }
+
+	/**
+	 * Returns the scores object for the scores being displayed
+	 * in the grade spreadsheet.
+	 * Returns an empty scores object if nothing is in scope.
+	 */
+	public Scores getScores() {
+	   if (scores != null) return scores;
+	   return new Scores();
+   }
+
+	/**
+	 * Returns the grade scheme for the currently selected section.
+	 * Returns an empty grade scheme if no section is in scope.
+	 */
+	public GradeScheme getGradeScheme() {
+	   if (section != null) return section.getGradeScheme();
+	   return new GradeScheme();
+   }
+	/////////////////////////////////
+
+
+   //////////////////////////////////
+   /* UPDATE METHODS FOR OBSERVERS */
+   //////////////////////////////////
    /**
     * Selects a given course, section, and group for the current spreadsheet.
     * Parameters can be null, but only from the bottom up.  For example, if a
@@ -179,21 +202,29 @@ public class WorkSpace extends Observable {
     * course is selected in the sidebar, but not any of its specific sections.
     */
    public void sidebarSelect(Course course, Section section,
-                                    Group group) {
+                             Group group) {
       this.course = course;
       this.section = section;
       this.group = group;
+
+      loadScores();
+
       setChanged();
       notifyObservers();
    }
 
    /**
     * Creates a delta for a score for the given student and assignment.
+    * The temporary Scores object is also updated to reflect current changes.
     * Deltas are not saved to persistent storage until the user saves them.
     */
    public void updateGrade(Student student, Assignment assignment,
-                                  double score) {
+                           double score) {
+      futureDeltas.clear();
       deltas.add(new RawScore(student, assignment, score));
+      scores.updateRawScore(student, assignment, score);
+      setChanged();
+      notifyObservers();
    }
 
    /**
@@ -201,28 +232,135 @@ public class WorkSpace extends Observable {
     * the changes.
     */
    public void revertGrades() {
-      deltas = new ArrayList<RawScore>();
-      // restore scores
-       setChanged();
-       notifyObservers();
+      deltas.clear();
+      futureDeltas.clear();
+
+      loadScores();
+
+      setChanged();
+      notifyObservers();
    }
 
    /**
     * Commits all deltas to persistent storage.
     */
    public void saveGrades() {
-       setChanged();
-       notifyObservers();
+      Scores gradebookScores = gradebook.getScores();
+      for (RawScore raw : deltas) {
+         gradebookScores.updateRawScore(
+            raw.getStudent(), raw.getAssignment(), score);
+      }
+      deltas.clear();
+      futureDeltas.clear();
+      loadScores();
+
+      setChanged();
+      notifyObservers();
    }
 
    /**
-    * Overwrites the current section's grade scheme.
+    * Overwrites the current section's grade scheme if a section is in scope.
     */
    public void updateGradeScheme(GradeScheme gradeScheme) {
       if (section != null) {
           section.setGradeScheme(gradeScheme);
           setChanged();
           notifyObservers();
+      }
+   }
+   //////////////////////////////////
+
+   /////////////////////
+   /* EDIT OPERATIONS */
+   /////////////////////
+   /**
+    * Returns whether a change can be undone.
+    */
+   public boolean canUndo() {
+      return !deltas.isEmpty();
+   }
+
+   /**
+    * Returns whether a change can be redone.
+    */
+   public boolean canRedo() {
+      return !futureDeltas.isEmpty();
+   }
+
+   /**
+    * Undoes a change by removing a delta.
+    */
+   public void undo() {
+      if (canUndo()) {
+         RawScore undoneDelta = deltas.get(deltas.size() - 1);
+         deltas.remove(deltas.size() - 1);
+         futureDeltas.add(undoneDelta);
+
+         Student student = undoneDelta.getStudent();
+         Assignment assignment = undoneDelta.getAssignment();
+
+         // Revert score.
+         scores.updateRawScore(student, assignment,
+            gradebook.getScores().getRawScore(student, assignment));
+      }
+   }
+
+   /**
+    * Redoes an undone change.
+    */
+   public void redo() {
+      if (canRedo()) {
+         RawScore redoneDelta = futureDeltas.get(futureDeltas.size() - 1);
+         futureDeltas.remove(futureDeltas.size() - 1);
+         deltas.add(redoneDelta);
+
+         // Reupdate score.
+         scores.updateRawScore(redoneDelta.getStudent(),
+            redoneDelta.getAssignment, redoneDelta);
+      }
+   }
+
+   /**
+    * Gets the latest workspace delta.
+    * Returns null if cannot undo.
+    */
+   public RawScore getLatestChange() {
+      if (canUndo()) {
+         return deltas.get(deltas.size() - 1);
+      }
+      return null;
+   }
+
+   /**
+    * Gets the latest undone workspace delta.
+    * Returns null if cannot redo.
+    */
+   public RawScore getLatestUndo() {
+      if (canRedo()) {
+         return futureDeltas.get(futureDeltas.size() - 1);
+      }
+      return null;
+   }
+
+   /////////////////////
+
+
+   /////////////////////
+   /* PRIVATE METHODS */
+   /////////////////////
+
+   /**
+    * Loads scores for the students in scope from the gradebook.
+    */
+   private void loadScores() {
+      Scores gradebookScores = gradebook.getScores();
+      List<Student> scopedStudents = getStudents();
+      scores = new Scores();
+
+      // Add in scores for relevant students.
+      for (Student student : scopedStudents) {
+         scoresMap = gradebookScores.getScoresMap(student);
+         scores.addScoresMap(student, scoresMap);
       }
    }
 }

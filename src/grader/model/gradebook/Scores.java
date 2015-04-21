@@ -17,6 +17,9 @@ public class Scores {
     */
     private HashMap<Student, HashMap<Assignment, RawScore>> rawScores;
 
+    /**
+     * Constructor.
+     */
     public Scores()
     {
         rawScores = new HashMap<Student, HashMap<Assignment, RawScore>>();
@@ -180,5 +183,34 @@ public class Scores {
       }
 
       return totalScore / count;
+   }
+
+   /**
+    * Gets a list of RawScores for the given assignment.
+    */
+   public List<Double> getScores(Assignment assignment) {
+      List<RawScore> scoresList = new ArrayList<RawScore>();
+      for (Student student : rawScores.keySet()) {
+         HashMap<Assignment, RawScore> assignments = rawScores.get(student);
+         if (assignments.containsKey(assignment)) {
+            scoresList.add(assignments.get(assignments));
+         }
+      }
+      return scoresList;
+   }
+
+   /**
+    * Gets the Assignment to RawScore map for the given student.
+    */
+   public Map<Assignment, RawScore> getScoresMap(Student student) {
+      return rawScores.get(student);
+   }
+
+   /**
+    * Adds all the scores from the given Assignment to RawScore map for the
+    * given student.
+    */
+   public void addScoresMap(Student student, Map<Assignment, RawScore> scores) {
+      rawScores.put(student, scores);
    }
 }

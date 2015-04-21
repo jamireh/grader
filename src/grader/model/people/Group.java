@@ -10,7 +10,7 @@ import java.util.*;
 public abstract class Group
 {
 	/**
-	 * Abstract Collection of Students to hold in this Group.
+	 * List of Students to hold in this Group.
 	 */
 	private List<Student> students;
 	/**

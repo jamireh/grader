@@ -14,19 +14,22 @@ public class Edit {
       //
       // A change to the gradebook must have been made during this session.
       //
-      WorkSpace.instance.prevGradebook != null;
+      WorkSpace.instance.canUndo();
 
     post:
       //
-      // The current workspace gradebook is reverted to the previous gradebook,
-      // and the futureGradebook is set to the old current gradebook.
+      // The last item in the WorkSpace's deltas is moved to its future deltas.
       //
-      WorkSpace.instance.gradebook'.equals(WorkSpace.instance.prevGradebook)
-      && WorkSpace.instance.prevGradebook' == null
-      && WorkSpace.instance.futureGradebook.equals(WorkSpace.instance.gradebook);
+      WorkSpace.instance.getLatestChange().equals(
+            WorkSpace.instance'.getLatestUndo())
+      && !WorkSpace.instance'.getLatestChange().equals(
+            WorkSpace.instance.getLatestChange())
+      && !WorkSpace.instance'.getLatestUndo().equals(
+            WorkSpace.instance.getLatestUndo())
     */
    public void undo() {
-       System.out.println("Edit->Undo");
+      WorkSpace.instance.undo();
+      System.out.println("Edit->Undo");
    }
 
    /**
@@ -34,22 +37,24 @@ public class Edit {
     *                                                             <pre>
     pre:
       //
-      // A call to undo must have been made during this session.
-      // The futureGradebook must not be null.
+      // A change to the gradebook must have been undone during this session.
       //
-      WorkSpace.instance.futureGradebook != null;
+      WorkSpace.instance.canRedo();
 
     post:
       //
-      // The current workspace gradebook is set to the future gradebook,
-      // and the prevGradebook is set to the old current gradebook.
+      // The last item in the WorkSpace's future deltas is moved to its deltas.
       //
-      WorkSpace.instance.gradebook'.equals(WorkSpace.instance.futureGradebook)
-      && WorkSpace.instance.futureGradebook' == null
-      && WorkSpace.instance.prevGradebook.equals(WorkSpace.instance.gradebook);
+      WorkSpace.instance'.getLatestChange().equals(
+            WorkSpace.instance.getLatestUndo())
+      && !WorkSpace.instance'.getLatestChange().equals(
+            WorkSpace.instance.getLatestChange())
+      && !WorkSpace.instance'.getLatestUndo().equals(
+            WorkSpace.instance.getLatestUndo())
     */
     public void redo() {
-        System.out.println("Edit->Redo");
+       WorkSpace.instance.redo();
+       System.out.println("Edit->Redo");
     }
 
    /**

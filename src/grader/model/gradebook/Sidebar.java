@@ -10,5 +10,11 @@ import java.util.Observer;
  * @author Gregory Davis
  */
 public class Sidebar implements Observer {
+   private Gradebook gradebook;
+
+   public Sidebar(Gradebook gradebook) {
+      this.gradebook = gradebook;
+   }
+
    public void update(Observable obj, Object args) {}
 }
