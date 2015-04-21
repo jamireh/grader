@@ -10,7 +10,7 @@ import java.util.*;
  * Statistics objects for the gradebook scope.
  * @author Quan Tran
  */
-public class StatsContainer {
+public class StatsContainer implements Observer {
     Collection<Student> students;
     Collection<Assignment> assignments;
     Scores scores;
@@ -56,4 +56,6 @@ public class StatsContainer {
             stats.put(ass, new Statistics(rawScores));
         }
     }
+
+    public void update(Observable obj, Object args) {}
 }

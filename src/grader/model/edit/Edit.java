@@ -14,16 +14,16 @@ public class Edit {
       //
       // A change to the gradebook must have been made during this session.
       //
-      WorkSpace.prevGradebook != null;
+      WorkSpace.instance.prevGradebook != null;
 
     post:
       //
       // The current workspace gradebook is reverted to the previous gradebook,
       // and the futureGradebook is set to the old current gradebook.
       //
-      WorkSpace.gradebook'.equals(WorkSpace.prevGradebook)
-      && WorkSpace.prevGradebook' == null
-      && WorkSpace.futureGradebook.equals(WorkSpace.gradebook);
+      WorkSpace.instance.gradebook'.equals(WorkSpace.instance.prevGradebook)
+      && WorkSpace.instance.prevGradebook' == null
+      && WorkSpace.instance.futureGradebook.equals(WorkSpace.instance.gradebook);
     */
    public void undo() {
        System.out.println("Edit->Undo");
@@ -37,16 +37,16 @@ public class Edit {
       // A call to undo must have been made during this session.
       // The futureGradebook must not be null.
       //
-      WorkSpace.futureGradebook != null;
+      WorkSpace.instance.futureGradebook != null;
 
     post:
       //
       // The current workspace gradebook is set to the future gradebook,
       // and the prevGradebook is set to the old current gradebook.
       //
-      WorkSpace.gradebook'.equals(WorkSpace.futureGradebook)
-      && WorkSpace.futureGradebook' == null
-      && WorkSpace.prevGradebook.equals(WorkSpace.gradebook);
+      WorkSpace.instance.gradebook'.equals(WorkSpace.instance.futureGradebook)
+      && WorkSpace.instance.futureGradebook' == null
+      && WorkSpace.instance.prevGradebook.equals(WorkSpace.instance.gradebook);
     */
     public void redo() {
         System.out.println("Edit->Redo");
@@ -60,8 +60,8 @@ public class Edit {
       // The clipboard must contain the contents of the selected context.
       // The selectedContext must also be cleared.
       //
-      WorkSpace.clipboard.equals(WorkSpace.selectedContext)
-      && WorkSpace.selectedContext'.empty();
+      WorkSpace.instance.clipboard.equals(WorkSpace.instance.selectedContext)
+      && WorkSpace.instance.selectedContext'.empty();
     */
     public void cut() {
         System.out.println("Edit->Cut");
@@ -74,7 +74,7 @@ public class Edit {
       //
       // The clipboard must contain the contents of the selected context.
       //
-      WorkSpace.clipboard.equals(WorkSpace.selectedContext);
+      WorkSpace.instance.clipboard.equals(WorkSpace.instance.selectedContext);
     */
     public void copy() {
         System.out.println("Edit->Copy");
@@ -87,14 +87,14 @@ public class Edit {
       //
       // The clipboard must not be empty.
       //
-      !WorkSpace.clipboard.empty();
+      !WorkSpace.instance.clipboard.empty();
 
     post:
       //
       // The current selected context must contain the contents of the
       // clipboard.
       //
-      WorkSpace.selectedContext.equals(WorkSpace.clipboard);
+      WorkSpace.instance.selectedContext.equals(WorkSpace.instance.clipboard);
     */
     public void paste() {
         System.out.println("Edit->Paste");

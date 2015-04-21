@@ -4,10 +4,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * The Spreadsheet class represents the underlying model for the grade spreadsheet.
+ * The Sidebar class represents the underlying model for the navigational
+ * sidebar.
  *
  * @author Gregory Davis
  */
-public class Spreadsheet implements Observer {
+public class Sidebar implements Observer {
    public void update(Observable obj, Object args) {}
 }

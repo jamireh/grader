@@ -8,12 +8,15 @@ import grader.model.gradebook.GradeScheme;
 import grader.model.gradebook.LetterGrade;
 import grader.model.gradebook.Percentage;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * The Histogram class defines the necessary components for graphically changing the GradeScheme
  *
  * Derived from the requirements documentation regarding visuals.
  */
-public class Histogram extends AbstractGraph
+public class Histogram extends AbstractGraph implements Observer
 {
 
 
@@ -74,5 +77,5 @@ public class Histogram extends AbstractGraph
         return tempGradeScheme;
     }
 
-
+    public void update(Observable obj, Object args) {}
 }
