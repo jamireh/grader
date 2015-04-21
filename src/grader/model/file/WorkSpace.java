@@ -142,6 +142,7 @@ public class WorkSpace extends Observable {
 	/////////////////////////////////
 	/**
 	 * Returns a reference to the currently open gradebook.
+	 * @return current gradebook
 	 */
 	public Gradebook getGradebook() {
 	   return gradebook;
@@ -151,6 +152,7 @@ public class WorkSpace extends Observable {
 	 * Returns a list of students whose grades are being displayed
 	 * in the grade spreadsheet.
 	 * Returns an empty list if nothing is in scope.
+	 * @return list of students in scope
 	 */
 	public List<Student> getStudents() {
 	   if (group != null) return group.getStudents();
@@ -163,6 +165,7 @@ public class WorkSpace extends Observable {
 	 * Returns a map of the assignments of which grades are being
 	 * displayed in the grade spreadsheet.
 	 * Returns an empty tree if nothing is in scope.
+	 * @return current course assignment tree
 	 */
 	public AssignmentTree getAssignmentTree() {
 	   if (course != null) return course.getAssignmentTree();
@@ -173,6 +176,7 @@ public class WorkSpace extends Observable {
 	 * Returns the scores object for the scores being displayed
 	 * in the grade spreadsheet.
 	 * Returns an empty scores object if nothing is in scope.
+	 * @return scores map for students and assignments in scope
 	 */
 	public Scores getScores() {
 	   if (scores != null) return scores;
@@ -182,6 +186,7 @@ public class WorkSpace extends Observable {
 	/**
 	 * Returns the grade scheme for the currently selected section.
 	 * Returns an empty grade scheme if no section is in scope.
+	 * @return grade scheme for section in scope
 	 */
 	public GradeScheme getGradeScheme() {
 	   if (section != null) return section.getGradeScheme();
@@ -198,6 +203,10 @@ public class WorkSpace extends Observable {
     * Parameters can be null, but only from the bottom up.  For example, if a
     * section is null, the group must also be null.  This would mean that the
     * course is selected in the sidebar, but not any of its specific sections.
+    *
+    * @param course newly selected course
+    * @param section newly selected section
+    * @param group newly selected group
     */
    public void sidebarSelect(Course course, Section section,
                              Group group) {
@@ -215,6 +224,10 @@ public class WorkSpace extends Observable {
     * Creates a delta for a score for the given student and assignment.
     * The temporary Scores object is also updated to reflect current changes.
     * Deltas are not saved to persistent storage until the user saves them.
+    *
+    * @param student student whose grade to update
+    * @param assignment assignment grade to update
+    * @param score new score
     */
    public void updateGrade(Student student, Assignment assignment,
                            double score) {
@@ -258,6 +271,7 @@ public class WorkSpace extends Observable {
 
    /**
     * Overwrites the current section's grade scheme if a section is in scope.
+    * @param gradeScheme new grade scheme
     */
    public void updateGradeScheme(GradeScheme gradeScheme) {
       if (section != null) {
@@ -274,6 +288,7 @@ public class WorkSpace extends Observable {
    /////////////////////
    /**
     * Returns whether a change can be undone.
+    * @return whether there are any deltas to undo
     */
    public boolean canUndo() {
       return !deltas.isEmpty();
@@ -281,6 +296,7 @@ public class WorkSpace extends Observable {
 
    /**
     * Returns whether a change can be redone.
+    * @return whether there are any undone deltas to redo
     */
    public boolean canRedo() {
       return !futureDeltas.isEmpty();
@@ -322,6 +338,7 @@ public class WorkSpace extends Observable {
    /**
     * Gets the latest workspace delta.
     * Returns null if cannot undo.
+    * @return latest delta
     */
    public RawScore getLatestChange() {
       if (canUndo()) {
@@ -333,6 +350,7 @@ public class WorkSpace extends Observable {
    /**
     * Gets the latest undone workspace delta.
     * Returns null if cannot redo.
+    * @return latest undone delta
     */
    public RawScore getLatestUndo() {
       if (canRedo()) {
