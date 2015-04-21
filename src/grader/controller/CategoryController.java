@@ -63,6 +63,7 @@ public class CategoryController implements Initializable {
             catch(PercentageFormatException e)
             {
                 exceptionThrown = true;
+                tfWeight.setStyle("-fx-focus-color: #FF0000;");
                 tfWeight.requestFocus();
             }
         }
@@ -75,11 +76,13 @@ public class CategoryController implements Initializable {
             catch(PercentageFormatException e)
             {
                 exceptionThrown = true;
+                tfWeight.setStyle("-fx-focus-color: #FF0000;");
                 tfWeight.requestFocus();
             }
             catch(WeightTotalException e)
             {
                 exceptionThrown = true;
+                tfWeight.setStyle("-fx-focus-color: #FF0000;");
                 tfWeight.requestFocus();
             }
         }

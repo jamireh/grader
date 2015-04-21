@@ -4,8 +4,6 @@ import grader.model.errors.PercentageFormatException;
 import grader.model.errors.WeightTotalException;
 import grader.model.gradebook.Percentage;
 
-import java.util.ArrayList;
-
 /**
  * Represents a category of assignments.
  * @author Jon Amireh
@@ -16,11 +14,8 @@ public class Category
     /** the name of this category */
     String name;
 
-    /** a collection of the subcategories of this category */
-    ArrayList<Category> subcategories;
-
-    /** a collection of the assignments of this category */
-    ArrayList<Assignment> items;
+    /** reference to the AssignmentTree **/
+    AssignmentTree assignmentTree;
 
     /** the amount of weight this category has in the final grade */
     Percentage weight;
@@ -33,8 +28,8 @@ public class Category
         this.name = name;
         this.weight = new Percentage(weight);
         this.uncategorizedByRawScore = uncategorizedByRawScore;
-        subcategories = new ArrayList<Category>();
-        items = new ArrayList<Assignment>();
+        //subcategories = new ArrayList<Category>();
+        //items = new ArrayList<Assignment>();
     }
 
     /**
@@ -46,7 +41,8 @@ public class Category
      */
     public void add(Category subcategory) throws WeightTotalException
     {
-        subcategories.add(subcategory);
+        //subcategories.add(subcategory);
+        assignmentTree.addTo(this, subcategory);
         System.out.println("items.Category.add(Category) called");
     }
 
@@ -59,7 +55,8 @@ public class Category
      */
     public void add(Assignment assignment) throws WeightTotalException
     {
-        items.add(assignment);
+        //items.add(assignment);
+        assignmentTree.addTo(this, assignment);
         System.out.println("items.Category.add(Assignment) called");
     }
 }
