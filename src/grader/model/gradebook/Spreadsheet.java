@@ -1,5 +1,10 @@
 package grader.model.gradebook;
 
+import grader.model.file.WorkSpace;
+import grader.model.items.AssignmentTree;
+import grader.model.people.Student;
+
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
