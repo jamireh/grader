@@ -5,6 +5,7 @@
 package grader.model.gradebook;
 
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.items.Category;
 import grader.model.people.Student;
 
@@ -37,14 +38,14 @@ public class Course
 	public ArrayList<Category> categories;
 
 	/**
-	*Collection of assignments associated with each category.
+	*Collection of assignments and categories.
 	*/
-	public ArrayList<Assignment> assignments;
+	public AssignmentTree assignments;
 
 
     public Course() {
         categories = new ArrayList<Category>();
-        assignments = new ArrayList<Assignment>();
+        assignments = new AssignmentTree();
         sections = new ArrayList<Section>();
         System.out.println("gradebook.Course() called");
     }
@@ -52,7 +53,7 @@ public class Course
     public Course(String name)
     {
         categories = new ArrayList<Category>();
-        assignments = new ArrayList<Assignment>();
+        assignments = new AssignmentTree();
         sections = new ArrayList<Section>();
         //sections.add(new Section());
         this.name = name;
@@ -73,7 +74,7 @@ public class Course
 	public void add(Assignment assign)
 	{
 		System.out.println("gradebook.Course.add(Assignment) called");
-		assignments.add(assign);
+		assignments.addTo(null, assign);
 	}
 
 	public void syncRoster()
@@ -100,6 +101,10 @@ public class Course
    }
 
     public void addAssignment(Assignment assignment) {
-        assignments.add(assignment);
+      assignments.addTo(null, assignment);
+    }
+
+    public AssignmentTree getAssignmentTree() {
+       return assignments;
     }
 }

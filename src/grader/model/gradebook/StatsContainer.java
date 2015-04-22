@@ -1,6 +1,8 @@
 package grader.model.gradebook;
 
+import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
 
 import java.util.*;
@@ -10,26 +12,12 @@ import java.util.*;
  * Statistics objects for the gradebook scope.
  * @author Quan Tran
  */
-public class StatsContainer {
-    Collection<Student> students;
-    Collection<Assignment> assignments;
-    Scores scores;
-    Map<Assignment, Statistics> stats;
-
-    /**
-     * Constructs a new StatsContainer for the given scope and scores.
-     * @param students    the students scope
-     * @param assignments the assignments scope
-     * @param scores      the score data
-     */
-    public StatsContainer(Collection<Student> students,
-                          Collection<Assignment> assignments, Scores scores) {
-        this.students = students;
-        this.assignments = assignments;
-        this.scores = scores;
-
-        //buildStats();
-    }
+public class StatsContainer implements Observer {
+    private Collection<Student> students;
+    private Collection<Assignment> assignments;
+    private AssignmentTree assignmentTree;
+    private Scores scores;
+    private Map<Assignment, Statistics> stats;
 
     /**
      * Gets the map of statistics in this container.
@@ -55,5 +43,22 @@ public class StatsContainer {
             // add the value to the map
             stats.put(ass, new Statistics(rawScores));
         }
+    }
+
+    /**
+     * Renders the statistics spreadsheet in the view.
+     */
+    public void render() {}
+
+    /**
+     * Observe update method.
+     * Queries the WorkSpace for necessary data.
+     */
+    public void update(Observable obj, Object args) {
+       students = WorkSpace.instance.getStudents();
+       assignmentTree = WorkSpace.instance.getAssignmentTree();
+       scores = WorkSpace.instance.getScores();
+       buildStats();
+       render();
     }
 }

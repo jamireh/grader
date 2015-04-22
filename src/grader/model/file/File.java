@@ -15,7 +15,7 @@ public class File {
       // The current workspace gradebook must not already contain a course
       // with the given name.
       //
-      !exists (Course course; WorkSpace.gradebook.courses.contains(course);
+      !exists (Course course; WorkSpace.instance.gradebook.courses.contains(course);
                course.name.equals(name));
 
     post:
@@ -23,9 +23,9 @@ public class File {
       // The current workspace gradebook must contain the same courses with
       // the addition of the new course.
       //
-      forall (Course course; WorkSpace.gradebook.courses'.contains(course)
-              iff WorkSpace.gradebook.courses.contains(course)))
-      && exists (Course course; WorkSpace.gradebook.courses'.contains(course);
+      forall (Course course; WorkSpace.instance.gradebook.courses'.contains(course)
+              iff WorkSpace.instance.gradebook.courses.contains(course)))
+      && exists (Course course; WorkSpace.instance.gradebook.courses'.contains(course);
                  course.name.equals(name));
     */
    public void newCourse(String name) {
@@ -63,13 +63,13 @@ public class File {
       //
       // The current workspace has a logged in user.
       //
-      WorkSpace.user != null;
+      WorkSpace.instance.user != null;
 
     post:
       //
       // The current workspace user will be null.
       //
-      WorkSpace.user == null;
+      WorkSpace.instance.user == null;
     */
    public void logout() {
        System.out.println("File->Logout");

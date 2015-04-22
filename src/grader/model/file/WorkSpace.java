@@ -2,10 +2,11 @@ package grader.model.file;
 
 import grader.model.gradebook.*;
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.people.*;
 import grader.model.curve.*;
-import java.util.List;
-import java.util.ArrayList;
+
+import java.util.*;
 
 /**
  * The WorkSpace class is a singleton contains all the information for the
@@ -14,173 +15,369 @@ import java.util.ArrayList;
  *
  * @author Gregory Davis
  */
-public class WorkSpace {
+public class WorkSpace extends Observable {
+   /**
+    * Singleton WorkSpace instance.
+    */
+   public static final WorkSpace instance = new WorkSpace();
+
+   /**
+    * Constructor.
+    * Instantiates necessary models.
+    */
+   private WorkSpace() {
+      gradebook = Gradebook.getCannedGradebook();
+	   deltas = new ArrayList<RawScore>();
+	   futureDeltas = new ArrayList<RawScore>();
+
+      sidebar = new Sidebar(gradebook);
+      spreadsheet = new Spreadsheet();
+      statistics = new StatsContainer();
+      pieChart = new PieChart();
+      histogram = new Histogram();
+
+      addObserver(sidebar);
+      addObserver(spreadsheet);
+      addObserver(statistics);
+      addObserver(pieChart);
+      addObserver(histogram);
+   }
+
 	/**
 	 * The currently logged in user.
 	 */
-	public static Person user;
+	public Person user;
 
-	/**
-	 * The previous Gradebook for undoing.
-	 * Will be null if no changes have been made this session.
-	 * This will reset to null when undo is called, since history only goes back
-	 * one operation.
-	 */
-	public static Gradebook prevGradebook;
 
-	/**
-	 * The future Gradebook for redoing.
-	 * Will be null if undo has not been called.
-	 * This will reset to null when redo is called, since history only goes back
-	 * one operation.
-	 */
-	public static Gradebook futureGradebook;
+	////////////////////////////////////
+	/* CLIPBOARD -- MOVE TO NEW CLASS */
+	////////////////////////////////////
 
 	/**
 	 * The value stored in the clipboard.
 	 * Will be null if cut/copy have not been called.
 	 */
-	public static String clipboard;
+	public String clipboard;
 
 	/**
 	 * The contents of the currently selected item.
 	 */
-	public static String selectedContext;
+	public String selectedContext;
+	////////////////////////////////////
 
-	//////////////////////////////
 
+   /////////////////////////////
+   /* CURRENT GRADEBOOK SCOPE */
+   /////////////////////////////
 	/**
 	 * The currently open Gradebook.
 	 */
-	public static Gradebook gradebook = Gradebook.getCannedGradebook();
+	public Gradebook gradebook;
 
 	/**
 	 * The Course currently selected in the sidebar.
 	 */
-	public static Course course;
+	public Course course;
 
 	/**
 	 * The Section currently selected in the sidebar.
 	 */
-	public static Section section;
+	public Section section;
 
 	/**
 	 * The Group currently selected in the sidebar.
 	 */
-	public static Group group;
+	public Group group;
 
 	/**
 	 * The Scores currently displayed in the grade spreadsheet.
 	 */
-	public static Scores scores;
+	public Scores scores;
 
 	/**
 	 * A list of new raw score changes to be applied to the
 	 * grade spreadsheet.
 	 */
-	public static List<RawScore> deltas = new ArrayList<RawScore>();
+	public List<RawScore> deltas;
+
+	/**
+	 * A list of undone deltas for undo/redo operations.
+	 */
+	public List<RawScore> futureDeltas;
+   /////////////////////////////
+
+
+   //////////////////////
+   /* COMPONENT MODELS */
+   //////////////////////
+   /**
+    * The gradebook sidebar model.
+    */
+   public Sidebar sidebar;
 
 	/**
 	 * The grade spreadsheet model.
 	 */
-	public static Spreadsheet spreadsheet;
+	public Spreadsheet spreadsheet;
 
 	/**
 	 * The statistics model.
 	 */
-	//public static Statistics statistics;
+	public StatsContainer statistics;
 
 	/**
 	 * The pie chart model.
 	 */
-	public static PieChart pieChart;
+	public PieChart pieChart;
 
 	/**
 	 * The histogram model.
 	 */
-	public static Histogram histogram;
+	public Histogram histogram;
+   //////////////////////
+
+
+	/////////////////////////////////
+	/* QUERY METHODS FOR OBSERVERS */
+	/////////////////////////////////
+	/**
+	 * Returns a reference to the currently open gradebook.
+	 * @return current gradebook
+	 */
+	public Gradebook getGradebook() {
+	   return gradebook;
+   }
 
 	/**
 	 * Returns a list of students whose grades are being displayed
 	 * in the grade spreadsheet.
+	 * Returns an empty list if nothing is in scope.
+	 * @return list of students in scope
 	 */
-	public static List<Student> getStudents() {
+	public List<Student> getStudents() {
 	   if (group != null) return group.getStudents();
 	   if (section != null) return section.getStudents();
 	   if (course != null) return course.getStudents();
-	   return null;
+	   return new ArrayList<Student>();
    }
 
 	/**
 	 * Returns a map of the assignments of which grades are being
 	 * displayed in the grade spreadsheet.
+	 * Returns an empty tree if nothing is in scope.
+	 * @return current course assignment tree
 	 */
-	//public static AssignmentTree getAssignmentTree();
+	public AssignmentTree getAssignmentTree() {
+	   if (course != null) return course.getAssignmentTree();
+	   return new AssignmentTree();
+   }
 
 	/**
 	 * Returns the scores object for the scores being displayed
 	 * in the grade spreadsheet.
+	 * Returns an empty scores object if nothing is in scope.
+	 * @return scores map for students and assignments in scope
 	 */
-	public static Scores getScores() {
-	   return scores;
+	public Scores getScores() {
+	   if (scores != null) return scores;
+	   return new Scores();
    }
 
 	/**
-	 * Returns a reference to the currently open gradebook.
+	 * Returns the grade scheme for the currently selected section.
+	 * Returns an empty grade scheme if no section is in scope.
+	 * @return grade scheme for section in scope
 	 */
-	public static Gradebook getGradebook() {
-	   return gradebook;
+	public GradeScheme getGradeScheme() {
+	   if (section != null) return section.getGradeScheme();
+	   return new GradeScheme();
    }
+	/////////////////////////////////
 
-	/**
-	 * Returns the gradescheme for the currently selected section.
-	 */
-	public static GradeScheme getGradeScheme() {
-	   if (section == null) return null;
-	   return section.getGradeScheme();
-   }
 
+   //////////////////////////////////
+   /* UPDATE METHODS FOR OBSERVERS */
+   //////////////////////////////////
    /**
     * Selects a given course, section, and group for the current spreadsheet.
     * Parameters can be null, but only from the bottom up.  For example, if a
     * section is null, the group must also be null.  This would mean that the
     * course is selected in the sidebar, but not any of its specific sections.
+    *
+    * @param course newly selected course
+    * @param section newly selected section
+    * @param group newly selected group
     */
-   public static void sidebarSelect(Course course, Section section,
-                                    Group group) {
-      WorkSpace.course = course;
-      WorkSpace.section = section;
-      WorkSpace.group = group;
+   public void sidebarSelect(Course course, Section section,
+                             Group group) {
+      this.course = course;
+      this.section = section;
+      this.group = group;
+
+      loadScores();
+
+      setChanged();
+      notifyObservers();
    }
 
    /**
     * Creates a delta for a score for the given student and assignment.
+    * The temporary Scores object is also updated to reflect current changes.
     * Deltas are not saved to persistent storage until the user saves them.
+    *
+    * @param student student whose grade to update
+    * @param assignment assignment grade to update
+    * @param score new score
     */
-   public static void updateGrade(Student student, Assignment assignment,
-                                  double score) {
+   public void updateGrade(Student student, Assignment assignment,
+                           double score) {
+      futureDeltas.clear();
       deltas.add(new RawScore(student, assignment, score));
+      scores.updateRawScore(student, assignment, score);
+      setChanged();
+      notifyObservers();
    }
 
    /**
     * Reverts all deltas and restores the Scores object to its state prior to
     * the changes.
     */
-   public static void revertGrades() {
-      deltas = new ArrayList<RawScore>();
-      // restore scores
+   public void revertGrades() {
+      deltas.clear();
+      futureDeltas.clear();
+
+      loadScores();
+
+      setChanged();
+      notifyObservers();
    }
 
    /**
     * Commits all deltas to persistent storage.
     */
-   public static void saveGrades() {
+   public void saveGrades() {
+      Scores gradebookScores = gradebook.getScores();
+      for (RawScore raw : deltas) {
+         gradebookScores.updateRawScore(
+            raw.getStudent(), raw.getAssignment(), raw.getScore());
+      }
+      deltas.clear();
+      futureDeltas.clear();
+      loadScores();
+
+      setChanged();
+      notifyObservers();
    }
 
    /**
-    * Overwrites the current section's grade scheme.
+    * Overwrites the current section's grade scheme if a section is in scope.
+    * @param gradeScheme new grade scheme
     */
-   public static void updateGradeScheme(GradeScheme gradeScheme) {
-      if (section != null) section.setGradeScheme(gradeScheme);
+   public void updateGradeScheme(GradeScheme gradeScheme) {
+      if (section != null) {
+          section.setGradeScheme(gradeScheme);
+          setChanged();
+          notifyObservers();
+      }
+   }
+   //////////////////////////////////
+
+
+   /////////////////////
+   /* EDIT OPERATIONS */
+   /////////////////////
+   /**
+    * Returns whether a change can be undone.
+    * @return whether there are any deltas to undo
+    */
+   public boolean canUndo() {
+      return !deltas.isEmpty();
+   }
+
+   /**
+    * Returns whether a change can be redone.
+    * @return whether there are any undone deltas to redo
+    */
+   public boolean canRedo() {
+      return !futureDeltas.isEmpty();
+   }
+
+   /**
+    * Undoes a change by removing a delta.
+    */
+   public void undo() {
+      if (canUndo()) {
+         RawScore undoneDelta = deltas.get(deltas.size() - 1);
+         deltas.remove(deltas.size() - 1);
+         futureDeltas.add(undoneDelta);
+
+         Student student = undoneDelta.getStudent();
+         Assignment assignment = undoneDelta.getAssignment();
+
+         // Revert score.
+         scores.updateRawScore(student, assignment,
+            gradebook.getScores().getRawScore(student, assignment));
+      }
+   }
+
+   /**
+    * Redoes an undone change.
+    */
+   public void redo() {
+      if (canRedo()) {
+         RawScore redoneDelta = futureDeltas.get(futureDeltas.size() - 1);
+         futureDeltas.remove(futureDeltas.size() - 1);
+         deltas.add(redoneDelta);
+
+         // Reupdate score.
+         scores.updateRawScore(redoneDelta.getStudent(),
+            redoneDelta.getAssignment(), redoneDelta.getScore());
+      }
+   }
+
+   /**
+    * Gets the latest workspace delta.
+    * Returns null if cannot undo.
+    * @return latest delta
+    */
+   public RawScore getLatestChange() {
+      if (canUndo()) {
+         return deltas.get(deltas.size() - 1);
+      }
+      return null;
+   }
+
+   /**
+    * Gets the latest undone workspace delta.
+    * Returns null if cannot redo.
+    * @return latest undone delta
+    */
+   public RawScore getLatestUndo() {
+      if (canRedo()) {
+         return futureDeltas.get(futureDeltas.size() - 1);
+      }
+      return null;
+   }
+
+   /////////////////////
+
+
+   /////////////////////
+   /* PRIVATE METHODS */
+   /////////////////////
+
+   /**
+    * Loads scores for the students in scope from the gradebook.
+    */
+   private void loadScores() {
+      Scores gradebookScores = gradebook.getScores();
+      List<Student> scopedStudents = getStudents();
+      scores = new Scores();
+
+      // Add in scores for relevant students.
+      for (Student student : scopedStudents) {
+         HashMap<Assignment, RawScore> scoresMap = gradebookScores.getScoresMap(student);
+         scores.addScoresMap(student, scoresMap);
+      }
    }
 }
