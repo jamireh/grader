@@ -1,7 +1,6 @@
 package grader.controller;
 
 import grader.model.errors.PercentageFormatException;
-import grader.model.errors.WeightTotalException;
 import grader.model.items.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,7 +68,7 @@ public class CategoryController implements Initializable {
         }
         else
         {
-            try
+            /*try
             {
                 MainController.course.categories.get(0).add(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
             }
@@ -84,7 +83,7 @@ public class CategoryController implements Initializable {
                 exceptionThrown = true;
                 tfWeight.setStyle("-fx-focus-color: #FF0000;");
                 tfWeight.requestFocus();
-            }
+            }*/
         }
         if(!exceptionThrown)
         {

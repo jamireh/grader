@@ -2,7 +2,6 @@ package grader.controller;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
-import grader.model.errors.WeightTotalException;
 import grader.model.items.Assignment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -74,7 +73,7 @@ public class AssignmentController implements Initializable {
         }
         else
         {
-            try
+            /*try
             {
                 MainController.course.categories.get(0).add(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
             }
@@ -92,7 +91,7 @@ public class AssignmentController implements Initializable {
             {
                 exceptionThrown = true;
                 tfWeight.requestFocus();
-            }
+            }*/
         }
         if(!exceptionThrown)
         {

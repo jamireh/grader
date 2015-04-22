@@ -2,7 +2,6 @@ package grader.model.items;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
-import grader.model.errors.WeightTotalException;
 import grader.model.gradebook.Percentage;
 import grader.model.gradebook.RawScore;
 import grader.model.people.Name;
@@ -21,24 +20,11 @@ import java.util.HashMap;
 public class AssignmentTree
 {
     private Node root;
-    private double totalGrade;
-    private double totalOffset;
 
-    private static AssignmentTree instance;
 
-    private AssignmentTree()
+    public AssignmentTree()
     {
         root = new Node();
-    }
-
-
-    public static AssignmentTree newInstance()
-    {
-        if(instance == null)
-        {
-            instance = new AssignmentTree();
-        }
-        return instance;
     }
 
     public void addTo(Category node, Category toAdd)
@@ -161,10 +147,11 @@ public class AssignmentTree
 
     //assignment iterator
     //level iterator
+    //return list of categories
 
     public static void main(String[] args)
     {
-        AssignmentTree at = AssignmentTree.newInstance();
+        AssignmentTree at = new AssignmentTree();
         try
         {
             Assignment finalExam = new Assignment("final", LocalDate.now(), "100", "0.3");
@@ -173,18 +160,17 @@ public class AssignmentTree
             at.addTo(null, tests);
             Category quizzes = new Category("quizzes", "0.2", false);
             Category midterms = new Category("midterms", "0.7", false);
-            tests.add(quizzes);
-            tests.add(midterms);
+            at.addTo(tests, quizzes);
+            at.addTo(tests, midterms);
 
             Assignment m1 = new Assignment("m1", LocalDate.now(), "50", "");
             Assignment m2 = new Assignment("m2", LocalDate.now(), "50", "");
             Assignment q1 = new Assignment("q1", LocalDate.now(), "10", "");
             Assignment a1 = new Assignment("a1", LocalDate.now(), "10", "");
-
-            quizzes.add(q1);
-            midterms.add(m1);
-            midterms.add(m2);
-            tests.add(a1);
+            at.addTo(quizzes, q1);
+            at.addTo(midterms, m1);
+            at.addTo(midterms, m2);
+            at.addTo(tests, a1);
 
             HashMap<Assignment, RawScore> map = new HashMap<Assignment, RawScore>();
             Student foo = new Student(new Name("Foo", "", "Bar", ""));
@@ -198,7 +184,6 @@ public class AssignmentTree
         }
         catch(RawScoreFormatException e) {}
         catch(PercentageFormatException e) {}
-        catch(WeightTotalException e) {}
         catch(InvalidNameException e) {}
     }
 
