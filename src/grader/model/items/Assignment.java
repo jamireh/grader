@@ -28,6 +28,8 @@ public class Assignment
     /** weight for this particular assignment **/
     Percentage weight;
 
+    boolean hasWeight;
+
     public Assignment(String name, LocalDate dueDate, String rawPoints, String weight) throws PercentageFormatException, RawScoreFormatException
     {
         this.name = name;
@@ -47,6 +49,12 @@ public class Assignment
         if(!weight.isEmpty())
         {
             this.weight = new Percentage(weight);
+            this.hasWeight = true;
+        }
+        else
+        {
+            this.weight = null;
+            this.hasWeight = false;
         }
     }
 

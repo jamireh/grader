@@ -1,8 +1,15 @@
 package grader.model.items;
 
+import grader.model.errors.PercentageFormatException;
+import grader.model.errors.RawScoreFormatException;
+import grader.model.errors.WeightTotalException;
 import grader.model.gradebook.Percentage;
 import grader.model.gradebook.RawScore;
+import grader.model.people.Name;
+import grader.model.people.Student;
 
+import javax.naming.InvalidNameException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,10 +21,24 @@ import java.util.HashMap;
 public class AssignmentTree
 {
     private Node root;
+    private double totalGrade;
+    private double totalOffset;
 
-    public AssignmentTree()
+    private static AssignmentTree instance;
+
+    private AssignmentTree()
     {
         root = new Node();
+    }
+
+
+    public static AssignmentTree newInstance()
+    {
+        if(instance == null)
+        {
+            instance = new AssignmentTree();
+        }
+        return instance;
     }
 
     public void addTo(Category node, Category toAdd)
@@ -55,19 +76,132 @@ public class AssignmentTree
     {
         ArrayList<Node> nodes = n.getNodes();
         Node ni = null;
-        if(nodes.isEmpty())
+        if(n.is(node))
+            return n;
+        if(!nodes.isEmpty())
         {
-            return n.is(node) ? n : null;
-        }
-        else
-        {
-            for (int i = 0; i < root.getNodes().size() && ni == null; i++)
+            for (int i = 0; i < n.getNodes().size() && ni == null; i++)
             {
                 ni = findNodeHelper(node, nodes.get(i));
             }
             return ni;
         }
+
+        return ni;
     }
+
+    private double gradeCheckNode(Node node, HashMap<Assignment, RawScore> map)
+    {
+        ArrayList<Node> nodes = node.getNodes();
+        for (int i = 0; i < nodes.size(); i++)
+        {
+            Category c = nodes.get(i).getCategory();
+            node.total += c.weight.getValue();
+        }
+        ArrayList<Assignment> unweightAssignments = new ArrayList<Assignment>();
+        for(Assignment a : node.getAssignments())
+        {
+            if(a.hasWeight)
+            {
+                node.total += a.weight.getValue();
+                node.grade += a.weight.getValue() * (map.get(a).getScore()/a.rawPoints);
+            }
+            else
+            {
+                unweightAssignments.add(a);
+            }
+        }
+
+        double indWeight = (1.0 - node.total)/unweightAssignments.size();
+        boolean equilDistribution;
+        try
+        {
+            equilDistribution = !node.getCategory().uncategorizedByRawScore;
+        }
+        catch(NullPointerException e)
+        {
+            equilDistribution = false;
+        }
+        if(equilDistribution)
+        {
+            for(Assignment a : unweightAssignments)
+            {
+                node.grade += indWeight*(map.get(a).getScore()/a.rawPoints);
+            }
+        }
+        else
+        {
+            double smallestRawScore = Double.MAX_VALUE;
+            for(Assignment a : unweightAssignments)
+            {
+                if(a.rawPoints < smallestRawScore)
+                {
+                    smallestRawScore = a.rawPoints;
+                }
+            }
+            double ref = 1.0 - node.total;
+            for(Assignment a : unweightAssignments)
+            {
+                double relWeight = ref * (a.rawPoints/smallestRawScore);
+                node.grade += relWeight * (map.get(a).getScore()/a.rawPoints);
+            }
+        }
+        for(Node n : nodes)
+        {
+            n.grade += gradeCheckNode(n, map);
+            node.grade += n.grade;
+        }
+        if(node.getCategory() == null)
+        {
+            return node.grade;
+        }
+        return node.grade * node.getCategory().weight.getValue();
+        
+    }
+
+    //assignment iterator
+    //level iterator
+
+    public static void main(String[] args)
+    {
+        AssignmentTree at = AssignmentTree.newInstance();
+        try
+        {
+            Assignment finalExam = new Assignment("final", LocalDate.now(), "100", "0.3");
+            at.addTo(null, finalExam);
+            Category tests = new Category("tests", "0.7", false);
+            at.addTo(null, tests);
+            Category quizzes = new Category("quizzes", "0.2", false);
+            Category midterms = new Category("midterms", "0.7", false);
+            tests.add(quizzes);
+            tests.add(midterms);
+
+            Assignment m1 = new Assignment("m1", LocalDate.now(), "50", "");
+            Assignment m2 = new Assignment("m2", LocalDate.now(), "50", "");
+            Assignment q1 = new Assignment("q1", LocalDate.now(), "10", "");
+            Assignment a1 = new Assignment("a1", LocalDate.now(), "10", "");
+
+            quizzes.add(q1);
+            midterms.add(m1);
+            midterms.add(m2);
+            tests.add(a1);
+
+            HashMap<Assignment, RawScore> map = new HashMap<Assignment, RawScore>();
+            Student foo = new Student(new Name("Foo", "", "Bar", ""));
+            map.put(finalExam, new RawScore(foo, finalExam, 100.0));
+            map.put(m1, new RawScore(foo, m1, 50.0));
+            map.put(m2, new RawScore(foo, m2, 50.0));
+            map.put(q1, new RawScore(foo, q1, 0.0));
+            map.put(a1, new RawScore(foo, a1, 10.0));
+
+            System.out.println(at.calculatePercentage(map).getValue());
+        }
+        catch(RawScoreFormatException e) {}
+        catch(PercentageFormatException e) {}
+        catch(WeightTotalException e) {}
+        catch(InvalidNameException e) {}
+    }
+
 
     /**
      * per student
@@ -76,7 +210,14 @@ public class AssignmentTree
      */
     public Percentage calculatePercentage(HashMap<Assignment, RawScore> scores)
     {
-        return null;
+        try
+        {
+            return new Percentage(gradeCheckNode(root, scores));
+        }
+        catch(PercentageFormatException e)
+        {
+            return new Percentage();
+        }
     }
 
 
@@ -85,23 +226,26 @@ public class AssignmentTree
         private Category category;
         private ArrayList<Node> nodes;
         private ArrayList<Assignment> assignments;
+        private double total;
+        private double grade;
 
         public Node()
         {
             nodes = new ArrayList<Node>();
+            total = 0.0;
+            grade = 0.0;
         }
 
         public Node(Category category)
         {
             this.category = category;
             nodes = new ArrayList<Node>();
+            init();
         }
 
-        public Node(Category category, ArrayList<Assignment> assignments)
+        private void init()
         {
-            this.category = category;
-            this.assignments = assignments;
-            nodes = new ArrayList<Node>();
+
         }
 
         public void addAssignment(Assignment assignment)
@@ -128,9 +272,14 @@ public class AssignmentTree
             return nodes;
         }
 
-        private ArrayList<Node> getAssignments()
+        private ArrayList<Assignment> getAssignments()
         {
-            return nodes;
+            return assignments;
+        }
+
+        private Category getCategory()
+        {
+            return category;
         }
     }
 }
