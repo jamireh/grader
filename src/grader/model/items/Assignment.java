@@ -84,50 +84,8 @@ public class Assignment
     }
 
     /**
-     * Finds the maximum score of an item.
-     * @return the maximum score of an item
-     pre:
-       // this Item must have at least one score associated with it
-       exists(RawScore score ; score.getAssignment().equals(this))
+     * Returns a String representation of this Assignment.
+     * @return this Assignment's name
      */
-    public int findMax()
-    {
-        return 0;
-    }
-
-    /**
-     * Finds the minimum score of an item.
-     * @return the minimum score of an item
-     pre:
-       // this Item must have at least one score associated with it
-       exists(RawScore score ; score.getAssignment().equals(this))
-     */
-    public int findMin()
-    {
-       return 0;
-    }
-
-    /**
-     * Finds the median score of an item.
-     * @return the median score of an item
-     pre:
-       // this Item must have at least one score associated with it
-       exists(RawScore score ; score.getAssignment().equals(this))
-     */
-    public int findMedian()
-    {
-        return 0;
-    }
-
-    /**
-     * Calculates the mean score of an item.
-     * @return the mean score of an item
-     pre:
-       // this Item must have at least one score associated with it
-       exists(RawScore score ; score.getAssignment().equals(this))
-     */
-    public double calculateMean()
-    {
-        return 0.0;
-    }
+    public String toString() { return name; }
 }
