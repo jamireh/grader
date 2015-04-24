@@ -21,15 +21,17 @@ import java.util.Iterator;
 public class AssignmentTree
 {
     private Node root;
-
+    private ArrayList<Category> categories;
 
     public AssignmentTree()
     {
         root = new Node(null);
+        categories = new ArrayList<Category>();
     }
 
     public void addTo(Category parentCategory, Category childCategory)
     {
+        categories.add(childCategory);
         if(parentCategory == null)
         {
             root.addNode(new Node(null, childCategory));
@@ -169,6 +171,11 @@ public class AssignmentTree
         return new AssignmentIterator();
     }
 
+    public ArrayList<Category> getCategories()
+    {
+        return categories;
+    }
+
     //level iterator
     //return list of categories
 
@@ -210,6 +217,11 @@ public class AssignmentTree
             {
                 Assignment a = iter.next();
                 System.out.println(a.name);
+            }
+
+            for(Category c : at.getCategories())
+            {
+                System.out.println(c.name);
             }
         }
         catch(RawScoreFormatException e) {}
