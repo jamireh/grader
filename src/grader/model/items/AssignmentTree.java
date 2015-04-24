@@ -11,6 +11,7 @@ import javax.naming.InvalidNameException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Beta implementation of AssignmentTree. Expect bugs.
@@ -24,34 +25,35 @@ public class AssignmentTree
 
     public AssignmentTree()
     {
-        root = new Node();
+        root = new Node(null);
     }
 
-    public void addTo(Category node, Category toAdd)
+    public void addTo(Category parentCategory, Category childCategory)
     {
-        if(node == null)
+        if(parentCategory == null)
         {
-            root.addNode(new Node(toAdd));
+            root.addNode(new Node(null, childCategory));
             return;
         }
-        findNode(node).addNode(new Node(toAdd));
+        Node parentNode = findNode(parentCategory);
+        parentNode.addNode(new Node(parentNode, childCategory));
     }
 
-    public void addTo(Category node, Assignment toAdd)
+    public void addTo(Category parentNode, Assignment childAssignment)
     {
-        if(node == null)
+        if(parentNode == null)
         {
-            root.addAssignment(toAdd);
+            root.addAssignment(childAssignment);
             return;
         }
-        findNode(node).addAssignment(toAdd);
+        findNode(parentNode).addAssignment(childAssignment);
     }
 
     private Node findNode(Category node)
     {
-        ArrayList<Node> nodes = root.getNodes();
+        ArrayList<Node> nodes = root.nodes;
         Node n = null;
-        for(int i = 0; i < root.getNodes().size() && n == null; i++)
+        for(int i = 0; i < root.nodes.size() && n == null; i++)
         {
             n = findNodeHelper(node, nodes.get(i));
         }
@@ -60,13 +62,13 @@ public class AssignmentTree
 
     private Node findNodeHelper(Category node, Node n)
     {
-        ArrayList<Node> nodes = n.getNodes();
+        ArrayList<Node> nodes = n.nodes;
         Node ni = null;
         if(n.is(node))
             return n;
         if(!nodes.isEmpty())
         {
-            for (int i = 0; i < n.getNodes().size() && ni == null; i++)
+            for (int i = 0; i < n.nodes.size() && ni == null; i++)
             {
                 ni = findNodeHelper(node, nodes.get(i));
             }
@@ -78,14 +80,14 @@ public class AssignmentTree
 
     private double gradeCheckNode(Node node, HashMap<Assignment, RawScore> map)
     {
-        ArrayList<Node> nodes = node.getNodes();
+        ArrayList<Node> nodes = node.nodes;
         for (int i = 0; i < nodes.size(); i++)
         {
-            Category c = nodes.get(i).getCategory();
+            Category c = nodes.get(i).category;
             node.total += c.weight.getValue();
         }
         ArrayList<Assignment> unweightAssignments = new ArrayList<Assignment>();
-        for(Assignment a : node.getAssignments())
+        for(Assignment a : node.assignments)
         {
             if(a.hasWeight)
             {
@@ -102,7 +104,7 @@ public class AssignmentTree
         boolean equilDistribution;
         try
         {
-            equilDistribution = !node.getCategory().uncategorizedByRawScore;
+            equilDistribution = !node.category.uncategorizedByRawScore;
         }
         catch(NullPointerException e)
         {
@@ -137,15 +139,36 @@ public class AssignmentTree
             n.grade += gradeCheckNode(n, map);
             node.grade += n.grade;
         }
-        if(node.getCategory() == null)
+        if(node.category == null)
         {
             return node.grade;
         }
-        return node.grade * node.getCategory().weight.getValue();
+        return node.grade * node.category.weight.getValue();
         
     }
 
-    //assignment iterator
+    /**
+     * per student
+     * @param scores
+     * @return
+     */
+    public Percentage calculatePercentage(HashMap<Assignment, RawScore> scores)
+    {
+        try
+        {
+            return new Percentage(gradeCheckNode(root, scores));
+        }
+        catch(PercentageFormatException e)
+        {
+            return new Percentage();
+        }
+    }
+
+    public AssignmentIterator getAssignmentIterator()
+    {
+        return new AssignmentIterator();
+    }
+
     //level iterator
     //return list of categories
 
@@ -181,30 +204,75 @@ public class AssignmentTree
             map.put(a1, new RawScore(foo, a1, 10.0));
 
             System.out.println(at.calculatePercentage(map).getValue());
+
+            Iterator<Assignment> iter = at.getAssignmentIterator();
+            while(iter.hasNext())
+            {
+                Assignment a = iter.next();
+                System.out.println(a.name);
+            }
         }
         catch(RawScoreFormatException e) {}
         catch(PercentageFormatException e) {}
         catch(InvalidNameException e) {}
     }
 
-
-    /**
-     * per student
-     * @param scores
-     * @return
-     */
-    public Percentage calculatePercentage(HashMap<Assignment, RawScore> scores)
+    class AssignmentIterator implements Iterator<Assignment>
     {
-        try
+        private Assignment nextAssignment;
+        private Node currentNode = root;
+
+        public AssignmentIterator()
         {
-            return new Percentage(gradeCheckNode(root, scores));
+            nextAssignment = findNextAssignment();
         }
-        catch(PercentageFormatException e)
+
+        private Assignment findNextAssignment()
         {
-            return new Percentage();
+            if(currentNode == null)
+            {
+                return null;
+            }
+            Assignment assignment = currentNode.getNextAssignment();
+            if(assignment != null)
+            {
+                return assignment;
+            }
+            Node node = currentNode.getNextNode();
+            if(node != null)
+            {
+                currentNode = node;
+                return findNextAssignment();
+            }
+            else
+            {
+                if(currentNode.nodes.size() == currentNode.nextNodeIndex)
+                {
+                    currentNode = currentNode.parent;
+                    return findNextAssignment();
+                }
+                else
+                {
+                    currentNode = currentNode.getNextNode();
+                    return findNextAssignment();
+                }
+            }
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return nextAssignment != null;
+        }
+
+        @Override
+        public Assignment next()
+        {
+            Assignment temp = nextAssignment;
+            nextAssignment = findNextAssignment();
+            return temp;
         }
     }
-
 
     class Node
     {
@@ -213,24 +281,25 @@ public class AssignmentTree
         private ArrayList<Assignment> assignments;
         private double total;
         private double grade;
+        private Node parent;
+        private int nextAssignIndex = 0;
+        private int nextNodeIndex = 0;
 
-        public Node()
+
+        public Node(Node parent)
         {
-            nodes = new ArrayList<Node>();
-            total = 0.0;
-            grade = 0.0;
+            this.nodes = new ArrayList<Node>();
+            this.total = 0.0;
+            this.grade = 0.0;
+            this.parent = parent;
+            this.nextAssignIndex = 0;
+            this.nextNodeIndex = 0;
         }
 
-        public Node(Category category)
+        public Node(Node parent, Category category)
         {
+            this(parent);
             this.category = category;
-            nodes = new ArrayList<Node>();
-            init();
-        }
-
-        private void init()
-        {
-
         }
 
         public void addAssignment(Assignment assignment)
@@ -252,19 +321,22 @@ public class AssignmentTree
             return this.category == category;
         }
 
-        private ArrayList<Node> getNodes()
+        public Assignment getNextAssignment()
         {
-            return nodes;
+            if(assignments.size() == 0 || nextAssignIndex == assignments.size())
+            {
+                return null;
+            }
+            return assignments.get(nextAssignIndex++);
         }
 
-        private ArrayList<Assignment> getAssignments()
+        public Node getNextNode()
         {
-            return assignments;
-        }
-
-        private Category getCategory()
-        {
-            return category;
+            if(nodes.size() == 0 || nextNodeIndex == nodes.size())
+            {
+                return null;
+            }
+            return nodes.get(nextNodeIndex++);
         }
     }
 }
