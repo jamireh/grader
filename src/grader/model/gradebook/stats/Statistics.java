@@ -1,4 +1,4 @@
-package grader.model.gradebook;
+package grader.model.gradebook.stats;
 
 import java.util.Collections;
 import java.util.List;

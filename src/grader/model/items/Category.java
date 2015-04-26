@@ -27,4 +27,11 @@ public class Category
         //subcategories = new ArrayList<Category>();
         //items = new ArrayList<Assignment>();
     }
+
+    /**
+     * Returns a String representation of this Category.
+     * @return this Category's name
+     */
+    @Override
+    public String toString() { return name; }
 }
