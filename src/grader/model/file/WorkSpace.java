@@ -30,7 +30,7 @@ public class WorkSpace extends Observable {
 	   deltas = new ArrayList<RawScore>();
 	   futureDeltas = new ArrayList<RawScore>();
 
-      sidebar = new Sidebar(gradebook);
+      sidebar = new Sidebar();
       spreadsheet = new Spreadsheet();
       statistics = new StatsContainer();
       pieChart = new PieChart();
@@ -41,6 +41,8 @@ public class WorkSpace extends Observable {
       addObserver(statistics);
       addObserver(pieChart);
       addObserver(histogram);
+      setChanged();
+      notifyObservers();
    }
 
 	/**
