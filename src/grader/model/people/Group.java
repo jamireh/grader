@@ -7,7 +7,7 @@ import java.util.*;
  *
  * Derived from the requirements documentation regarding student management.
  */
-public abstract class Group
+public class Group
 {
 	/**
 	 * List of Students to hold in this Group.

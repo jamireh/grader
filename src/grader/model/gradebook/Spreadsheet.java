@@ -1,6 +1,7 @@
 package grader.model.gradebook;
 
 import grader.model.file.WorkSpace;
+import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
 
@@ -22,6 +23,18 @@ public class Spreadsheet implements Observer {
     * Renders the scores spreadsheet to the view.
     */
    public void render() {}
+
+   public void save() {
+      WorkSpace.instance.saveGrades();
+   }
+
+   public void revert() {
+      WorkSpace.instance.revertGrades();
+   }
+
+   public void updateGrade(Student student, Assignment assignment, double score) {
+      WorkSpace.instance.updateGrade(student, assignment, score);
+   }
 
    /**
     * Updates the spreadsheet's context assignment tree, students, and scores.
