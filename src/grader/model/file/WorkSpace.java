@@ -1,6 +1,7 @@
 package grader.model.file;
 
 import grader.model.gradebook.*;
+import grader.model.gradebook.stats.*;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.*;
