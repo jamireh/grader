@@ -9,7 +9,7 @@ import grader.model.curve.*;
 import java.util.*;
 
 /**
- * The WorkSpace class is a singleton contains all the information for the
+ * The WorkSpace class is a singleton that contains all the information for the
  * current user session, including the open Gradebook, active user,
  * undo/redo history, and the clipboard.
  *
