@@ -148,6 +148,30 @@ public class WorkSpace extends Observable {
 	   return gradebook;
    }
 
+   /**
+    * Returns the currently selected course.
+    * @return selected course
+    */
+   public Course getCourse() {
+      return course;
+   }
+
+   /**
+    * Returns the currently selected section.
+    * @return selected section
+    */
+   public Section getSection() {
+      return section;
+   }
+
+   /**
+    * Returns the currently selected group.
+    * @return selected group
+    */
+   public Group getGroup() {
+      return group;
+   }
+
 	/**
 	 * Returns a list of students whose grades are being displayed
 	 * in the grade spreadsheet.
@@ -207,6 +231,12 @@ public class WorkSpace extends Observable {
     * @param course newly selected course
     * @param section newly selected section
     * @param group newly selected group
+    post:
+      //
+      // The workspace scope should reflect the update.
+      //
+      this'.course.equals(course) && this'.section.equals(section)
+      && this'.group.equals(group);
     */
    public void sidebarSelect(Course course, Section section,
                              Group group) {
@@ -228,6 +258,24 @@ public class WorkSpace extends Observable {
     * @param student student whose grade to update
     * @param assignment assignment grade to update
     * @param score new score
+    pre:
+      //
+      // The student and assignment to add a score for must be in scope.
+      //
+      getStudents().contains(student)
+      && getAssignmentTree().contains(assignment);
+
+    post:
+      //
+      // The workspace scores must reflect the change, and there must be a
+      // delta for the score change.
+      // The future deltas list should also be cleared.
+      //
+      deltas'.get(deltas.size() - 1).getStudent().equals(student)
+      && deltas'.get(deltas.size() - 1).getAssignment().equals(assignment)
+      && futureDeltas'.size() == 0
+      && Double.compare(this'.getScores().getRawScore(student, assignment),
+                        score) == 0;
     */
    public void updateGrade(Student student, Assignment assignment,
                            double score) {
@@ -241,6 +289,21 @@ public class WorkSpace extends Observable {
    /**
     * Reverts all deltas and restores the Scores object to its state prior to
     * the changes.
+    post:
+      //
+      // The current workspace deltas should be empty and the grades in the
+      // scores should be equal to their corresponding gradebook scores.
+      //
+      deltas.size() == 0
+      &&
+      futureDeltas.size() == 0
+      &&
+      forall (Student student; this'.getStudents().contains(student);
+              forall (Assignment assignment;
+                      this'.getAssignmentTree().contains(assignment);
+                      Double.compare(
+                         gradebook.getScores().getRawScore(student, assignment),
+                         this'.getScores().getRawScore(student, assignment)) == 0));
     */
    public void revertGrades() {
       deltas.clear();
@@ -254,6 +317,18 @@ public class WorkSpace extends Observable {
 
    /**
     * Commits all deltas to persistent storage.
+    post:
+      //
+      // All changes reflected in the deltas should be saved to the gradebook
+      // and the deltas and future deltas should be cleared.
+      //
+      forall (RawScore rawScore; deltas.contains(rawScore);
+              Double.compare(gradebook'.getScores().getRawScore(
+                                rawScore.getStudent(),
+                                rawScore.getAssignment()),
+                             rawScore.getScore()) == 0)
+      && deltas'.size() == 0
+      && futureDeltas'.size() == 0;
     */
    public void saveGrades() {
       Scores gradebookScores = gradebook.getScores();
@@ -272,6 +347,11 @@ public class WorkSpace extends Observable {
    /**
     * Overwrites the current section's grade scheme if a section is in scope.
     * @param gradeScheme new grade scheme
+    post:
+      //
+      // The workspace section should have the new grade scheme.
+      //
+      this'.section.getGradeScheme().equals(gradeScheme);
     */
    public void updateGradeScheme(GradeScheme gradeScheme) {
       if (section != null) {
@@ -304,6 +384,37 @@ public class WorkSpace extends Observable {
 
    /**
     * Undoes a change by removing a delta.
+    pre:
+      //
+      // There is a delta to be undone.
+      //
+      canUndo() == true;
+
+    post:
+      //
+      // The last item in the old deltas list should now be at the end of
+      // the future deltas list. The corresponding score should be reverted
+      // to the gradebook score.
+      //
+      deltas'.size() == deltas.size() - 1;
+      &&
+      futureDeltas'.size() == futureDeltas.size() + 1;
+      &&
+      forall(RawScore rawScore; deltas'.contains(rawScore)
+             iff deltas.contains(rawScore) &&
+                 !rawScore.equals(deltas.get(deltas.size() - 1)))
+      &&
+      forall(RawScore rawScore; futureDeltas'.contains(rawScore)
+             iff futureDeltas.contains(rawScore) ||
+                 rawScore.equals(deltas.get(deltas.size() - 1)))
+      &&
+      Double.compare(
+         this'.getScores().getRawScore(
+            deltas.get(deltas.size() - 1).getStudent(),
+            deltas.get(deltas.size() - 1).getAssignment()),
+         gradebook.getScores().getRawScore(
+            deltas.get(deltas.size() - 1).getStudent(),
+            deltas.get(deltas.size() - 1).getAssignment())) == 0;
     */
    public void undo() {
       if (canUndo()) {
@@ -322,6 +433,34 @@ public class WorkSpace extends Observable {
 
    /**
     * Redoes an undone change.
+    pre:
+      //
+      // There is a future delta to be redone.
+      //
+      canRedo() == true;
+
+    post:
+      //
+      // The last item in the old future deltas list should now be at the end of
+      // the deltas list, and the scores should reflect the change.
+      //
+      deltas'.size() == deltas.size() + 1;
+      &&
+      futureDeltas'.size() == futureDeltas.size() - 1;
+      &&
+      forall(RawScore rawScore; deltas'.contains(rawScore)
+             iff deltas.contains(rawScore) ||
+                 rawScore.equals(futureDeltas.get(futureDeltas.size() - 1)))
+      &&
+      forall(RawScore rawScore; futureDeltas'.contains(rawScore)
+             iff futureDeltas.contains(rawScore) && 
+                 !rawScore.equals(futureDeltas.get(futureDeltas.size() - 1)))
+      &&
+      Double.compare(
+         this'.getScores().getRawScore(
+            deltas.get(deltas.size() - 1).getStudent(),
+            deltas.get(deltas.size() - 1).getAssignment()),
+         futureDeltas.get(futureDeltas.size() - 1).getScore()) == 0;
     */
    public void redo() {
       if (canRedo()) {
@@ -368,6 +507,27 @@ public class WorkSpace extends Observable {
 
    /**
     * Loads scores for the students in scope from the gradebook.
+    post:
+      //
+      // The workspace scores should all be equal to the gradebook scores.
+      //
+      deltas'.size() == deltas.size() + 1;
+      &&
+      futureDeltas'.size() == futureDeltas.size() - 1;
+      &&
+      forall(RawScore rawScore; deltas'.contains(rawScore)
+             iff deltas.contains(rawScore) ||
+                 rawScore.equals(futureDeltas.get(futureDeltas.size() - 1)))
+      &&
+      forall(RawScore rawScore; futureDeltas'.contains(rawScore)
+             iff futureDeltas.contains(rawScore) && 
+                 !rawScore.equals(futureDeltas.get(futureDeltas.size() - 1)))
+      &&
+      Double.compare(
+         this'.getScores().getRawScore(
+            deltas.get(deltas.size() - 1).getStudent(),
+            deltas.get(deltas.size() - 1).getAssignment()),
+         futureDeltas.get(futureDeltas.size() - 1).getScore()) == 0;
     */
    private void loadScores() {
       Scores gradebookScores = gradebook.getScores();

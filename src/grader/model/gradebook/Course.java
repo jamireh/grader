@@ -101,7 +101,7 @@ public class Course
    }
 
     public void addAssignment(Assignment assignment) {
-      assignments.addTo(null, assignment);
+       assignments.addTo(null, assignment);
     }
 
     public AssignmentTree getAssignmentTree() {
