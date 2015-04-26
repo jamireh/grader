@@ -23,11 +23,16 @@ public class StudentController
     @FXML TextField tfFirst;
     @FXML TextField tfMiddle;
     @FXML TextField tfLast;
-    @FXML TextField tfNickname;
+    @FXML TextField tfUserID;
     @FXML TextField tfP1;
     @FXML TextField tfP2;
     @FXML TextField tfP3;
 
+    /**
+     * Verifies through the model that the student is valid.
+     *
+     * @param event hitting the add student button.
+     */
     public void onAddPressed(ActionEvent event)
     {
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -35,10 +40,11 @@ public class StudentController
         try
         {
             MainController.course.sections.get(0).addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
-                    tfLast.getText(), tfNickname.getText()), tfP1.getText() + tfP2.getText() + tfP3.getText()));
+                    tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText()));
         }
         catch (InvalidPhoneNumberException e)
         {
+            tfP1.requestFocus();
             tfP1.setText("");
             tfP2.setText("");
             tfP3.setText("");
@@ -47,6 +53,7 @@ public class StudentController
         }
         catch (InvalidNameException e)
         {
+            tfFirst.requestFocus();
             System.out.println("Name exception, try again.");
             return;
         }

@@ -53,12 +53,12 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Label text="Nickname">
+                  <Label text="User ID">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="tfNickname" prefWidth="100.0" promptText="Nickname">
+                  <TextField fx:id="tfUserID" prefWidth="100.0" promptText="User ID">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -88,7 +88,7 @@
                   <Insets bottom="10.0" top="10.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefWidth="200.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="500.0">
                <children>
                   <Button fx:id="bAdd" mnemonicParsing="false" onAction="#onAddPressed" prefWidth="70.0" text="Add">
                      <HBox.margin>

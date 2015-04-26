@@ -27,19 +27,14 @@ public class Name
 	 */
 	String middleName;
 
-	/**
-	 * A shorthand name for this Person.
-	 */
-	String nickName;
-
-    public Name(String firstName, String middleName, String lastName, String nickName) throws InvalidNameException
+    public Name(String firstName, String middleName, String lastName) throws InvalidNameException
     {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.nickName = nickName;
 
-        if (firstName.length() == 0 || lastName.length() == 0)
+        if (firstName.length() == 0 || lastName.length() == 0 || !firstName.matches("/^[A-z]+$/") || !middleName
+                .matches("/^[A-z]+$/") || lastName.matches("/^[A-z]+$/"))
             throw new InvalidNameException("");
     }
 

@@ -18,6 +18,7 @@ public class Main extends Application {
     public static URL histogramResource = Main.class.getResource("view/histogram.fxml");
     public static URL piechartResource = Main.class.getResource("view/piechart.fxml");
     public static URL studentsResource = Main.class.getResource("view/students.fxml");
+    public static URL groupsResource = Main.class.getResource("view/groups.fxml");
     public static URL findResource = Main.class.getResource("view/find.fxml");
 
     @Override

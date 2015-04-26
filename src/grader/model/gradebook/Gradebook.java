@@ -107,7 +107,7 @@ public class Gradebook {
           Student student = null;
           try
           {
-              student = new Student(new Name(tokens[0], null, tokens[1], null));
+              student = new Student(new Name(tokens[0], null, tokens[1]));
           }
           catch (InvalidNameException e)
           {
