@@ -231,7 +231,7 @@ public class AssignmentTree
             at.addTo(tests, a1);
 
             HashMap<Assignment, RawScore> map = new HashMap<Assignment, RawScore>();
-            Student foo = new Student(new Name("Foo", "", "Bar", ""));
+            Student foo = new Student(new Name("Foo", "", "Bar"));
             map.put(finalExam, new RawScore(foo, finalExam, 100.0));
             map.put(m1, new RawScore(foo, m1, 50.0));
             map.put(m2, new RawScore(foo, m2, 50.0));

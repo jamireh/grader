@@ -16,33 +16,27 @@ public class Student extends Person implements Comparable<Student>
 	 */
 	Name name;
 
+    /**
+     * The unique userID of this Student.
+     */
+    String userID;
+
 	/**
 	 * The phone number of this Student.
 	 */
 	String phoneNumber;
 
-	/**
-	 * A digital representation of this Student.
-	 */
-	ImageIcon photo;
-
-	/**
-	 * The university-assigned identification number of this Student.
-	 */
-	String emplID;
-
    public Student(Name name) {
       this.name = name;
    }
 
-   public Student(Name name, String phoneNumber) throws InvalidPhoneNumberException
+   public Student(Name name, String userID, String phoneNumber) throws InvalidPhoneNumberException
    {
        if (phoneNumber.length() != 10 || !phoneNumber.matches("^[0-9]+$"))
            throw new InvalidPhoneNumberException(phoneNumber);
        this.name = name;
+       this.userID = userID;
        this.phoneNumber = phoneNumber;
-       photo = null;
-       emplID = null;
    }
 
     /**

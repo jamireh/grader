@@ -148,8 +148,12 @@ public class MainController implements Initializable
         System.out.println("Students->Edit Roster clicked!");
     }
 
-    public void studentsCreateGroup() {
+    public void studentsCreateGroup() throws IOException {
         System.out.println("Students->Create Group clicked!");
+        Parent root = FXMLLoader.load(Main.groupsResource);
+        stage.setTitle("Add New Group");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void studentsEditGroups() {
