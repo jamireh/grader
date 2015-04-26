@@ -1,7 +1,5 @@
 package grader.model.people;
 
-import grader.model.errors.NameFormatException;
-
 import javax.naming.InvalidNameException;
 
 /**

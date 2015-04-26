@@ -1,4 +1,5 @@
 package grader.model.people;
+
 import grader.model.errors.InvalidPhoneNumberException;
 
 import javax.swing.ImageIcon;
