@@ -33,8 +33,8 @@ public class WorkSpace extends Observable {
     */
    public static final WorkSpace instance = new WorkSpace();
    static {
-      setChanged();
-      notifyObservers();
+      instance.setChanged();
+      instance.notifyObservers();
    }
 
    /**
