@@ -1,9 +1,12 @@
 package grader.model.gradebook;
 
 /**
- * Contains the fixed set of available letter grades.
+ * LetterGrade represents the set of grades possible for
+ * a student to receive in a class.
+ *
+ * @author Tobias Bleisch
  */
 public enum LetterGrade
 {
-    A, B, C, D, F;
+    A, B, C, D, F
 }

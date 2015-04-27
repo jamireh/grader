@@ -37,7 +37,7 @@ public class Histogram extends AbstractGraph implements Observer
 	 post:
 	   //The LetterGrade and Percentage have been properly applied to the
 	   //tempGradeScheme and no other changes have been made
-	   forall (DivisionBar divisionBar; 
+	   forall (GradeRange divisionBar;
 	    	tempGradeScheme'.divisions.contains(divisionBar) iff 
 	   			(divisionBar.letterGrade.equals(letterGrade) && divisionBar.low.equals(newLowerBound))
 	   			||
@@ -50,9 +50,9 @@ public class Histogram extends AbstractGraph implements Observer
 	 * model.
 	 post:
 	 	//The GradeScheme of the Section must be identical to the tempGradeScheme.
-	 	forall (DivisionBar divisionBar;
+	 	forall (GradeRange divisionBar;
 	 		tempGradeScheme.contains(divisionBar);
-	 		exists(DivisionBar sDivisionBar;
+	 		exists(GradeRange sDivisionBar;
             section'.gradeScheme.divisions.contains(sDivisionBar);
             divisionBar.equals(sDivisionBar)));	
 	 */
