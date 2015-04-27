@@ -57,16 +57,4 @@ public class Percentage
     {
         return value;
     }
-
-    /**
-     * Corrects the passed in value to a valid percentage.
-     * <pre>
-     *    post:
-     *    (value' <= 100.0) && (value' >= 0.0);
-     * </pre>
-     */ 
-    public void format()
-    {
-
-    }
 }

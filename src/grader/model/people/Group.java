@@ -16,7 +16,7 @@ public class Group
 	/**
 	 * Name assigned to this Group.
 	 */
-	private String groupName;
+	public String groupName;
 
 	/**
 	 * Modifies the group name to the one provided.

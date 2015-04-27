@@ -32,6 +32,7 @@ public class Section
         this.sectionNumber = number;
         students = new ArrayList<Student>();
         gradeScheme = new GradeScheme();
+        groups = new ArrayList<Group>();
     }
 
 	/**
@@ -43,7 +44,7 @@ public class Section
 	*Collection of all groups associated with this section.
 	*Groups are quarter-long.
 	*/
-	Collection<Group> groups;
+	ArrayList<Group> groups;
 
 	/**
 	*The TAs associated with this section.
