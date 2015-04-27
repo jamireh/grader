@@ -26,6 +26,9 @@ public class FindController implements Initializable {
 
     static Find find;
 
+    /**
+     * Constructor.
+     */
     public FindController() {
         find = new Find();
     }
@@ -50,6 +53,10 @@ public class FindController implements Initializable {
         courseBox.setItems(courseOptions);
     }
 
+    /**
+     * Handles find button press.
+     * @param actionEvent action event.
+     */
     public void onFindButtonPress(ActionEvent actionEvent)
     {
         String courseName = (String) courseBox.getValue();
@@ -63,6 +70,10 @@ public class FindController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Handles cancel button press.
+     * @param actionEvent action event.
+     */
     public void onCancelButtonPress(ActionEvent actionEvent)
     {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
