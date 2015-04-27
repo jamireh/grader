@@ -260,7 +260,7 @@ public class AssignmentTree
     /**
      * Iterator class for the AssignmentTree.
      */
-    class AssignmentIterator implements Iterator<Assignment>
+    public class AssignmentIterator implements Iterator<Assignment>
     {
         private Assignment nextAssignment;
         private Node currentNode = root;
