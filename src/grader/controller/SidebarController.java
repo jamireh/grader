@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+
+/**
+ * Controller for the Sidebar model
+ * @author Jon Amireh
+ */
 public class SidebarController implements Initializable
 {
     @FXML TreeView<String> tvCourses;
@@ -25,38 +30,33 @@ public class SidebarController implements Initializable
         sidebar.setController(this);
         sidebar.update(null, null);
         tvCourses.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener() {
+                new ChangeListener<TreeItem<String>>() {
                     @Override
-                    public void changed(ObservableValue observable, Object oldValue,
-                                        Object newValue) {
-                            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-                            int level = tvCourses.getTreeItemLevel(selectedItem);
-                            String course = null, section = null, group = null;
-                            switch (level)
-                            {
-                                case 1:
-                                    course = selectedItem.getValue();
-                                    section = null;
-                                    group = null;
-                                    break;
-                                case 2:
-                                    course = selectedItem.getParent().getValue();
-                                    section = selectedItem.getValue();
-                                    group = null;
-                                    break;
-                                case 3:
-                                    course = selectedItem.getParent().getParent().getValue();
-                                    section = selectedItem.getParent().getValue();
-                                    group = selectedItem.getValue();
-                                    break;
-                            }
-                            if(level != 0)
-                            {
-                                sidebar.selectScope(course, section, group);
-                            }
+                    public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue)
+                    {
+                        int level = tvCourses.getTreeItemLevel(newValue);
+                        String course = null, section = null, group = null;
+                        switch (level)
+                        {
+                            case 1:
+                                course = newValue.getValue();
+                                section = null;
+                                group = null;
+                                break;
+                            case 2:
+                                course = newValue.getParent().getValue();
+                                section = newValue.getValue();
+                                group = null;
+                                break;
+                            case 3:
+                                course = newValue.getParent().getParent().getValue();
+                                section = newValue.getParent().getValue();
+                                group = newValue.getValue();
+                                break;
                         }
-
-                    });
+                        sidebar.selectScope(course, section, group);
+                    }
+                });
     }
 
 

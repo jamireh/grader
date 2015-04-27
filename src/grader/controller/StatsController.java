@@ -56,22 +56,4 @@ public class StatsController implements Initializable {
 
         view = new StatisticsBar(FXCollections.observableList(statistics));
     }
-/*
-    public static void main(String[] args) {
-        StatsController control = new StatsController();
-        control.render();
-    }
-
-
-    /*
- ObservableList<Person> teamMembers = ...;
- table.setItems(teamMembers);
-
- TableColumn<Person,String> firstNameCol = new TableColumn<Person,String>("First Name");
- firstNameCol.setCellValueFactory(new PropertyValueFactory("firstName"));
- TableColumn<Person,String> lastNameCol = new TableColumn<Person,String>("Last Name");
- lastNameCol.setCellValueFactory(new PropertyValueFactory("lastName"));
-
- table.getColumns().setAll(firstNameCol, lastNameCol);
-     */
 }

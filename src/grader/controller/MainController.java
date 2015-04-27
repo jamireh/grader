@@ -63,6 +63,7 @@ public class MainController implements Initializable
         vbContainer.setVisible(true);
         course = WorkSpace.instance.getCourse();
         setupGradebook();
+        StatsController stats = new StatsController();
     }
 
     /* FILE MENU COMMANDS */
