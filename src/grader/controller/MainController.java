@@ -3,7 +3,7 @@ package grader.controller;
 import grader.Main;
 import grader.model.StudentEntry;
 import grader.model.edit.Edit;
-import grader.model.file.File;
+import grader.model.file.*;
 import grader.model.gradebook.Course;
 import grader.model.gradebook.Gradebook;
 import javafx.collections.FXCollections;
@@ -49,6 +49,9 @@ public class MainController implements Initializable
 
     static Course course;
 
+    /**
+     * Constructor.
+     */
     public MainController() {
         stage = new Stage();
     }
@@ -58,6 +61,7 @@ public class MainController implements Initializable
         sidebar.setVisible(true);
         sidebar.setVisible(true);
         vbContainer.setVisible(true);
+        course = WorkSpace.instance.getCourse();
         setupGradebook();
     }
 
@@ -66,7 +70,6 @@ public class MainController implements Initializable
      * Controller method for File->New Course.
      */
     public void fileNewCourse() throws IOException {
-        course = Gradebook.getCannedGradebook().courses.get(0);
         Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
         stage.setScene(new Scene(root));
@@ -152,6 +155,7 @@ public class MainController implements Initializable
      */
     public void studentsSyncRoster() {
         System.out.println("Students->Sync Roster clicked!");
+        Course course = WorkSpace.instance.getCourse();
         if (course != null) course.syncRoster();
     }
 
