@@ -85,7 +85,8 @@ public class StatsContainer implements Observer {
      * Renders the statistics spreadsheet in the view.
      */
     public void render() {
-        controller.render();
+        if (controller != null)
+            controller.render();
     }
 
     /**
@@ -98,8 +99,7 @@ public class StatsContainer implements Observer {
         scores = WorkSpace.instance.getScores();
         buildAssignments();
         buildStats();
-        if (controller != null)
-            render();
+        render();
     }
 
     // test
