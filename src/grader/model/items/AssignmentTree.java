@@ -260,7 +260,7 @@ public class AssignmentTree
     /**
      * Iterator class for the AssignmentTree.
      */
-    class AssignmentIterator implements Iterator<Assignment>
+    public class AssignmentIterator implements Iterator<Assignment>
     {
         private Assignment nextAssignment;
         private Node currentNode = root;
@@ -365,6 +365,7 @@ public class AssignmentTree
             this.parent = parent;
             this.nextAssignIndex = 0;
             this.nextNodeIndex = 0;
+            this.assignments = new ArrayList<Assignment>();
         }
 
         /**
@@ -385,12 +386,6 @@ public class AssignmentTree
          */
         public void addAssignment(Assignment assignment)
         {
-            // build the list of Assignments if adding the first Assignment
-            if(assignments == null)
-            {
-                assignments = new ArrayList<Assignment>();
-            }
-
             assignments.add(assignment);
         }
 

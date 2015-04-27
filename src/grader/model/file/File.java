@@ -1,7 +1,7 @@
 package grader.model.file;
 /**
  * The File class represents the underlying model for the File menu.
- * Included are methods for file operations.
+ * Included are methods for each of the operations.
  *
  * @author Gregory Davis
  */

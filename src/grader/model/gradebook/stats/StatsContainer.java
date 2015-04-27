@@ -6,7 +6,12 @@ import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * A container class for gradebook statistics aggregating all individual
@@ -14,8 +19,8 @@ import java.util.*;
  * @author Quan Tran
  */
 public class StatsContainer implements Observer {
-    private Collection<Student> students;
-    private Collection<Assignment> assignments;
+    private List<Student> students;
+    private List<Assignment> assignments;
     private AssignmentTree assignmentTree;
     private Scores scores;
     private Map<Assignment, Statistics> stats;
@@ -27,6 +32,18 @@ public class StatsContainer implements Observer {
     public Map<Assignment, Statistics> getMap() { return stats; }
 
     /**
+     * Builds the list of Assignments from the AssignmentTree.
+     */
+    private void buildAssignments() {
+        AssignmentTree.AssignmentIterator itr =
+                assignmentTree.getAssignmentIterator();
+
+        assignments = new ArrayList<Assignment>();
+        while (itr.hasNext())
+            assignments.add(itr.next());
+    }
+
+    /**
      * Builds the stats map, mapping Assignments to Statistics.
      */
     private void buildStats() {
@@ -34,8 +51,7 @@ public class StatsContainer implements Observer {
 
         // iterate through each assignment in the scope
         for (Assignment ass : assignments) {
-            //List<RawScore> rawScores = new Vector<>();
-            List<Double> rawScores = new Vector<Double>();
+            List<Double> rawScores = new ArrayList<Double>();
 
             // iterate through each student in the scope
             for (Student student : students)
@@ -56,10 +72,25 @@ public class StatsContainer implements Observer {
      * Queries the WorkSpace for necessary data.
      */
     public void update(Observable obj, Object args) {
-       students = WorkSpace.instance.getStudents();
-       assignmentTree = WorkSpace.instance.getAssignmentTree();
-       scores = WorkSpace.instance.getScores();
-       buildStats();
-       render();
+        students = WorkSpace.instance.getStudents();
+        assignmentTree = WorkSpace.instance.getAssignmentTree();
+        scores = WorkSpace.instance.getScores();
+        buildAssignments();
+        buildStats();
+        render();
+    }
+
+    // test
+    public static void main(String[] args) {
+        StatsContainer container = new StatsContainer();
+        container.update(null, null);
+        Map<Assignment, Statistics> map = container.getMap();
+        for (Assignment ass : map.keySet()) {
+            Statistics stats = map.get(ass);
+            System.out.println(ass + ". " +
+                    "mean: " + stats.mean + ", " +
+                    "min: " + stats.min + ", " +
+                    "max: " + stats.max);
+        }
     }
 }

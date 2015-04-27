@@ -82,4 +82,12 @@ public class Assignment
     public int getPoints() {
         return rawPoints;
     }
+
+    /**
+     * Returns a String representation of this Assignment.
+     * @return the name of this Assignment
+     */
+    public String toString() {
+        return name;
+    }
 }
