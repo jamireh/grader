@@ -14,6 +14,17 @@ import java.util.*;
  * current user session, including the open Gradebook, active user,
  * undo/redo history, and the clipboard.
  *
+ * The WorkSpace provides methods for interacting with the grades relevant to
+ * the scope (or context) of the grades being considered.  The scope is
+ * controlled by the grader sidebar via the sidebarSelect method.  Upon scope
+ * updates, all of the GUI underlying models are notified of the change, at
+ * which time they will query for the information they need to display to the
+ * user.
+ *
+ * The Scores object held by the workspace is a copy of the grades relevant
+ * to the current scope.  This copy is necessary to maintain temporary changes
+ * to scores before they are persisted to the gradebook's scores object.
+ *
  * @author Gregory Davis
  */
 public class WorkSpace extends Observable {
@@ -21,6 +32,10 @@ public class WorkSpace extends Observable {
     * Singleton WorkSpace instance.
     */
    public static final WorkSpace instance = new WorkSpace();
+   static {
+      instance.setChanged();
+      instance.notifyObservers();
+   }
 
    /**
     * Constructor.
@@ -42,8 +57,6 @@ public class WorkSpace extends Observable {
       addObserver(statistics);
       addObserver(pieChart);
       addObserver(histogram);
-      setChanged();
-      notifyObservers();
    }
 
 	/**
