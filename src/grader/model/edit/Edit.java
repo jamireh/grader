@@ -4,7 +4,7 @@ import grader.model.file.WorkSpace;
 
 /**
  * The Edit class represents the underlying model for the Edit menu.
- * Included are methods for edit operations.
+ * Included are methods for each of the edit operations.
  *
  * @author Gregory Davis
  */

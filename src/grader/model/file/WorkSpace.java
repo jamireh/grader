@@ -23,7 +23,12 @@ import java.util.*;
  *
  * The Scores object held by the workspace is a copy of the grades relevant
  * to the current scope.  This copy is necessary to maintain temporary changes
- * to scores before they are persisted to the gradebook's scores object.
+ * to scores before they are persisted to the gradebook's scores object.  This
+ * way, reverting the scores is a simple matter of reloading the scores from
+ * the gradebook.  Saving the scores iterates through the list of deltas and
+ * commits them to the gradebook.  Undo and redo are handled by maintaining a
+ * list of future deltas.  Deltas move between these lists during undo/redo
+ * operations.
  *
  * @author Gregory Davis
  */
