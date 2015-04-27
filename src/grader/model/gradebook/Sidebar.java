@@ -38,12 +38,11 @@ public class Sidebar implements Observer {
      */
     public void render() {
         generateTreeView();
-        try
+        //controller hasn't been set yet so do nothing
+        if(controller != null)
         {
             controller.render(viewReference);
         }
-        catch(NullPointerException e)
-        {}
     }
 
     private void generateTreeView()
@@ -67,6 +66,10 @@ public class Sidebar implements Observer {
         System.out.println(viewReference);
     }
 
+    /**
+     * Sets the controller bound to this model
+     * @param controller Controller to delegate to when the model changes
+     */
     public void setController(SidebarController controller)
     {
         this.controller = controller;

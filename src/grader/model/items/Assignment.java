@@ -30,6 +30,15 @@ public class Assignment
 
     boolean hasWeight;
 
+    /**
+     * Creates a new Assignment based on given parameters
+     * @param name String representing the name of the Assignment
+     * @param dueDate LocalDate representing the day the Assignment is true
+     * @param rawPoints String representing the Double of the Assignment's value
+     * @param weight String representing the Percentage of the Assignment's weight
+     * @throws PercentageFormatException if the weight given is not a valid Percentage
+     * @throws RawScoreFormatException if the rawPoints given is not a valid RawScore
+     */
     public Assignment(String name, LocalDate dueDate, String rawPoints, String weight) throws PercentageFormatException, RawScoreFormatException
     {
         this.name = name;
@@ -58,7 +67,6 @@ public class Assignment
         }
     }
 
-    public Assignment() {}
     public Assignment(String name) {
        this.name = name;
     }
