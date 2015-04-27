@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+
+/**
+ * Controller for the Sidebar model
+ * @author Jon Amireh
+ */
 public class SidebarController implements Initializable
 {
     @FXML TreeView<String> tvCourses;
