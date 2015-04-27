@@ -1,6 +1,5 @@
 package grader.controller;
 
-import grader.model.BasicModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +37,5 @@ public class CourseController implements Initializable {
         System.out.println("Course Number: " + tfCourseNum.getText());
         Stage stage = (Stage) bAdd.getScene().getWindow();
         stage.close();
-        BasicModel.mCallback.call(tfCourseNum.getText());
     }
 }

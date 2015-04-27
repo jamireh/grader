@@ -28,7 +28,7 @@ public class File {
       && exists (Course course; WorkSpace.instance.gradebook.courses'.contains(course);
                  course.name.equals(name));
     */
-   public void newCourse(String name) {
+   public static void newCourse(String name) {
        System.out.println("File->New Course:  " + name);
    }
 
@@ -36,7 +36,7 @@ public class File {
     * Opens the "export" menu.
     * *Planned functionality -- NOT MODELED*
     */
-   public void exportGradebook() {
+   public static void exportGradebook() {
        System.out.println("File->Export");
    }
 
@@ -44,7 +44,7 @@ public class File {
     * Opens the "import" menu.
     * *Planned functionality -- NOT MODELED*
     */
-   public void importGradebook() {
+   public static void importGradebook() {
        System.out.println("File->Import");
    }
 
@@ -52,7 +52,7 @@ public class File {
     * Opens the "print" menu.
     * *Planned functionality -- NOT MODELED*
     */
-   public void print() {
+   public static void print() {
        System.out.println("File->Print");
    }
 
@@ -71,14 +71,14 @@ public class File {
       //
       WorkSpace.instance.user == null;
     */
-   public void logout() {
+   public static void logout() {
        System.out.println("File->Logout");
    }
 
    /**
     * Quits the application.
     */
-   public void quit() {
+   public static void quit() {
        System.out.println("File->Quit");
    }
 }

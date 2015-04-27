@@ -9,9 +9,8 @@ import grader.model.items.AssignmentTree;
 import grader.model.items.Category;
 import grader.model.people.Student;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Course data structure, holds all relevant info about the course.
@@ -96,14 +95,26 @@ public class Course
       return students;
    }
 
+	/**
+	 * Adds the given Section to the root of the AssignmentTree
+	 * @param section Section to adda
+	 */
    public void addSection(Section section) {
       this.sections.add(section);
    }
 
+	/**
+	 * Adds the given assignment to the root of the AssignmentTree
+	 * @param assignment Assignment to add
+	 */
     public void addAssignment(Assignment assignment) {
        assignments.addTo(null, assignment);
     }
 
+	/**
+	 * Retrieves the AssignmentTree for this Course
+	 * @return AssignmentTree for this Course
+	 */
     public AssignmentTree getAssignmentTree() {
        return assignments;
     }

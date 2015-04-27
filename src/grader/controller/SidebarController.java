@@ -1,24 +1,48 @@
 package grader.controller;
 
-import javafx.collections.FXCollections;
+import grader.model.file.WorkSpace;
+import grader.model.gradebook.Sidebar;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class SidebarController implements Initializable
 {
-    @FXML Accordion aCourses;
-
+    @FXML TreeView<String> tvCourses;
+    Sidebar sidebar = WorkSpace.instance.sidebar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        aCourses.getPanes().add(new TitledPane("CPE 309", new ListView<String>(FXCollections.observableArrayList(Arrays.asList("Section 1")))));
+        sidebar.setController(this);
+        sidebar.update(null, null);
+    }
+
+
+    public void render(HashMap<String, HashMap<String, ArrayList<String>>> viewReference)
+    {
+        TreeItem<String> rootView = new TreeItem<String>();
+        rootView.setValue("Courses");
+        for(String courseKey : viewReference.keySet())
+        {
+            TreeItem<String> course = new TreeItem<String>(courseKey);
+            for (String  sectionKey : viewReference.get(courseKey).keySet())
+            {
+                TreeItem<String> section = new TreeItem<String>("Section " + sectionKey);
+                for(String group : viewReference.get(courseKey).get(sectionKey))
+                {
+                    section.getChildren().add(new TreeItem<String>(group));
+                }
+                course.getChildren().add(section);
+            }
+            rootView.getChildren().add(course);
+        }
+        tvCourses.setRoot(rootView);
     }
 }

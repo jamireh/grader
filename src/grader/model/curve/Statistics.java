@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The Statistics class performs different math operations on the Scores of a certain Section.
+ * The StatisticsBar class performs different math operations on the Scores of a certain Section.
  *  
  * Derived from the requirements documentation regarding statistics;
  */

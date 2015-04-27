@@ -1,5 +1,6 @@
 package grader.model.gradebook.stats;
 
+import grader.controller.StatsController;
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.Scores;
 import grader.model.items.Assignment;
@@ -15,10 +16,11 @@ import java.util.Observer;
 
 /**
  * A container class for gradebook statistics aggregating all individual
- * Statistics objects for the gradebook scope.
+ * StatisticsBar objects for the gradebook scope.
  * @author Quan Tran
  */
 public class StatsContainer implements Observer {
+    private StatsController controller;
     private List<Student> students;
     private List<Assignment> assignments;
     private AssignmentTree assignmentTree;
@@ -26,10 +28,24 @@ public class StatsContainer implements Observer {
     private Map<Assignment, Statistics> stats;
 
     /**
-     * Gets the map of statistics in this container.
-     * @return the map
+     * Gets the list of Assignments used by this container.
+     * @return the list of Assignments
+     */
+    public List<Assignment> getAssignments() { return assignments; }
+
+    /**
+     * Gets the map of Statistics in this container.
+     * @return the Assignments->Statistics map
      */
     public Map<Assignment, Statistics> getMap() { return stats; }
+
+    /**
+     * Sets the controller for this StatsContainer.
+     * @param controller the controller to use
+     */
+    public void setController(StatsController controller) {
+        this.controller = controller;
+    }
 
     /**
      * Builds the list of Assignments from the AssignmentTree.
@@ -39,12 +55,15 @@ public class StatsContainer implements Observer {
                 assignmentTree.getAssignmentIterator();
 
         assignments = new ArrayList<Assignment>();
-        while (itr.hasNext())
-            assignments.add(itr.next());
+        while (itr.hasNext()) {
+            Assignment next = itr.next();
+            System.out.println(next);
+            assignments.add(next);
+        }
     }
 
     /**
-     * Builds the stats map, mapping Assignments to Statistics.
+     * Builds the stats map, mapping Assignments to StatisticsBar.
      */
     private void buildStats() {
         stats = new HashMap<Assignment, Statistics>();
@@ -65,7 +84,9 @@ public class StatsContainer implements Observer {
     /**
      * Renders the statistics spreadsheet in the view.
      */
-    public void render() {}
+    public void render() {
+        controller.render();
+    }
 
     /**
      * Observe update method.
@@ -77,7 +98,8 @@ public class StatsContainer implements Observer {
         scores = WorkSpace.instance.getScores();
         buildAssignments();
         buildStats();
-        render();
+        if (controller != null)
+            render();
     }
 
     // test

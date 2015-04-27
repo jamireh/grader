@@ -24,7 +24,5 @@ public class Category
         this.name = name;
         this.weight = new Percentage(weight);
         this.uncategorizedByRawScore = uncategorizedByRawScore;
-        //subcategories = new ArrayList<Category>();
-        //items = new ArrayList<Assignment>();
     }
 }
