@@ -12,6 +12,8 @@ import org.junit.Test;
  *
  *    Phase 3: Repeat phases 1 through 2.
  *	                                       								 </pre>
+ *
+ *	 @author Jon Amireh
  */
 public class CategoryTest
 {
