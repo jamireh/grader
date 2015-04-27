@@ -12,11 +12,23 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import java.util.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PieChartController implements Initializable{
+import grader.model.file.*;
+import grader.model.people.*;
+import grader.model.gradebook.*;
+import grader.model.items.*;
+
+public class PieChartController implements Initializable, Observer{
+
+    private int aS = 0;
+    private int bS = 0;
+    private int cS = 0;
+    private int dS = 0;
+    private int fS = 0;
 
     @FXML
     ObservableList<PieChart.Data> pieChartData =
@@ -31,10 +43,8 @@ public class PieChartController implements Initializable{
             );
 
     @FXML
-    ObservableList<PieChart.Data> pieChartDataSmall =
-            FXCollections.observableArrayList(new PieChart.Data("B", 36),
-                    new PieChart.Data("C", 43),
-                    new PieChart.Data("D", 21));
+    ObservableList<PieChart.Data> pieChartDataSmall;
+
 
     @FXML
     private PieChart piechart = new PieChart(pieChartData);
@@ -44,9 +54,29 @@ public class PieChartController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        WorkSpace.instance.addObserver(this);
+        List<Student> students = WorkSpace.instance.getStudents();
+
+        for (Student s : students)
+        {
+            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+            Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
+            addToGrade(percent);
+
+        }
+
+        //System.out.println(aS + " " + bS + " " + cS + " " + dS + " " + fS);
+
+        pieChartDataSmall = FXCollections.observableArrayList(
+                new PieChart.Data("A", (aS/((double)students.size())) * 100),
+                new PieChart.Data("B", (bS/((double)students.size())) * 100),
+                new PieChart.Data("C", (cS/((double)students.size())) * 100),
+                new PieChart.Data("D", (dS/((double)students.size())) * 100),
+                new PieChart.Data("F", (fS/((double)students.size())) * 100));
+
         piechart.setData(pieChartDataSmall);
 
-        piechart.setOnMousePressed(new EventHandler<MouseEvent>() {
+        /*piechart.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
                 if (smallData)
                 {
@@ -59,8 +89,62 @@ public class PieChartController implements Initializable{
                     smallData = true;
                 }
             }
-        });
+        });*/
 
+    }
+
+    /**
+     * Adds to grade variables.
+     */
+    private void addToGrade(Percentage percent)
+    {
+        System.out.println("added : " + percent.getValue());
+        double per = percent.getValue();
+
+        if (per >= 90.0)
+        {
+            aS++;
+        }
+        else if (per >= 80.0)
+        {
+            bS++;
+        }
+        else if (per >= 70.0)
+        {
+            cS++;
+        }
+        else if (per >= 60.0)
+        {
+            dS++;
+        }
+        else
+        {
+            fS++;
+        }
+    }
+
+    public void update(Observable obs, Object obj)
+    {
+        List<Student> students = WorkSpace.instance.getStudents();
+
+        for (Student s : students)
+        {
+            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+            Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
+            addToGrade(percent);
+
+        }
+
+        //System.out.println(aS + " " + bS + " " + cS + " " + dS + " " + fS);
+
+        pieChartDataSmall = FXCollections.observableArrayList(
+                new PieChart.Data("A", (aS/((double)students.size())) * 100),
+                new PieChart.Data("B", (bS/((double)students.size())) * 100),
+                new PieChart.Data("C", (cS/((double)students.size())) * 100),
+                new PieChart.Data("D", (dS/((double)students.size())) * 100),
+                new PieChart.Data("F", (fS/((double)students.size())) * 100));
+
+        piechart.setData(pieChartDataSmall);
     }
 
 
