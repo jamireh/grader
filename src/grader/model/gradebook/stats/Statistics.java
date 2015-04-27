@@ -13,7 +13,7 @@ public class Statistics {
     public final double min, max, mean;
 
     /**
-     * Constructs a new set of Statistics for the given data collection.
+     * Constructs a new set of StatisticsBar for the given data collection.
      * @param scores a list of the scores as doubles for the item
      */
     public Statistics(List<Double> scores) {
