@@ -30,6 +30,7 @@ public class Section
 
     public Section(String number) {
         this.sectionNumber = number;
+        this.sectionName = "Section " + number;
         students = new ArrayList<Student>();
         gradeScheme = new GradeScheme();
         groups = new ArrayList<Group>();

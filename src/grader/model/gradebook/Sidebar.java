@@ -28,9 +28,48 @@ public class Sidebar implements Observer {
      * @param section section scope
      * @param group group scope
      */
-    public void selectScope(Course course, Section section, Group group) {
+    public void selectScope(String course, String section, String group) {
+        Course cCourse = null;
+        Section sSection = null;
+        Group gGroup = null;
+        if(course != null)
+        {
+            for(Course c : gradebook.courses)
+            {
+                if(c.name.equals(course))
+                {
+                    cCourse = c;
+                    break;
+                }
+            }
+        }
+        if(section != null)
+        {
+            for (Section s : cCourse.sections)
+            {
+                if (s.sectionName.equals(section))
+                {
+                    sSection = s;
+                    break;
+                }
+            }
+        }
+        if(group != null)
+        {
+            for(Group g : sSection.groups)
+            {
+                if(group.equals(g.groupName))
+                {
+                    gGroup = g;
+                    break;
+                }
+            }
+        }
+        System.out.println(cCourse != null);
+        System.out.println(sSection != null);
+        System.out.println(gGroup != null);
 
-        WorkSpace.instance.sidebarSelect(course, section, group);
+        WorkSpace.instance.sidebarSelect(cCourse, sSection, gGroup);
     }
 
     /**
@@ -59,7 +98,7 @@ public class Sidebar implements Observer {
                 {
                     group.add(g.groupName);
                 }
-                sections.put(s.sectionNumber, group);
+                sections.put(s.sectionName, group);
             }
             viewReference.put(c.name, sections);
         }

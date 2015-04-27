@@ -2,6 +2,8 @@ package grader.controller;
 
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.Sidebar;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
@@ -22,10 +24,43 @@ public class SidebarController implements Initializable
     {
         sidebar.setController(this);
         sidebar.update(null, null);
+        tvCourses.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ObservableValue observable, Object oldValue,
+                                        Object newValue) {
+                            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+                            int level = tvCourses.getTreeItemLevel(selectedItem);
+                            String course = null, section = null, group = null;
+                            switch (level)
+                            {
+                                case 1:
+                                    course = selectedItem.getValue();
+                                    section = null;
+                                    group = null;
+                                    break;
+                                case 2:
+                                    course = selectedItem.getParent().getValue();
+                                    section = selectedItem.getValue();
+                                    group = null;
+                                    break;
+                                case 3:
+                                    course = selectedItem.getParent().getParent().getValue();
+                                    section = selectedItem.getParent().getValue();
+                                    group = selectedItem.getValue();
+                                    break;
+                            }
+                            if(level != 0)
+                            {
+                                sidebar.selectScope(course, section, group);
+                            }
+                        }
+
+                    });
     }
 
 
-    public void render(HashMap<String, HashMap<String, ArrayList<String>>> viewReference)
+    public void render(final HashMap<String, HashMap<String, ArrayList<String>>> viewReference)
     {
         TreeItem<String> rootView = new TreeItem<String>();
         rootView.setValue("Courses");
@@ -34,7 +69,7 @@ public class SidebarController implements Initializable
             TreeItem<String> course = new TreeItem<String>(courseKey);
             for (String  sectionKey : viewReference.get(courseKey).keySet())
             {
-                TreeItem<String> section = new TreeItem<String>("Section " + sectionKey);
+                TreeItem<String> section = new TreeItem<String>(sectionKey);
                 for(String group : viewReference.get(courseKey).get(sectionKey))
                 {
                     section.getChildren().add(new TreeItem<String>(group));
