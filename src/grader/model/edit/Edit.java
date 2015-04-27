@@ -30,8 +30,8 @@ public class Edit {
             WorkSpace.instance.getLatestUndo())
     */
    public static void undo() {
-      WorkSpace.instance.undo();
       System.out.println("Edit->Undo");
+      WorkSpace.instance.undo();
    }
 
    /**
@@ -55,8 +55,8 @@ public class Edit {
             WorkSpace.instance.getLatestUndo())
     */
     public static void redo() {
-       WorkSpace.instance.redo();
        System.out.println("Edit->Redo");
+       WorkSpace.instance.redo();
     }
 
    /**

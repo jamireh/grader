@@ -57,9 +57,8 @@ public class MainController implements Initializable
     public void initialize(URL location, ResourceBundle resources) {
         sidebar.setVisible(true);
         sidebar.setVisible(true);
+        vbContainer.setVisible(true);
         setupGradebook();
-
-        vbContainer.setVisible(false);
     }
 
     /* FILE MENU COMMANDS */
@@ -153,15 +152,7 @@ public class MainController implements Initializable
      */
     public void studentsSyncRoster() {
         System.out.println("Students->Sync Roster clicked!");
-        course.syncRoster();
-        if(course == null)
-        {
-            vbContainer.setVisible(true);
-        }
-        else
-        {
-            System.out.println("Try File->New Course and add a \'CPE 309\' course, then come back.");
-        }
+        if (course != null) course.syncRoster();
     }
 
     /**
@@ -273,7 +264,7 @@ public class MainController implements Initializable
      * Controller method for Save Grades.
      * @param event action event
      */
-    public void OnSaveButtonClicked(ActionEvent event)
+    public void onSaveButtonClicked(ActionEvent event)
     {
         System.out.println("Save button clicked");
     }
