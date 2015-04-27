@@ -1,7 +1,6 @@
 package grader.controller;
 
 import grader.Main;
-import grader.model.BasicModel;
 import grader.model.StudentEntry;
 import grader.model.edit.Edit;
 import grader.model.file.File;
@@ -48,73 +47,88 @@ public class MainController implements Initializable
 
     @FXML SidebarController sidebarController;
 
-    boolean addCourse = false;
-
     static Course course;
-    static File file;
-    static Edit edit;
 
     public MainController() {
         stage = new Stage();
-        file = new File();
-        edit = new Edit();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sidebar.setVisible(false);
+        sidebar.setVisible(true);
+        sidebar.setVisible(true);
         setupGradebook();
 
         vbContainer.setVisible(false);
     }
 
     /* FILE MENU COMMANDS */
+    /**
+     * Controller method for File->New Course.
+     */
     public void fileNewCourse() throws IOException {
         course = Gradebook.getCannedGradebook().courses.get(0);
         Parent root = FXMLLoader.load(Main.courseResource);
         stage.setTitle("New Course");
         stage.setScene(new Scene(root));
         stage.show();
-        BasicModel.setCallback(new Callback<String, Boolean>()
-        {
-            @Override
-            public Boolean call(String param)
-            {
-                file.newCourse(param);
-                if (param.equals("309"))
-                {
-                    addCourse = true;
-                    sidebar.setVisible(true);
-                }
-                return true;
-            }
-        });
     }
 
-    public void fileExport() { file.exportGradebook(); }
+    /**
+     * Controller method for File->Export.
+     */
+    public void fileExport() { File.exportGradebook(); }
 
-    public void fileImport() { file.importGradebook(); }
+    /**
+     * Controller method for File->Import.
+     */
+    public void fileImport() { File.importGradebook(); }
 
-    public void filePrint() { file.print(); }
+    /**
+     * Controller method for File->Print.
+     */
+    public void filePrint() { File.print(); }
 
-    public void fileLogout() { file.logout(); }
+    /**
+     * Controller method for File->Logout.
+     */
+    public void fileLogout() { File.logout(); }
 
-    public void fileQuit() {
-        file.quit();
-        System.exit(0);
-    }
+    /**
+     * Controller method for File->Quit.
+     * Exits the application.
+     */
+    public void fileQuit() { File.quit(); }
 
     /* EDIT MENU COMMANDS */
-    public void editUndo() { edit.undo(); }
+    /**
+     * Controller method for Edit->Undo.
+     */
+    public void editUndo() { Edit.undo(); }
 
-    public void editRedo() { edit.redo(); }
+    /**
+     * Controller method for Edit->Redo.
+     */
+    public void editRedo() { Edit.redo(); }
 
-    public void editCut() { edit.cut(); }
+    /**
+     * Controller method for Edit->Cut.
+     */
+    public void editCut() { Edit.cut(); }
 
-    public void editCopy() { edit.copy(); }
+    /**
+     * Controller method for Edit->Copy.
+     */
+    public void editCopy() { Edit.copy(); }
 
-    public void editPaste() { edit.paste(); }
+    /**
+     * Controller method for Edit->Paste.
+     */
+    public void editPaste() { Edit.paste(); }
 
+    /**
+     * Controller method for Edit->Find.
+     */
     public void editFind() throws IOException {
         System.out.println("Edit->Find clicked!");
         Parent root = FXMLLoader.load(Main.findResource);
@@ -123,6 +137,9 @@ public class MainController implements Initializable
     }
 
     /* STUDENTS MENU COMMANDS */
+    /**
+     * Controller method for Students->Add New.
+     */
     public void studentsAddNew() throws IOException {
         System.out.println("Students->Add New clicked!");
         Parent root = FXMLLoader.load(Main.studentsResource);
@@ -131,10 +148,13 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Students->Sync Roster.
+     */
     public void studentsSyncRoster() {
         System.out.println("Students->Sync Roster clicked!");
         course.syncRoster();
-        if(addCourse)
+        if(course == null)
         {
             vbContainer.setVisible(true);
         }
@@ -144,10 +164,16 @@ public class MainController implements Initializable
         }
     }
 
+    /**
+     * Controller method for Students->Edit Roster.
+     */
     public void studentsEditRoster() {
         System.out.println("Students->Edit Roster clicked!");
     }
 
+    /**
+     * Controller method for Students->Create Group.
+     */
     public void studentsCreateGroup() throws IOException {
         System.out.println("Students->Create Group clicked!");
         Parent root = FXMLLoader.load(Main.groupsResource);
@@ -156,11 +182,17 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Students->Edit Groups.
+     */
     public void studentsEditGroups() {
         System.out.println("Students->Edit Groups clicked!");
     }
 
     /* GRADES MENU COMMANDS */
+    /**
+     * Controller method for Grades->Add Category.
+     */
     public void gradesAddCategory() throws IOException {
         System.out.println("Grades->Add Category clicked!");
         Parent root = FXMLLoader.load(Main.categoriesResource);
@@ -169,6 +201,9 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Grades->Add Assignment.
+     */
     public void gradesAddAssignment() throws IOException {
         System.out.println("Grades->Add Assignment clicked!");
         Parent root = FXMLLoader.load(Main.assignmentsResource);
@@ -177,15 +212,24 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Grades->Manage.
+     */
     public void gradesManage() {
         System.out.println("Grades->Manage clicked!");
     }
 
+    /**
+     * Controller method for Grades->Publish.
+     */
     public void gradesPublish() {
         System.out.println("Grades->Publish clicked!");
     }
 
     /* CURVE MENU COMMANDS */
+    /**
+     * Controller method for Curve->Pie Chart.
+     */
     public void curvePieChart() throws IOException {
         System.out.println("Grades->Pie Chart clicked!");
         Parent root = FXMLLoader.load(Main.piechartResource);
@@ -194,6 +238,9 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Curve->Histogram.
+     */
     public void curveHistogram() throws IOException {
         System.out.println("Grades->Histogram clicked!");
         Parent root = FXMLLoader.load(Main.histogramResource);
@@ -202,6 +249,9 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Curve->Grade Scheme.
+     */
     public void curveGradeScheme() throws IOException {
         System.out.println("Grades->Grade Scheme clicked!");
         Parent root = FXMLLoader.load(Main.gradeSchemeResource);
@@ -210,16 +260,28 @@ public class MainController implements Initializable
         stage.show();
     }
 
+    /**
+     * Controller method for Revert Grades.
+     * @param event action event
+     */
     public void onRevertButtonClicked(ActionEvent event)
     {
         System.out.println("Revert button clicked");
     }
 
+    /**
+     * Controller method for Save Grades.
+     * @param event action event
+     */
     public void OnSaveButtonClicked(ActionEvent event)
     {
         System.out.println("Save button clicked");
     }
 
+    /**
+     * Controller method for Save and Post Grades.
+     * @param event action event
+     */
     public void onSavePostButtonClicked(ActionEvent event)
     {
         System.out.println("Save & Post button clicked");
@@ -343,6 +405,5 @@ public class MainController implements Initializable
         hbTable.setSpacing(5);
 
         hbTable.getChildren().addAll(table);
-
     }
 }
