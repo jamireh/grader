@@ -46,10 +46,9 @@ public class Spreadsheet implements Observer {
                grades[studentIndex][0] = student.getName().toString();
                for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
                    grades[studentIndex][assignmentIndex + 1] =
-                         "50";
-//                       Double.toString(
-//                               scores.getRawScore(student,
-//                               assignments.get(assignmentIndex)));
+                       Double.toString(
+                               scores.getRawScore(student,
+                               assignments.get(assignmentIndex)));
                }
            }
 
@@ -85,9 +84,6 @@ public class Spreadsheet implements Observer {
       while (itr.hasNext()) {
          assignments.add(itr.next());
       }
-      assignments.add(new Assignment("Dummy test"));
-      assignments.add(new Assignment("Dummy quiz"));
-      assignments.add(new Assignment("Dummy homework"));
 
       students = WorkSpace.instance.getStudents();
       scores = WorkSpace.instance.getScores();
