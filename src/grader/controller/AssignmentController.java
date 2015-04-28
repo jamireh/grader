@@ -2,6 +2,7 @@ package grader.controller;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
+import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,7 +58,10 @@ public class AssignmentController implements Initializable {
         {
             try
             {
-                MainController.course.addAssignment(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
+                if(WorkSpace.instance.course != null)
+                {
+                    WorkSpace.instance.course.addAssignment(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
+                }
 
             }
             catch(PercentageFormatException e)
