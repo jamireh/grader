@@ -38,6 +38,7 @@ public class WorkSpace extends Observable {
     */
    public static final WorkSpace instance = new WorkSpace();
    static {
+      instance.sidebar.update(null, null);
       instance.setChanged();
       instance.notifyObservers();
    }
@@ -51,13 +52,14 @@ public class WorkSpace extends Observable {
 	   deltas = new ArrayList<RawScore>();
 	   futureDeltas = new ArrayList<RawScore>();
 
+      // Separate so we don't notify it all the time
       sidebar = new Sidebar();
+
       spreadsheet = new Spreadsheet();
       statistics = new StatsContainer();
       pieChart = new PieChart();
       histogram = new Histogram();
 
-      addObserver(sidebar);
       addObserver(spreadsheet);
       addObserver(statistics);
       addObserver(pieChart);

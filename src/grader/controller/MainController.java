@@ -295,36 +295,36 @@ public class MainController implements Initializable
           table = new TableView<String[]>();
           hbTable.setSpacing(5);
           hbTable.getChildren().addAll(table);
-       }
 
-        final Button b1 = new Button("Revert");
-        b1.setFont(new Font("Arial", 16));
-        final Button b2 = new Button("Save");
-        b2.setFont(new Font("Arial", 16));
-        final Button b3 = new Button("Save and Publish");
-        b3.setFont(new Font("Arial", 16));
+          final Button b1 = new Button("Revert");
+          b1.setFont(new Font("Arial", 16));
+          final Button b2 = new Button("Save");
+          b2.setFont(new Font("Arial", 16));
+          final Button b3 = new Button("Save and Publish");
+          b3.setFont(new Font("Arial", 16));
 
-        table.setEditable(true);
-        table.setMinWidth(1200);
-        table.setMaxWidth(1200);
-        table.setMaxHeight(600);
+          table.setEditable(true);
+          table.setMinWidth(1200);
+          table.setMaxWidth(1200);
+          table.setMaxHeight(600);
 
-        ObservableList<String[]> data = FXCollections.observableArrayList();
-        data.addAll(Arrays.asList(grades));
-
-        for (int i = 0; i < headers.length; i++) {
-            TableColumn tc = new TableColumn(headers[i]);
-            final int colNo = i;
-            tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+          for (int i = 0; i < headers.length; i++) {
+             TableColumn tc = new TableColumn(headers[i]);
+             final int colNo = i;
+             tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
-                    return new SimpleStringProperty((p.getValue()[colNo]));
+                   return new SimpleStringProperty((p.getValue()[colNo]));
                 }
-            });
-            tc.setPrefWidth(90);
-            table.getColumns().add(tc);
-        }
+             });
+             tc.setPrefWidth(90);
+             table.getColumns().add(tc);
+          }
+       }
 
-        table.setItems(data);
+       ObservableList<String[]> data = FXCollections.observableArrayList();
+       data.addAll(Arrays.asList(grades));
+
+       table.setItems(data);
     }
 }

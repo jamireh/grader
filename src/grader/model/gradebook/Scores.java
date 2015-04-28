@@ -46,6 +46,8 @@ public class Scores {
                                  iff rawScores.contains(score));
     */
    public double getRawScore(Student student, Assignment assignment) {
+      if (rawScores.get(student) == null) return 0.0;
+      if (rawScores.get(student).get(assignment) == null) return 0.0;
       return rawScores.get(student).get(assignment).getScore();
    }
 
