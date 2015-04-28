@@ -32,6 +32,26 @@ public class AssignmentTree
         categories = new ArrayList<Category>();
     }
 
+    @Override
+    protected AssignmentTree clone()
+    {
+        AssignmentTree at = new AssignmentTree();
+        at.root = cloneHelper(root, null);
+        return at;
+    }
+
+    private Node cloneHelper(Node currentNode, Node parent)
+    {
+        Node toReturn = new Node(parent);
+        toReturn.assignments.addAll(currentNode.assignments);
+        for(Node n : currentNode.nodes)
+        {
+            toReturn.nodes.add(cloneHelper(n, toReturn));
+        }
+        return toReturn;
+    }
+
+
     /**
      * Adds the given child (sub)Category to the given parent Category.
      * @param parent the parent Category
@@ -192,7 +212,7 @@ public class AssignmentTree
      */
     public AssignmentIterator getAssignmentIterator()
     {
-        return new AssignmentIterator();
+        return new AssignmentIterator(clone());
     }
 
     /**
@@ -263,13 +283,16 @@ public class AssignmentTree
     public class AssignmentIterator implements Iterator<Assignment>
     {
         private Assignment nextAssignment;
-        private Node currentNode = root;
+        private Node currentNode;
+        private AssignmentTree at;
 
         /**
          * Constructs a new AssignmentIterator.
          */
-        public AssignmentIterator()
+        public AssignmentIterator(AssignmentTree at)
         {
+            this.at = at;
+            currentNode = at.root;
             nextAssignment = findNextAssignment();
         }
 
