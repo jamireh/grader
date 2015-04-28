@@ -64,16 +64,10 @@ public class Course
 	*pre:
 	*	!categories.contains(cate);
 	*/
-	public void add(Category cate)
+	public void addCategory(Category cate)
 	{
 		System.out.println("gradebook.Course.add(Category) called");
 		categories.add(cate);
-	}
-
-	public void add(Assignment assign)
-	{
-		System.out.println("gradebook.Course.add(Assignment) called");
-		assignments.addTo(null, assign);
 	}
 
 	public void syncRoster()
@@ -108,6 +102,7 @@ public class Course
 	 * @param assignment Assignment to add
 	 */
     public void addAssignment(Assignment assignment) {
+       System.out.println("gradebook.Course.add(Assignment) called");
        assignments.addTo(null, assignment);
     }
 
@@ -116,6 +111,7 @@ public class Course
 	 * @return AssignmentTree for this Course
 	 */
     public AssignmentTree getAssignmentTree() {
+        System.out.println("Get assignment tree");
        return assignments;
     }
 }

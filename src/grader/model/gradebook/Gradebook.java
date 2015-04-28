@@ -1,6 +1,8 @@
 package grader.model.gradebook;
 
+import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.people.Instructor;
 import grader.model.people.Name;
 import grader.model.people.Student;
@@ -107,7 +109,7 @@ public class Gradebook {
           Student student = null;
           try
           {
-              student = new Student(new Name(tokens[0], null, tokens[1]));
+              student = new Student(new Name(tokens[0], "", tokens[1]));
           }
           catch (InvalidNameException e)
           {
@@ -133,6 +135,12 @@ public class Gradebook {
 
       cannedGradebook.scores = scores;
       cannedGradebook.addCourse(course);
+      AssignmentTree.AssignmentIterator itr =
+         course.getAssignmentTree().getAssignmentIterator();
+
+      while (itr.hasNext()) {
+          System.out.println(itr.next());
+      }
    }
 
    /**

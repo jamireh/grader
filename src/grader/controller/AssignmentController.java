@@ -57,7 +57,7 @@ public class AssignmentController implements Initializable {
         {
             try
             {
-                MainController.course.add(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
+                MainController.course.addAssignment(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
 
             }
             catch(PercentageFormatException e)
