@@ -98,7 +98,7 @@ public class PieChartController implements Initializable, Observer{
      */
     private void addToGrade(Percentage percent)
     {
-        System.out.println("added : " + percent.getValue());
+        //System.out.println("added : " + percent.getValue());
         double per = percent.getValue();
 
         if (per >= 90.0)

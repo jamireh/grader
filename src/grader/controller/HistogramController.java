@@ -22,19 +22,23 @@ import javafx.scene.input.MouseEvent;
 import java.awt.*;
 import java.awt.Button;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import grader.model.curve.*;
+import grader.model.file.*;
+import grader.model.people.*;
 import grader.model.gradebook.*;
+import grader.model.items.*;
 
 
-public class HistogramController implements Initializable{
+public class HistogramController implements Initializable, Observer {
 
-    private boolean smallData = true;
+    //private boolean smallData = true;
 
     private Section section = new Section();
 
-    @FXML
+    private Hashtable<Double, Integer> vals = new Hashtable<Double, Integer>();
+
+    /*@FXML
     ObservableList<Entry> data = FXCollections.observableArrayList(
             new Entry("A+", "99", " "),
             new Entry("A", "94", " "),
@@ -157,7 +161,10 @@ public class HistogramController implements Initializable{
             new Entry(" ", "2", " "),
             new Entry(" ", "1", " "),
             new Entry("F", "0", " ")
-    );
+    );*/
+
+    @FXML
+    ObservableList<Entry> data = FXCollections.observableArrayList();
 
 
     @FXML
@@ -194,12 +201,36 @@ public class HistogramController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        WorkSpace.instance.addObserver(this);
+
+        for (int i = 0; i <= 100; i++)
+        {
+            vals.put(new Double(i), 0);
+        }
+
+        java.util.List<Student> students = WorkSpace.instance.getStudents();
+
+        for (Student s : students)
+        {
+            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+            Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
+
+            double tempPercent = Math.ceil(percent.getValue());
+            Integer temp = vals.get(tempPercent);
+            vals.replace(tempPercent, ++temp);
+
+        }
+
+        for (int i = 100; i >= 0; i--) {
+            data.add(createEntry((double) i));
+        }
+
         letterCol.setMinWidth(100);
         percentCol.setMinWidth(100);
         starCol.setMinWidth(200);
         table.setItems(this.data);
 
-        table.setOnMousePressed(new EventHandler<MouseEvent>() {
+        /*table.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
                 if (smallData)
                 {
@@ -212,7 +243,7 @@ public class HistogramController implements Initializable{
                     smallData = true;
                 }
             }
-        });
+        });*/
     }
 
     public static class Entry {
@@ -244,6 +275,90 @@ public class HistogramController implements Initializable{
         }
     }
 
+    public void update(Observable obv, Object obj)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            vals.put(((double)i), 0);
+        }
+
+        java.util.List<Student> students = WorkSpace.instance.getStudents();
+
+        for (Student s : students)
+        {
+            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+            Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
+
+            double tempPercent = Math.ceil(percent.getValue());
+            Integer temp = vals.get(tempPercent);
+            vals.replace(tempPercent, ++temp);
+
+        }
+
+        for (int i = 100; i >= 0; i--) {
+            data.add(createEntry((double) i));
+        }
+    }
+
+    private Entry createEntry(double percent)
+    {
+        String letter;
+        String stars = "";
+
+        switch (((int)percent))
+        {
+            case 99:
+                letter = "A+";
+                break;
+            case 94:
+                letter = "A";
+                break;
+            case 90:
+                letter = "A-";
+                break;
+            case 89:
+                letter = "B+";
+                break;
+            case 84:
+                letter = "B";
+                break;
+            case 80:
+                letter = "B-";
+                break;
+            case 79:
+                letter = "C+";
+                break;
+            case 74:
+                letter = "C";
+                break;
+            case 70:
+                letter = "C-";
+                break;
+            case 69:
+                letter = "D+";
+                break;
+            case 64:
+                letter = "D";
+                break;
+            case 60:
+                letter = "D-";
+                break;
+            case 0:
+                letter = "F";
+                break;
+            default:
+                letter = " ";
+                break;
+
+        }
+
+        for (int i = 0; i < vals.get(percent); i++)
+        {
+            stars += " *";
+        }
+
+        return new Entry(letter, String.valueOf(percent), stars);
+    }
 
 
 
