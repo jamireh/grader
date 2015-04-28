@@ -33,7 +33,7 @@ public class Name
         this.middleName = middleName;
         this.lastName = lastName;
 
-        if (firstName.length() == 0 || lastName.length() == 0 || !firstName.matches("/^[A-z]+$/") || !middleName
+        if (firstName.length() == 0 || lastName.length() == 0 || firstName.matches("/^[A-z]+$/") || middleName
                 .matches("/^[A-z]+$/") || lastName.matches("/^[A-z]+$/"))
             throw new InvalidNameException("");
     }
@@ -50,5 +50,9 @@ public class Name
      */
     public String getFirstName() {
        return firstName;
+    }
+
+    public String toString() {
+        return firstName + " " + lastName;
     }
 }

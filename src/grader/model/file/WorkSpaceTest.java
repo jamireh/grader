@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
  *
  *    Phase 7: Repeat phases 1 through 6.
  *	                                       								 </pre>
+ *
+ *	@author Gregory Davis
  */
 public class WorkSpaceTest {
     @org.junit.Test

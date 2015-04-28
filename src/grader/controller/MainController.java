@@ -6,6 +6,8 @@ import grader.model.edit.Edit;
 import grader.model.file.*;
 import grader.model.gradebook.Course;
 import grader.model.gradebook.Gradebook;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +29,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -62,8 +65,8 @@ public class MainController implements Initializable
         sidebar.setVisible(true);
         vbContainer.setVisible(true);
         course = WorkSpace.instance.getCourse();
-        setupGradebook();
         StatsController stats = new StatsController();
+        WorkSpace.instance.spreadsheet.setController(this);
     }
 
     /* FILE MENU COMMANDS */
@@ -283,9 +286,16 @@ public class MainController implements Initializable
         System.out.println("Save & Post button clicked");
     }
 
-    public void setupGradebook()
+
+    static TableView<String[]> table = null;
+
+    public void setupGradebook(String[] headers, String[][] grades)
     {
-        TableView table = new TableView();
+       if (table == null) {
+          table = new TableView<String[]>();
+          hbTable.setSpacing(5);
+          hbTable.getChildren().addAll(table);
+       }
 
         final Button b1 = new Button("Revert");
         b1.setFont(new Font("Arial", 16));
@@ -299,107 +309,22 @@ public class MainController implements Initializable
         table.setMaxWidth(1200);
         table.setMaxHeight(600);
 
-        TableColumn nameCol = new TableColumn("Name");
-        TableColumn groupCol = new TableColumn("Group");
-        TableColumn projectCol = new TableColumn("Projects");
-        TableColumn quizCol = new TableColumn("Quizzes");
-        TableColumn midtermCol = new TableColumn("Midterms");
-        TableColumn finalCol = new TableColumn("Final");
-        TableColumn participationCol = new TableColumn("Participation");
-        TableColumn totalCol = new TableColumn("Total");
-        TableColumn letterGradeCol = new TableColumn("Letter Grade");
+        ObservableList<String[]> data = FXCollections.observableArrayList();
+        data.addAll(Arrays.asList(grades));
 
-        TableColumn firstProjectCol = new TableColumn("Project 1");
-        TableColumn secondProjectCol = new TableColumn("Project 2");
-        projectCol.getColumns().addAll(firstProjectCol, secondProjectCol);
-
-        TableColumn firstQuizCol = new TableColumn("Quiz 1");
-        TableColumn secondQuizCol = new TableColumn("Quiz 2");
-        quizCol.getColumns().addAll(firstQuizCol, secondQuizCol);
-
-        TableColumn firstMidtermCol = new TableColumn("Midterm 1");
-        TableColumn secondMidtermCol = new TableColumn("Midterm 2");
-        midtermCol.getColumns().addAll(firstMidtermCol, secondMidtermCol);
-
-
-        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.12));
-        groupCol.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        projectCol.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        firstProjectCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        secondProjectCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        quizCol.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        firstQuizCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        secondQuizCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        midtermCol.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        firstMidtermCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        secondMidtermCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        finalCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        participationCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-        totalCol.prefWidthProperty().bind(table.widthProperty().multiply(0.05));
-        letterGradeCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
-
-        final ObservableList<StudentEntry> data = FXCollections.observableArrayList(
-                new StudentEntry("Clark, Brandon J.", "Team 1", 19, 18, 8, 13, 32, 30, 89, 1, 85, "B+"),
-                new StudentEntry("Dang, Carmen", "Team 2", 19, 20, 8, 12, 35, 50, 92, 4, 78, "C+"),
-                new StudentEntry("Fong, Vivian", "Team 3", 16, 15, 9, 12, 37, 46, 80, 2, 68, "D+"),
-                new StudentEntry("Garg, Nupur", "Team 4", 20, 16, 8, 17, 45, 35, 72, 2, 78, "C+"),
-                new StudentEntry("Hicks, Katelyn C.", "Team 5", 18, 22, 8, 14, 34, 36, 93, 2, 66, "D+"),
-                new StudentEntry("Hwang, Helen", "Team 1", 24, 16, 7, 10, 32, 39, 89, 5, 80, "B-"),
-                new StudentEntry("Joshi, Esha", "Team 2", 15, 19, 8, 19, 47, 32, 95, 4, 85, "B"),
-                new StudentEntry("Krier, Connor M.", "Team 3", 17, 24, 6, 10, 39, 30, 75, 2, 83, "B"),
-                new StudentEntry("Lee, Daniel H.", "Team 4", 25, 21, 6, 14, 30, 46, 95, 5, 74, "C"),
-                new StudentEntry("Lukens, Myra C.", "Team 5", 21, 20, 8, 19, 39, 39, 95, 1, 75, "C"),
-                new StudentEntry("Oelkers, Blaine P.", "Team 1", 21, 15, 7, 17, 37, 38, 73, 2, 77, "C+"),
-                new StudentEntry("Poole V, Frank", "Team 2", 20, 25, 9, 19, 30, 38, 93, 5, 78, "C+"),
-                new StudentEntry("Quezada, Brian J.", "Team 3", 16, 22, 6, 19, 48, 31, 93, 2, 63, "D-"),
-                new StudentEntry("Qureshi, Wasae Abdul", "Team 4", 25, 24, 9, 14, 48, 45, 80, 3, 78, "C+"),
-                new StudentEntry("Toy, Daniel L.", "Team 5", 24, 16, 7, 15, 39, 47, 77, 5, 85, "B")
-        );
-
-
-        nameCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("name")
-        );
-        groupCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("group")
-        );
-        firstProjectCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("projects1")
-        );
-        secondProjectCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("projects1")
-        );
-        firstQuizCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("quizzes1")
-        );
-        secondQuizCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("quizzes2")
-        );
-        firstMidtermCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("midterm1")
-        );
-        secondMidtermCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("midterm2")
-        );
-        finalCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("finalExam")
-        );
-        participationCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("participation")
-        );
-        totalCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("total")
-        );
-        letterGradeCol.setCellValueFactory(
-                new PropertyValueFactory<StudentEntry, String>("letterGrade")
-        );
+        for (int i = 0; i < headers.length; i++) {
+            TableColumn tc = new TableColumn(headers[i]);
+            final int colNo = i;
+            tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
+                    return new SimpleStringProperty((p.getValue()[colNo]));
+                }
+            });
+            tc.setPrefWidth(90);
+            table.getColumns().add(tc);
+        }
 
         table.setItems(data);
-        table.getColumns().addAll(nameCol, groupCol,
-                projectCol, quizCol, midtermCol, finalCol, participationCol, totalCol, letterGradeCol);
-
-        hbTable.setSpacing(5);
-
-        hbTable.getChildren().addAll(table);
     }
 }

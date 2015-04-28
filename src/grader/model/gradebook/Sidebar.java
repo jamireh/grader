@@ -2,6 +2,7 @@ package grader.model.gradebook;
 
 import grader.controller.SidebarController;
 import grader.model.file.WorkSpace;
+import grader.model.items.AssignmentTree;
 import grader.model.people.Group;
 
 import java.util.ArrayList;
@@ -38,6 +39,14 @@ public class Sidebar implements Observer {
             {
                 if(c.name.equals(course))
                 {
+                   System.out.println("Found course " + course);
+                    AssignmentTree.AssignmentIterator itr =
+                       c.getAssignmentTree().getAssignmentIterator();
+
+                     while (itr.hasNext()) {
+                         System.out.println(itr.next());
+                     }
+
                     cCourse = c;
                     break;
                 }
@@ -65,11 +74,10 @@ public class Sidebar implements Observer {
                 }
             }
         }
-        System.out.println(cCourse != null);
-        System.out.println(sSection != null);
-        System.out.println(gGroup != null);
-
-        WorkSpace.instance.sidebarSelect(cCourse, sSection, gGroup);
+        if(cCourse != null)
+        {
+            WorkSpace.instance.sidebarSelect(cCourse, sSection, gGroup);
+        }
     }
 
     /**

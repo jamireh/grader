@@ -6,7 +6,6 @@ import grader.model.errors.PercentageFormatException;
  * Wrapper class for a float to ensure the correct percentage format.
  *
  * @author Jon Amireh
- * @author Tobias Bleisch
  */
 public class Percentage
 {
@@ -67,7 +66,7 @@ public class Percentage
     }
 
     /**
-     * Retrives the value of this Percentage
+     * Retrieves the value of this Percentage
      * @return Double representing the value of this Percentage
      */
     public double getValue()

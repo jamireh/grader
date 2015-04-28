@@ -1,6 +1,8 @@
 package grader.model.gradebook;
 
+import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.people.Instructor;
 import grader.model.people.Name;
 import grader.model.people.Student;
@@ -10,6 +12,7 @@ import javax.naming.InvalidNameException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
 *This class collects all the various components of the grader: Instructor, TA and Student Views.
@@ -107,7 +110,7 @@ public class Gradebook {
           Student student = null;
           try
           {
-              student = new Student(new Name(tokens[0], null, tokens[1]));
+              student = new Student(new Name(tokens[0], "", tokens[1]));
           }
           catch (InvalidNameException e)
           {
@@ -124,15 +127,24 @@ public class Gradebook {
       }
 
       Scores scores = new Scores();
+      Random rand = new Random();
 
       for (Student student : students) {
          for (Assignment assignment : assignments)  {
-            scores.addRawScore(student, assignment, 0.0);
+            double randomScore = rand.nextInt(assignment.rawPoints);
+            scores.addRawScore(student, assignment, randomScore);
          }
       }
 
       cannedGradebook.scores = scores;
       cannedGradebook.addCourse(course);
+      AssignmentTree.AssignmentIterator itr =
+         course.getAssignmentTree().getAssignmentIterator();
+
+      System.out.println("Canned gradebook assignments:");
+      while (itr.hasNext()) {
+          System.out.println(itr.next());
+      }
    }
 
    /**
