@@ -46,7 +46,6 @@ public class Course
         categories = new ArrayList<Category>();
         assignments = new AssignmentTree();
         sections = new ArrayList<Section>();
-        System.out.println("gradebook.Course() called");
     }
 
     public Course(String name)
@@ -54,9 +53,7 @@ public class Course
         categories = new ArrayList<Category>();
         assignments = new AssignmentTree();
         sections = new ArrayList<Section>();
-        //sections.add(new Section());
         this.name = name;
-        System.out.println("gradebook.Course() called");
     }
 
 	/**
@@ -111,7 +108,6 @@ public class Course
 	 * @return AssignmentTree for this Course
 	 */
     public AssignmentTree getAssignmentTree() {
-        System.out.println("Get assignment tree");
        return assignments;
     }
 }
