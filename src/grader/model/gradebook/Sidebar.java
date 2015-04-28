@@ -39,14 +39,6 @@ public class Sidebar implements Observer {
             {
                 if(c.name.equals(course))
                 {
-                   System.out.println("Found course " + course);
-                    AssignmentTree.AssignmentIterator itr =
-                       c.getAssignmentTree().getAssignmentIterator();
-
-                     while (itr.hasNext()) {
-                         System.out.println(itr.next());
-                     }
-
                     cCourse = c;
                     break;
                 }

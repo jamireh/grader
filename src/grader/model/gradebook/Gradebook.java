@@ -164,7 +164,6 @@ public class Gradebook {
 
       Random rand = new Random();
 
-      System.out.println("Canned gradebook assignments:");
       for (Student student : students) {
 
          AssignmentTree.AssignmentIterator itr =
