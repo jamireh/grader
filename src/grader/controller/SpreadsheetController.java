@@ -64,6 +64,7 @@ public class SpreadsheetController implements Initializable
           table.setMaxHeight(600);
        }
 
+       table.getColumns().clear();
        for (int i = 0; i < headers.length; i++) {
           TableColumn tc = new TableColumn(headers[i]);
           final int colNo = i;
