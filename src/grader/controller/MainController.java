@@ -286,9 +286,16 @@ public class MainController implements Initializable
         System.out.println("Save & Post button clicked");
     }
 
+
+    static TableView<String[]> table = null;
+
     public void setupGradebook(String[] headers, String[][] grades)
     {
-        TableView<String[]> table = new TableView<String[]>();
+       if (table == null) {
+          table = new TableView<String[]>();
+          hbTable.setSpacing(5);
+          hbTable.getChildren().addAll(table);
+       }
 
         final Button b1 = new Button("Revert");
         b1.setFont(new Font("Arial", 16));
@@ -317,10 +324,7 @@ public class MainController implements Initializable
             tc.setPrefWidth(90);
             table.getColumns().add(tc);
         }
+
         table.setItems(data);
-
-        hbTable.setSpacing(5);
-
-        hbTable.getChildren().addAll(table);
     }
 }
