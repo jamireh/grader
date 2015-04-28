@@ -17,18 +17,18 @@ import java.time.LocalDate;
 public class Assignment
 {
     /** the date and time at which this item is due */
-    LocalDate dueDate;
+    public LocalDate dueDate;
 
     /** the name of this particular item */
-    String name;
+    public String name;
 
     /** the number of points this item is worth */
-    int rawPoints;
+    public int rawPoints;
 
     /** weight for this particular assignment **/
-    Percentage weight;
+    public Percentage weight;
 
-    boolean hasWeight;
+    public boolean hasWeight;
 
     /**
      * Creates a new Assignment based on given parameters
@@ -68,6 +68,7 @@ public class Assignment
     }
 
     public Assignment(String name) {
+       this.rawPoints = 100;
        this.name = name;
     }
 

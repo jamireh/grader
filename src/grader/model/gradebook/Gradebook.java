@@ -12,6 +12,7 @@ import javax.naming.InvalidNameException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
 *This class collects all the various components of the grader: Instructor, TA and Student Views.
@@ -126,10 +127,12 @@ public class Gradebook {
       }
 
       Scores scores = new Scores();
+      Random rand = new Random();
 
       for (Student student : students) {
          for (Assignment assignment : assignments)  {
-            scores.addRawScore(student, assignment, 0.0);
+            double randomScore = rand.nextInt(assignment.rawPoints);
+            scores.addRawScore(student, assignment, randomScore);
          }
       }
 
