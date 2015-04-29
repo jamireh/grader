@@ -1,6 +1,6 @@
 package grader.model.gradebook;
 
-import grader.controller.MainController;
+import grader.controller.SpreadsheetController;
 import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
@@ -20,13 +20,13 @@ public class Spreadsheet implements Observer {
    private List<Student> students;
    private List<Assignment> assignments;
    private Scores scores;
-   private MainController controller;
+   private SpreadsheetController controller;
 
    /**
      Sets the controller bound to this model
     * @param controller Controller to delegate to when the model changes
     */
-   public void setController(MainController controller) {
+   public void setController(SpreadsheetController controller) {
        this.controller = controller;
    }
 
@@ -82,7 +82,8 @@ public class Spreadsheet implements Observer {
          WorkSpace.instance.getAssignmentTree().getAssignmentIterator();
 
       while (itr.hasNext()) {
-         assignments.add(itr.next());
+         Assignment assignment = itr.next();
+         assignments.add(assignment);
       }
 
       students = WorkSpace.instance.getStudents();

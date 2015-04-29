@@ -64,15 +64,34 @@ public class Gradebook {
 
    public Gradebook()
    {
+      scores = new Scores();
       courses = new ArrayList<Course>();
    }
 
    static {
       cannedGradebook = new Gradebook();
       Course course = new Course("CPE 309");
-      Section section = new Section("01");
-      course.addSection(section);
 
+      // Add assignments to course
+      String[] assignmentNames = {
+         "Project 1",
+         "Project 2",
+         "Quiz 1",
+         "Quiz 2",
+         "Midterm 1",
+         "Midterm 2",
+         "Final",
+         "Participation"
+      };
+
+      for (String assignmentName : Arrays.asList(assignmentNames)) {
+         Assignment assignment = new Assignment(assignmentName);
+         course.addAssignment(assignment);
+      }
+
+      cannedGradebook.addCourse(course);
+
+      // Create sections
       String[] names = {
          "Brandon Clark",
          "Carmen Dang",
@@ -91,16 +110,39 @@ public class Gradebook {
          "Daniel Toy"
       };
 
-      String[] assignmentNames = {
-         "Project 1",
-         "Project 2",
-         "Quiz 1",
-         "Quiz 2",
-         "Midterm 1",
-         "Midterm 2",
-         "Final",
-         "Participation"
-      };
+      addCannedSection(cannedGradebook, course, "01", names);
+
+      final String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      final String abc = "abcdefghijklmnopqrstuvwxyZ";
+      final int nameLength = 6;
+      Random rnd = new Random();
+
+      names = new String[25];
+      for (int i = 0; i < names.length; ++i) {
+         StringBuilder sb = new StringBuilder( nameLength );
+         sb.append( ABC.charAt( rnd.nextInt(ABC.length()) ) );
+         for( int letter = 0; letter < nameLength - 1; letter++ )
+            sb.append( abc.charAt( rnd.nextInt(abc.length()) ) );
+         sb.append(" ");
+         sb.append( ABC.charAt( rnd.nextInt(ABC.length()) ) );
+         for( int letter = 0; letter < nameLength - 1; letter++ )
+            sb.append( abc.charAt( rnd.nextInt(abc.length()) ) );
+         names[i] = sb.toString();
+      }
+      addCannedSection(cannedGradebook, course, "02", names);
+
+      AssignmentTree.AssignmentIterator itr =
+         course.getAssignmentTree().getAssignmentIterator();
+
+      System.out.println("Canned gradebook assignments:");
+      while (itr.hasNext()) {
+          System.out.println(itr.next());
+      }
+   }
+
+   private static void addCannedSection(Gradebook gradebook, Course course, String number, String[] names) {
+      Section section = new Section(number);
+      course.addSection(section);
 
       List<Student> students = new ArrayList<Student>();
       List<Assignment> assignments = new ArrayList<Assignment>();
@@ -120,30 +162,18 @@ public class Gradebook {
          section.addStudent(student);
       }
 
-      for (String assignmentName : Arrays.asList(assignmentNames)) {
-         Assignment assignment = new Assignment(assignmentName);
-         assignments.add(assignment);
-         course.addAssignment(assignment);
-      }
-
-      Scores scores = new Scores();
       Random rand = new Random();
 
       for (Student student : students) {
-         for (Assignment assignment : assignments)  {
+
+         AssignmentTree.AssignmentIterator itr =
+               course.getAssignmentTree().getAssignmentIterator();
+
+         while (itr.hasNext()) {
+            Assignment assignment = itr.next();
             double randomScore = rand.nextInt(assignment.rawPoints);
-            scores.addRawScore(student, assignment, randomScore);
+            cannedGradebook.scores.addRawScore(student, assignment, randomScore);
          }
-      }
-
-      cannedGradebook.scores = scores;
-      cannedGradebook.addCourse(course);
-      AssignmentTree.AssignmentIterator itr =
-         course.getAssignmentTree().getAssignmentIterator();
-
-      System.out.println("Canned gradebook assignments:");
-      while (itr.hasNext()) {
-          System.out.println(itr.next());
       }
    }
 

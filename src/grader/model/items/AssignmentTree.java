@@ -284,14 +284,12 @@ public class AssignmentTree
     {
         private Assignment nextAssignment;
         private Node currentNode;
-        private AssignmentTree at;
 
         /**
          * Constructs a new AssignmentIterator.
          */
         public AssignmentIterator(AssignmentTree at)
         {
-            this.at = at;
             currentNode = at.root;
             nextAssignment = findNextAssignment();
         }

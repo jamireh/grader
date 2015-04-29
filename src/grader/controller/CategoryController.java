@@ -1,6 +1,7 @@
 package grader.controller;
 
 import grader.model.errors.PercentageFormatException;
+import grader.model.file.WorkSpace;
 import grader.model.items.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,7 +58,10 @@ public class CategoryController implements Initializable {
         {
             try
             {
-                MainController.course.addCategory(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
+                if(WorkSpace.instance.course != null)
+                {
+                    WorkSpace.instance.course.addCategory(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
+                }
             }
             catch(PercentageFormatException e)
             {
