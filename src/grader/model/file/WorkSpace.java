@@ -254,6 +254,7 @@ public class WorkSpace extends Observable {
     * @param course newly selected course
     * @param section newly selected section
     * @param group newly selected group
+    *                                                             <pre>
     post:
       //
       // The workspace scope should reflect the update.
@@ -281,6 +282,7 @@ public class WorkSpace extends Observable {
     * @param student student whose grade to update
     * @param assignment assignment grade to update
     * @param score new score
+    *                                                             <pre>
     pre:
       //
       // The student and assignment to add a score for must be in scope.
@@ -312,6 +314,7 @@ public class WorkSpace extends Observable {
    /**
     * Reverts all deltas and restores the Scores object to its state prior to
     * the changes.
+    *                                                             <pre>
     post:
       //
       // The current workspace deltas should be empty and the grades in the
@@ -340,6 +343,7 @@ public class WorkSpace extends Observable {
 
    /**
     * Commits all deltas to persistent storage.
+    *                                                             <pre>
     post:
       //
       // All changes reflected in the deltas should be saved to the gradebook
@@ -370,6 +374,7 @@ public class WorkSpace extends Observable {
    /**
     * Overwrites the current section's grade scheme if a section is in scope.
     * @param gradeScheme new grade scheme
+    *                                                             <pre>
     post:
       //
       // The workspace section should have the new grade scheme.
@@ -407,6 +412,7 @@ public class WorkSpace extends Observable {
 
    /**
     * Undoes a change by removing a delta.
+    *                                                             <pre>
     pre:
       //
       // There is a delta to be undone.
@@ -456,6 +462,7 @@ public class WorkSpace extends Observable {
 
    /**
     * Redoes an undone change.
+    *                                                             <pre>
     pre:
       //
       // There is a future delta to be redone.
@@ -530,6 +537,7 @@ public class WorkSpace extends Observable {
 
    /**
     * Loads scores for the students in scope from the gradebook.
+    *                                                             <pre>
     post:
       //
       // The workspace scores should all be equal to the gradebook scores.
