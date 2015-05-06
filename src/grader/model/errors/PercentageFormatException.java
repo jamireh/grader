@@ -6,7 +6,7 @@ package grader.model.errors;
  */
 
 
-public class PercentageFormatException extends Exception
+public class PercentageFormatException extends RuntimeException
 {
     /**
      * Creates an exception with the given invalid value

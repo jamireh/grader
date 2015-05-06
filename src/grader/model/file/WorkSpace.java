@@ -449,7 +449,7 @@ public class WorkSpace extends Observable {
             deltas.get(deltas.size() - 1).getAssignment()),
          gradebook.getScores().getRawScore(
             deltas.get(deltas.size() - 1).getStudent(),
-            deltas.get(deltas.size() - 1).getAssignment())) == 0;
+            deltas.g/et(deltas.size() - 1).getAssignment())) == 0;
     */
    public void undo() {
       if (canUndo()) {

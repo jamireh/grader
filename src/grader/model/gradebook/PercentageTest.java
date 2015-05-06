@@ -2,6 +2,7 @@ package grader.model.gradebook;
 
 import grader.model.errors.PercentageFormatException;
 import org.junit.Test;
+
 /**
  * The PercentTest class is the companion testing class for the grader
  * Percent. It implements the following module test plan:

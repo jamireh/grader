@@ -120,6 +120,32 @@ public class AssignmentTree
         return ni;
     }
 
+    private void clearGrades()
+    {
+        ArrayList<Node> nodes = root.nodes;
+        root.grade = 0.0;
+        root.total = 0.0;
+        for(int i = 0; i < root.nodes.size(); i++)
+        {
+            clearGradesHelper(nodes.get(i));
+        }
+    }
+
+    private void clearGradesHelper(Node n)
+    {
+        ArrayList<Node> nodes = n.nodes;
+        n.grade = 0.0;
+        n.total = 0.0;
+        if(!nodes.isEmpty())
+        {
+            for (int i = 0; i < n.nodes.size(); i++) {
+                clearGradesHelper(nodes.get(i));
+            }
+        }
+
+    }
+
+
     private double gradeCheckNode(Node node, HashMap<Assignment, RawScore> map)
     {
         ArrayList<Node> nodes = node.nodes;
@@ -196,14 +222,12 @@ public class AssignmentTree
      */
     public Percentage calculatePercentage(HashMap<Assignment, RawScore> scores)
     {
-        try
-        {
-            return new Percentage(gradeCheckNode(root, scores));
-        }
-        catch(PercentageFormatException e)
-        {
-            return new Percentage();
-        }
+        Percentage toReturn;
+        double result = gradeCheckNode(root, scores);
+        toReturn = new Percentage(result);
+
+        clearGrades();
+        return toReturn;
     }
 
     /**
