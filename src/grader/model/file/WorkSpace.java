@@ -187,6 +187,12 @@ public class WorkSpace extends Observable {
       return section;
    }
 
+    /**
+     * Returns the currently built pie chart
+     * @return selected pie chart
+     */
+    public PieChart getPieChart() { return pieChart;}
+
    /**
     * Returns the currently selected group.
     * @return selected group

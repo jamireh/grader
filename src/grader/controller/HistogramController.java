@@ -277,6 +277,15 @@ public class HistogramController implements Initializable, Observer {
 
     public void update(Observable obv, Object obj)
     {
+
+        System.out.println("Updated");
+
+        vals = new Hashtable<Double, Integer>();
+        for (int i = 0; i <= 100; i++)
+        {
+            vals.put(new Double(i), 0);
+        }
+
         for (int i = 0; i < 100; i++)
         {
             vals.put(((double)i), 0);
