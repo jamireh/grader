@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 /**
  * Controller for the Sidebar model
  * @author Jon Amireh
+ * @author Alexander Miller
  */
 public class SpreadsheetController implements Initializable
 {

@@ -15,6 +15,7 @@ import java.util.Observer;
  * The Spreadsheet class represents the underlying model for the grade spreadsheet.
  *
  * @author Gregory Davis
+ * @author Alexander Miller
  */
 public class Spreadsheet implements Observer {
    private List<Student> students;
