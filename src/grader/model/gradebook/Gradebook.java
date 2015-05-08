@@ -1,12 +1,10 @@
 package grader.model.gradebook;
 
-import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Instructor;
 import grader.model.people.Name;
 import grader.model.people.Student;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import javax.naming.InvalidNameException;
 import java.util.ArrayList;
@@ -171,7 +169,7 @@ public class Gradebook {
 
          while (itr.hasNext()) {
             Assignment assignment = itr.next();
-            double randomScore = rand.nextInt(assignment.rawPoints);
+            double randomScore = rand.nextInt(assignment.rawPoints / 2) + (assignment.rawPoints / 2);
             cannedGradebook.scores.addRawScore(student, assignment, randomScore);
          }
       }
