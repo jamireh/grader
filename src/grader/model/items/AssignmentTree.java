@@ -1,14 +1,11 @@
 package grader.model.items;
 
-import grader.model.errors.PercentageFormatException;
-import grader.model.errors.RawScoreFormatException;
+import grader.model.file.WorkSpace;
+import grader.model.gradebook.Gradebook;
 import grader.model.gradebook.Percentage;
 import grader.model.gradebook.RawScore;
-import grader.model.people.Name;
 import grader.model.people.Student;
 
-import javax.naming.InvalidNameException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -187,18 +184,15 @@ public class AssignmentTree
         }
         else
         {
-            double smallestRawScore = Double.MAX_VALUE;
+            double totalRawScore = 0.0;
             for(Assignment a : unweightAssignments)
             {
-                if(a.rawPoints < smallestRawScore)
-                {
-                    smallestRawScore = a.rawPoints;
-                }
+                totalRawScore += a.rawPoints;
             }
             double ref = 1.0 - node.total;
             for(Assignment a : unweightAssignments)
             {
-                double relWeight = ref * (a.rawPoints/smallestRawScore);
+                double relWeight = ref * (a.rawPoints/totalRawScore);
                 node.grade += relWeight * (map.get(a).getScore()/a.rawPoints);
             }
         }
@@ -223,9 +217,8 @@ public class AssignmentTree
     public Percentage calculatePercentage(HashMap<Assignment, RawScore> scores)
     {
         Percentage toReturn;
-        double result = gradeCheckNode(root, scores);
+        double result = gradeCheckNode(root, scores) * 100.0;
         toReturn = new Percentage(result);
-
         clearGrades();
         return toReturn;
     }
@@ -253,7 +246,39 @@ public class AssignmentTree
 
     public static void main(String[] args)
     {
-        AssignmentTree at = new AssignmentTree();
+        Gradebook gradebook = WorkSpace.instance.gradebook;
+        WorkSpace.instance.sidebarSelect(gradebook.courses.get(0), gradebook.courses.get(0).sections.get(1), null);
+        AssignmentTree at = WorkSpace.instance.getAssignmentTree();
+        double EPSILON = 0.00001;
+        for(Student s : WorkSpace.instance.getStudents())
+        {
+            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+            double test = 0.0;
+            double total = 0.0;
+            for(RawScore rs : map.values())
+            {
+                test += rs.getScore();
+            }
+            for(Assignment a : map.keySet())
+            {
+                total += a.rawPoints;
+            }
+            double expected = test/total;
+            double received = at.calculatePercentage(map).getValue();
+            if(!(expected == received || Math.abs(expected - received) < EPSILON))
+            {
+                System.err.println("COMPARISON FAILED");
+            }
+            else if(expected >= 60.0)
+            {
+                System.out.println("GRADE NOT F");
+            }
+        }
+
+
+
+        //System.out.println("breakpoint");
+        /*AssignmentTree at = new AssignmentTree();
         try
         {
             Assignment finalExam = new Assignment("final", LocalDate.now(), "100", "0.3");
@@ -298,7 +323,7 @@ public class AssignmentTree
         }
         catch(RawScoreFormatException e) {}
         catch(PercentageFormatException e) {}
-        catch(InvalidNameException e) {}
+        catch(InvalidNameException e) {}*/
     }
 
     /**
