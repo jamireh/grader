@@ -8,8 +8,15 @@ import grader.model.gradebook.GradeScheme;
 import grader.model.gradebook.LetterGrade;
 import grader.model.gradebook.Percentage;
 
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Observable;
 import java.util.Observer;
+
+import grader.model.file.*;
+import grader.model.people.*;
+import grader.model.gradebook.*;
+import grader.model.items.*;
 
 /**
  * The Histogram class defines the necessary components for graphically changing the GradeScheme
@@ -19,6 +26,7 @@ import java.util.Observer;
 public class Histogram extends AbstractGraph implements Observer
 {
 
+    private Hashtable<Double, Integer> vals = new Hashtable<Double, Integer>();
 
 	/**
 	 * GradeScheme used to project how a particular adjustment will propagate.
@@ -82,5 +90,85 @@ public class Histogram extends AbstractGraph implements Observer
    /**
     * Updates the Histogram.
     */
-   public void update(Observable obj, Object args) {}
+   public void update(Observable obj, Object args) {
+       for (int i = 0; i <= 100; i++)
+       {
+           vals.put(new Double(i), 0);
+       }
+
+       java.util.List<Student> students = WorkSpace.instance.getStudents();
+
+       for (Student s : students)
+       {
+           HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+           Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
+
+           double tempPercent = Math.ceil(percent.getValue());
+           Integer temp = vals.get(tempPercent);
+           vals.replace(tempPercent, ++temp);
+
+       }
+
+   }
+
+    public Entry getEntry(double percent)
+    {
+        String letter;
+        String stars = "";
+
+        switch (((int)percent))
+        {
+            case 99:
+                letter = "A+";
+                break;
+            case 94:
+                letter = "A";
+                break;
+            case 90:
+                letter = "A-";
+                break;
+            case 89:
+                letter = "B+";
+                break;
+            case 84:
+                letter = "B";
+                break;
+            case 80:
+                letter = "B-";
+                break;
+            case 79:
+                letter = "C+";
+                break;
+            case 74:
+                letter = "C";
+                break;
+            case 70:
+                letter = "C-";
+                break;
+            case 69:
+                letter = "D+";
+                break;
+            case 64:
+                letter = "D";
+                break;
+            case 60:
+                letter = "D-";
+                break;
+            case 0:
+                letter = "F";
+                break;
+            default:
+                letter = " ";
+                break;
+
+        }
+
+        for (int i = 0; i < vals.get(percent); i++)
+        {
+            stars += " *";
+        }
+
+        return new Entry(letter, String.valueOf(percent), stars);
+    }
+
 }

@@ -193,6 +193,12 @@ public class WorkSpace extends Observable {
      */
     public PieChart getPieChart() { return pieChart;}
 
+    /**
+     * Returns the currently built histogram
+     * @return selected histogram
+     */
+    public Histogram getHistogram() { return histogram;}
+
    /**
     * Returns the currently selected group.
     * @return selected group
