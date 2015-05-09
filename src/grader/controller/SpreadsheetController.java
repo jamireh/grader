@@ -39,32 +39,22 @@ public class SpreadsheetController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        spreadsheet.setController(this);
-        spreadsheet.update(null, null);
+       table = new TableView<String[]>();
+       hbTable.setSpacing(5);
+       hbTable.getChildren().addAll(table);
+
+       table.setEditable(true);
+       table.setMinWidth(1200);
+       table.setMaxWidth(1200);
+       table.setMaxHeight(600);
+       spreadsheet.setController(this);
+       spreadsheet.update(null, null);
     }
 
 
 
     public void setupGradebook(String[] headers, String[][] grades)
     {
-       if (table == null) {
-          table = new TableView<String[]>();
-          hbTable.setSpacing(5);
-          hbTable.getChildren().addAll(table);
-
-          final Button b1 = new Button("Revert");
-          b1.setFont(new Font("Arial", 16));
-          final Button b2 = new Button("Save");
-          b2.setFont(new Font("Arial", 16));
-          final Button b3 = new Button("Save and Publish");
-          b3.setFont(new Font("Arial", 16));
-
-          table.setEditable(true);
-          table.setMinWidth(1200);
-          table.setMaxWidth(1200);
-          table.setMaxHeight(600);
-       }
-
        table.getColumns().clear();
        for (int i = 0; i < headers.length; i++) {
           TableColumn tc = new TableColumn(headers[i]);
