@@ -108,10 +108,10 @@ public class Gradebook {
          "Daniel Toy"
       };
 
-      addCannedSection(cannedGradebook, course, "01", names);
+      addCannedSection(course, "01", names);
 
       final String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      final String abc = "abcdefghijklmnopqrstuvwxyZ";
+      final String abc = "abcdefghijklmnopqrstuvwxyz";
       final int nameLength = 6;
       Random rnd = new Random();
 
@@ -127,7 +127,7 @@ public class Gradebook {
             sb.append( abc.charAt( rnd.nextInt(abc.length()) ) );
          names[i] = sb.toString();
       }
-      addCannedSection(cannedGradebook, course, "02", names);
+      addCannedSection(course, "02", names);
 
       AssignmentTree.AssignmentIterator itr =
          course.getAssignmentTree().getAssignmentIterator();
@@ -138,12 +138,11 @@ public class Gradebook {
       }
    }
 
-   private static void addCannedSection(Gradebook gradebook, Course course, String number, String[] names) {
+   private static void addCannedSection(Course course, String number, String[] names) {
       Section section = new Section(number);
       course.addSection(section);
 
       List<Student> students = new ArrayList<Student>();
-      List<Assignment> assignments = new ArrayList<Assignment>();
 
       for (String name : Arrays.asList(names)) {
          String[] tokens = name.split(" ");
