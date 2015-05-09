@@ -1,5 +1,7 @@
 package grader.model.gradebook;
 
+import javafx.scene.paint.Color;
+
 /**
  *  GradeRange represents the percentage range that specifies
  *  a specific attainable LetterGrade within the class. A GradeRange contains the
@@ -39,8 +41,6 @@ public class GradeRange
         this.color = color;
     }
 
-
-
     /**
      * Accessor method for the lowerBound.
      * @return the lowerBound Percentage of this GradeRange.
@@ -63,14 +63,6 @@ public class GradeRange
      */
     public LetterGrade getLetterGrade() {
         return letterGrade;
-    }
-
-    /**
-     * Mutator method for the letterGrade.
-     * @param letterGrade the LetterGrade of this GradeRange.
-     */
-    public void setLetterGrade(LetterGrade letterGrade) {
-        this.letterGrade = letterGrade;
     }
 
     /**

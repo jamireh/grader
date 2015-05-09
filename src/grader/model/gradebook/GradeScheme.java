@@ -1,11 +1,13 @@
 package grader.model.gradebook;
 import java.util.*;
 
+import grader.model.errors.OverlappingRangeException;
 import grader.model.errors.PercentageFormatException;
+import javafx.scene.paint.Color;
 
 /**
- * The model containing the range breakdown for each letter-grade 
- * as well as the associated colors.
+ * GradeScheme represents the set of GradeRanges that allow for a student to
+ * receive a LetterGrade determined by their Percentage in the class.
  *
  * @author Tobias Bleisch
  */
@@ -17,51 +19,71 @@ public class GradeScheme
     public ArrayList<GradeRange> ranges;
 
     /**
-     * Constructor for fields of GradeScheme.
-     *
-     * Creates and sets a generic GradeScheme to be used in the class.
+     * Constructor for fields of GradeScheme which creates and sets
+     * a generic GradeScheme to be used in the class.
      */
     public GradeScheme() {
         ranges = new ArrayList<GradeRange>();
 
         /*
          * Create a generic GradeScheme to be used initially:
-         * 90%-100%, A, Green | 80%-90%, B, Blue | 70%-80%, C, Orange | 60%-70%, D, Purple | 0%-60%, F, Red
+         * 90%-100%, A, Green | 80%-90%, B, Blue | 70%-80%, C, Yellow | 60%-70%, D, Purple | 0%-60%, F, Red
          */
         try {
-            ranges.add(new GradeRange(new Percentage(97.0), LetterGrade.A_PLUS, Color.Green));
-            ranges.add(new GradeRange(new Percentage(93.0), LetterGrade.A, Color.Green));
-            ranges.add(new GradeRange(new Percentage(90.0), LetterGrade.A_MINUS, Color.Green));
-            ranges.add(new GradeRange(new Percentage(87.0), LetterGrade.B_PLUS, Color.Blue));
-            ranges.add(new GradeRange(new Percentage(83.0), LetterGrade.B, Color.Blue));
-            ranges.add(new GradeRange(new Percentage(80.0), LetterGrade.B_MINUS, Color.Blue));
-            ranges.add(new GradeRange(new Percentage(77.0), LetterGrade.C_PLUS, Color.Orange));
-            ranges.add(new GradeRange(new Percentage(73.0), LetterGrade.C, Color.Orange));
-            ranges.add(new GradeRange(new Percentage(70.0), LetterGrade.C_MINUS, Color.Orange));
-            ranges.add(new GradeRange(new Percentage(67.0), LetterGrade.D_PLUS, Color.Purple));
-            ranges.add(new GradeRange(new Percentage(63.0), LetterGrade.D, Color.Purple));
-            ranges.add(new GradeRange(new Percentage(60.0), LetterGrade.D_MINUS, Color.Purple));
-            ranges.add(new GradeRange(new Percentage(0.0), LetterGrade.F, Color.Red));
+            ranges.add(new GradeRange(new Percentage(97.0), LetterGrade.A_PLUS, Color.LIGHTGREEN));
+            ranges.add(new GradeRange(new Percentage(93.0), LetterGrade.A, Color.GREEN));
+            ranges.add(new GradeRange(new Percentage(90.0), LetterGrade.A_MINUS, Color.DARKGREEN));
+            ranges.add(new GradeRange(new Percentage(87.0), LetterGrade.B_PLUS, Color.LIGHTBLUE));
+            ranges.add(new GradeRange(new Percentage(83.0), LetterGrade.B, Color.BLUE));
+            ranges.add(new GradeRange(new Percentage(80.0), LetterGrade.B_MINUS, Color.DARKBLUE));
+            ranges.add(new GradeRange(new Percentage(77.0), LetterGrade.C_PLUS, Color.LIGHTYELLOW));
+            ranges.add(new GradeRange(new Percentage(73.0), LetterGrade.C, Color.YELLOW));
+            ranges.add(new GradeRange(new Percentage(70.0), LetterGrade.C_MINUS, Color.GOLD));
+            ranges.add(new GradeRange(new Percentage(67.0), LetterGrade.D_PLUS, Color.LAVENDER));
+            ranges.add(new GradeRange(new Percentage(63.0), LetterGrade.D, Color.PURPLE));
+            ranges.add(new GradeRange(new Percentage(60.0), LetterGrade.D_MINUS, Color.DARKVIOLET));
+            ranges.add(new GradeRange(new Percentage(0.0), LetterGrade.F, Color.RED));
         }
         catch (PercentageFormatException except) {
             except.printStackTrace();
         }
     }
 
-//    TODO - Along with implementing updateDivisions(), assimilate input actions for GradeScheme
-//    Have two connecting ranges update together so that there aren't any gaps left (B 80-90, A 90-100). They can be the same
-//    value on the GUI and underlying can take it to be < value = B from underneath and >= value = A coming from the top.
-
     /**
-     * Upon changing of the data, changes the modified division
-     * as well as adjusts the other ranges accordingly.
+     * Updates the GradeRange of the specified LetterGrade with the specified Percentage.
+     * @param gradeToUpdate the LetterGrade of the GradeRange to be updated
+     * @param newPercent the new Percentage to update the GradeRange with
      * pre:
      *    forall(GradeRange bar;
      *    divisions.contains(bar);
      *    bar != null);
      */
-    public void updateDivisions() {
+    public void updateGradeRange(LetterGrade gradeToUpdate, Percentage newPercent) throws OverlappingRangeException {
         System.out.println("Divisions have been updated.");
+        Percentage higher = ranges.get(gradeToUpdate.ordinal() - 1).getLowerBound();
+        Percentage lower = ranges.get(gradeToUpdate.ordinal() + 1).getLowerBound();
+
+        /*if (newPercent.compareTo(higher) <= 0) {
+            throw new OverlappingRangeException(String.valueOf(newPercent.getValue()),
+                    String.valueOf(higher.getValue()));
+        }
+        else if (newPercent.compareTo(lower) >= 0) {
+            throw new OverlappingRangeException(String.valueOf(newPercent.getValue()),
+                    String.valueOf(lower.getValue()));
+        }*/
+
+        ranges.get(gradeToUpdate.ordinal()).setLowerBound(newPercent);
+    }
+
+    /**
+     * Updates the GradeRange of the specified LetterGrade with the specified Color.
+     * @param gradeToUpdate the LetterGrade of the GradeRange to be updated
+     * @param newColor the new Color to update the GradeRange with
+     */
+    public void updateGradeRange(LetterGrade gradeToUpdate, Color newColor) {
+        System.out.println("Color has been updated");
+
+        ranges.get(gradeToUpdate.ordinal()).setColor(newColor);
     }
 
     /**
