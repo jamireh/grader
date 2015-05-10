@@ -243,7 +243,7 @@ public class WorkSpace extends Observable {
 	 */
 	public GradeScheme getGradeScheme() {
 	   if (section != null) return section.getGradeScheme();
-	   return new GradeScheme();
+	   return null;
    }
 	/////////////////////////////////
 
