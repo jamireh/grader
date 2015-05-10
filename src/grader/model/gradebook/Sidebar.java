@@ -2,7 +2,6 @@ package grader.model.gradebook;
 
 import grader.controller.SidebarController;
 import grader.model.file.WorkSpace;
-import grader.model.items.AssignmentTree;
 import grader.model.people.Group;
 
 import java.util.ArrayList;

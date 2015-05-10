@@ -1,5 +1,9 @@
 package grader.model.file;
 
+import grader.model.gradebook.*;
+import grader.model.items.Assignment;
+import grader.model.people.Student;
+
 import static org.junit.Assert.*;
 
 /**
@@ -16,109 +20,196 @@ import static org.junit.Assert.*;
  *
  *    Phase 4: Unit test updating the grade scheme.
  *
- *    Phase 5: Unit test updating, reverting, and saving grades.
+ *    Phase 5: Unit test updating, reverting, and saving grades, along with
+ *             undo and redo functionality, including canUndo/canRedo
+ *             and getLatestChange and getLatestUndo.
  *
- *    Phase 6: Unit test undo and redo functionality, including canUndo/canRedo
- *             along with getLatestChange and getLatestUndo.
- *
- *    Phase 7: Repeat phases 1 through 6.
+ *    Phase 6: Repeat phases 1 through 5.
  *	                                       								 </pre>
  *
  *	@author Gregory Davis
  */
 public class WorkSpaceTest {
-    @org.junit.Test
-    public void testGetGradebook() throws Exception {
+   /**
+    * Phase 1 testing: Constructor.
+    * For now, we test the singleton instance for canned instantiation.
+    * The Gradebook should be set to the static Canned Gradebook, and the
+    * deltas and future deltas should be empty.
+    */
+   @org.junit.Test
+   public void testConstructor() {
+      assert(WorkSpace.instance.getGradebook()
+            .equals(Gradebook.getCannedGradebook()));
+      assert(WorkSpace.instance.deltas.size() == 0);
+      assert(WorkSpace.instance.futureDeltas.size() == 0);
+   }
 
-    }
+   /**
+    * Phase 2 testing: Sidebar control.
+    * Ensure that the scope is properly changed by the sidebarSelect method.
+    */
+   @org.junit.Test
+   public void testSidebarSelect() {
+      Gradebook canned = WorkSpace.instance.getGradebook();
+      Course course = canned.courses.get(0);
+      Section section = course.sections.get(0);
 
-    @org.junit.Test
-    public void testGetCourse() throws Exception {
+      WorkSpace.instance.sidebarSelect(course, section, null);
 
-    }
+      assert(course.equals(WorkSpace.instance.getCourse()));
+      assert(section.equals(WorkSpace.instance.getSection()));
+      assert(WorkSpace.instance.getGroup() == null);
 
-    @org.junit.Test
-    public void testGetSection() throws Exception {
+      WorkSpace.instance.sidebarSelect(null, null, null);
 
-    }
+      assert(WorkSpace.instance.getCourse() == null);
+      assert(WorkSpace.instance.getSection() == null);
+      assert(WorkSpace.instance.getGroup() == null);
+   }
 
-    @org.junit.Test
-    public void testGetGroup() throws Exception {
+   /**
+    * Phase 3 testing: Scope related data.
+    * Ensure that scope related data is properly updated with scope changes.
+    */
+   @org.junit.Test
+   public void testScopedData() {
+      Gradebook canned = WorkSpace.instance.getGradebook();
+      Course course = canned.courses.get(0);
+      Section section = course.sections.get(0);
 
-    }
+      WorkSpace.instance.sidebarSelect(null, null, null);
+      assert(WorkSpace.instance.getStudents().size() == 0);
 
-    @org.junit.Test
-    public void testGetStudents() throws Exception {
+      WorkSpace.instance.sidebarSelect(course, null, null);
+      assert(WorkSpace.instance.getStudents().equals(course.getStudents()));
 
-    }
+      WorkSpace.instance.sidebarSelect(course, section, null);
+      assert(WorkSpace.instance.getStudents().equals(section.getStudents()));
 
-    @org.junit.Test
-    public void testGetAssignmentTree() throws Exception {
+      assert(WorkSpace.instance.getAssignmentTree().equals(course.getAssignmentTree()));
+      assert(WorkSpace.instance.getGradeScheme().equals(section.getGradeScheme()));
 
-    }
+      // TODO: Test scores object.
+   }
 
-    @org.junit.Test
-    public void testGetScores() throws Exception {
+   /**
+    * Phase 4 testing: GradeScheme updating.
+    * Ensure that updating the GradeScheme changes the scoped section's
+    * GradeScheme.
+    */
+   @org.junit.Test
+   public void testGradeScheme() {
+      Gradebook canned = WorkSpace.instance.getGradebook();
+      Course course = canned.courses.get(0);
+      Section section = course.sections.get(0);
 
-    }
+      WorkSpace.instance.sidebarSelect(course, section, null);
+      assert(WorkSpace.instance.getGradeScheme().equals(section.getGradeScheme()));
 
-    @org.junit.Test
-    public void testGetGradeScheme() throws Exception {
+      // TODO: Test once GradeScheme is working.
+   }
 
-    }
+   /**
+    * Phase 5 testing: Score updating.
+    * Test updating scores by exercising the deltas and futureDeltas.
+    */
+   @org.junit.Test
+   public void testGradeChanges() {
+      Gradebook canned = WorkSpace.instance.getGradebook();
+      Course course = canned.courses.get(0);
+      Section section = course.sections.get(0);
+      Student student = section.getStudents().get(0);
+      Assignment assignment = course.getAssignmentTree().getAssignmentIterator().next();
+      double score0 = canned.getScores().getRawScore(student, assignment);
+      double score1 = 99.9;
+      double score2 = 88.8;
 
-    @org.junit.Test
-    public void testSidebarSelect() throws Exception {
+      WorkSpace.instance.sidebarSelect(course, section, null);
 
-    }
+      // Update grade twice.
+      WorkSpace.instance.updateGrade(student, assignment, score1);
+      WorkSpace.instance.updateGrade(student, assignment, score2);
+      assert(WorkSpace.instance.canUndo());
 
-    @org.junit.Test
-    public void testUpdateGrade() throws Exception {
+      // Check deltas.
+      assert(WorkSpace.instance.deltas.size() == 2);
+      assert(WorkSpace.instance.futureDeltas.size() == 0);
+      RawScore raw1 = WorkSpace.instance.deltas.get(0);
+      assert(raw1.getStudent().equals(student));
+      assert(raw1.getAssignment().equals(assignment));
+      assert(raw1.getScore() == score1);
+      RawScore raw2 = WorkSpace.instance.deltas.get(1);
+      assert(raw2.getStudent().equals(student));
+      assert(raw2.getAssignment().equals(assignment));
+      assert(raw2.getScore() == score2);
 
-    }
+      // Undo change.
+      WorkSpace.instance.undo();
+      assert(WorkSpace.instance.canUndo());
+      assert(WorkSpace.instance.deltas.size() == 1);
+      assert(WorkSpace.instance.futureDeltas.size() == 1);
+      raw1 = WorkSpace.instance.deltas.get(0);
+      assert(raw1.getStudent().equals(student));
+      assert(raw1.getAssignment().equals(assignment));
+      assert(raw1.getScore() == score1);
+      raw2 = WorkSpace.instance.futureDeltas.get(0);
+      assert(raw2.getStudent().equals(student));
+      assert(raw2.getAssignment().equals(assignment));
+      assert(raw2.getScore() == score2);
 
-    @org.junit.Test
-    public void testRevertGrades() throws Exception {
+      // Undo second change.
+      WorkSpace.instance.undo();
+      assert(!WorkSpace.instance.canUndo());
+      assert(WorkSpace.instance.deltas.size() == 0);
+      assert(WorkSpace.instance.futureDeltas.size() == 2);
+      raw1 = WorkSpace.instance.futureDeltas.get(1);
+      assert(raw1.getStudent().equals(student));
+      assert(raw1.getAssignment().equals(assignment));
+      assert(raw1.getScore() == score1);
+      raw2 = WorkSpace.instance.futureDeltas.get(0);
+      assert(raw2.getStudent().equals(student));
+      assert(raw2.getAssignment().equals(assignment));
+      assert(raw2.getScore() == score2);
 
-    }
+      // Redo changes.
+      assert(WorkSpace.instance.canRedo());
+      WorkSpace.instance.redo();
+      WorkSpace.instance.redo();
+      assert(!WorkSpace.instance.canRedo());
+      assert(WorkSpace.instance.canUndo());
+      assert(WorkSpace.instance.deltas.size() == 2);
+      assert(WorkSpace.instance.futureDeltas.size() == 0);
 
-    @org.junit.Test
-    public void testSaveGrades() throws Exception {
+      raw1 = WorkSpace.instance.deltas.get(0);
+      assert(raw1.getStudent().equals(student));
+      assert(raw1.getAssignment().equals(assignment));
+      assert(raw1.getScore() == score1);
+      raw2 = WorkSpace.instance.deltas.get(1);
+      assert(raw2.getStudent().equals(student));
+      assert(raw2.getAssignment().equals(assignment));
+      assert(raw2.getScore() == score2);
 
-    }
+      // Save grades.
+      WorkSpace.instance.saveGrades();
+      assert(WorkSpace.instance.deltas.size() == 0);
+      assert(WorkSpace.instance.futureDeltas.size() == 0);
+      assert(!WorkSpace.instance.canRedo());
+      assert(!WorkSpace.instance.canUndo());
+      Scores scores = canned.getScores();
+      assert(scores.getRawScore(student, assignment) == score2);
 
-    @org.junit.Test
-    public void testUpdateGradeScheme() throws Exception {
+      // Second pass
+      WorkSpace.instance.updateGrade(student, assignment, score1);
+      raw1 = WorkSpace.instance.getLatestChange();
+      assert(raw1.getStudent().equals(student));
+      assert(raw1.getAssignment().equals(assignment));
+      assert(raw1.getScore() == score1);
+      WorkSpace.instance.undo();
+      raw2 = WorkSpace.instance.getLatestUndo();
+      assert(raw1.equals(raw2));
 
-    }
-
-    @org.junit.Test
-    public void testCanUndo() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testCanRedo() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testUndo() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testRedo() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testGetLatestChange() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testGetLatestUndo() throws Exception {
-
-    }
+      WorkSpace.instance.revertGrades();
+      assert(!WorkSpace.instance.canUndo());
+      assert(!WorkSpace.instance.canRedo());
+   }
 }

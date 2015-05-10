@@ -25,7 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("view/overview.fxml"));
         primaryStage.setTitle("Grader");
-        primaryStage.setScene(new Scene(root, 1420, 622));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
         /*primaryStage.widthProperty().addListener(new ChangeListener<Number>() {

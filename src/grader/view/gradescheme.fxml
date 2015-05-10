@@ -101,19 +101,19 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="37.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="70.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="136.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="103.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="235.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="268.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="202.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="169.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="367.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="400.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="334.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="301.0" prefHeight="25.0" prefWidth="39.0" />
-                  <ColorPicker onAction="#onColorChosen" layoutX="8.0" layoutY="432.0" prefHeight="25.0" prefWidth="39.0" />
+                  <ColorPicker fx:id="A_PLUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="37.0" prefHeight="25.0" prefWidth="39.0" />
+                  <ColorPicker fx:id="A_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="70.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="A_MINUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="103.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="B_PLUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="136.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="B_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="169.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="B_MINUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="202.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="C_PLUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="235.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="C_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="268.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="C_MINUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="301.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="D_PLUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="334.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="D_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="367.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="D_MINUS_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="400.0" prefHeight="25.0" prefWidth="39.0" />
+                   <ColorPicker fx:id="F_COLOR" onAction="#onColorChosen" layoutX="8.0" layoutY="432.0" prefHeight="25.0" prefWidth="39.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="282.0">
@@ -142,43 +142,43 @@
                   </Label>
                   <TextField fx:id="A_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="37.0" prefHeight="25.0" prefWidth="74.0" />
                   <TextField fx:id="A_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="37.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="41.0" prefHeight="17.0" prefWidth="25.0" />
-                  <Separator layoutX="128.0" layoutY="74.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="A_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="70.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="A_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="70.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="B_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="136.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="B_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="136.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="140.0" prefHeight="17.0" prefWidth="25.0" />
-                  <Separator layoutX="128.0" layoutY="107.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="A_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="103.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="A_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="103.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="C_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="234.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="C_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="234.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="238.0" prefHeight="17.0" prefWidth="25.0" />
-                  <Separator layoutX="128.0" layoutY="271.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="C_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="267.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="C_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="267.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="B_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="201.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="B_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="201.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="205.0" prefHeight="17.0" prefWidth="25.0" />
-                  <Separator layoutX="128.0" layoutY="172.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="B_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="168.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="B_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="168.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="D_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="333.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="D_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="333.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="337.0" prefHeight="17.0" prefWidth="25.0" />
-                  <Separator layoutX="128.0" layoutY="370.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="D_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="366.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="D_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="366.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="F_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="432.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="F_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="432.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="436.0" prefHeight="17.0" prefWidth="25.0" />
-                  <Separator layoutX="128.0" layoutY="403.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="D_Minus_High" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="399.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="D_Minus_Low" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="399.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Separator layoutX="128.0" layoutY="305.0" prefHeight="17.0" prefWidth="25.0" />
-                  <TextField fx:id="C_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="301.0" prefHeight="25.0" prefWidth="74.0" />
-                  <TextField fx:id="C_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="301.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="A_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="70.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="A_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="70.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="A_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="103.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="A_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="103.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="B_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="136.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="B_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="136.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="B_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="168.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="B_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="168.0" prefHeight="25.0" prefWidth="74.0" />
+                   <Separator layoutX="128.0" layoutY="74.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="41.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="140.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="107.0" prefHeight="17.0" prefWidth="25.0" />
+                   <TextField fx:id="B_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="201.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="B_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="201.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="C_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="234.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="C_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="234.0" prefHeight="25.0" prefWidth="74.0" />
+                   <Separator layoutX="128.0" layoutY="238.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="271.0" prefHeight="17.0" prefWidth="25.0" />
+                   <TextField fx:id="C_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="267.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="C_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="267.0" prefHeight="25.0" prefWidth="74.0" />
+                   <Separator layoutX="128.0" layoutY="205.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="172.0" prefHeight="17.0" prefWidth="25.0" />
+                   <TextField fx:id="C_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="301.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="C_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="301.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="D_Plus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="333.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="D_Plus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="333.0" prefHeight="25.0" prefWidth="74.0" />
+                   <Separator layoutX="128.0" layoutY="337.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="370.0" prefHeight="17.0" prefWidth="25.0" />
+                   <TextField fx:id="D_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="366.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="D_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="366.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="D_Minus_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="399.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="D_Minus_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="399.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="F_High" onAction="#onTextFieldEdited" layoutX="41.0" layoutY="432.0" prefHeight="25.0" prefWidth="74.0" />
+                   <TextField fx:id="F_Low" onAction="#onTextFieldEdited" layoutX="166.0" layoutY="432.0" prefHeight="25.0" prefWidth="74.0" />
+                   <Separator layoutX="128.0" layoutY="436.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="403.0" prefHeight="17.0" prefWidth="25.0" />
+                   <Separator layoutX="128.0" layoutY="305.0" prefHeight="17.0" prefWidth="25.0" />
                </children>
             </AnchorPane>
         </items>
