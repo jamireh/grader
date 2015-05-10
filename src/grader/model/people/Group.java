@@ -27,12 +27,20 @@ public class Group
    }
 
 	/**
-	 * Adds a new Student to the underlying Collection.
-	 * @param studentToAdd Student to add to this Group.
+	 * Removes a Student currently within the group.
+	 * @param studentToRemove Student to add to this Group.
 	 */
-	public void addStudent(Student studentToAdd) {
-	   students.add(studentToAdd);
+	public void removeStudent(Student studentToRemove) {
+	   students.remove(studentToRemove);
    }
+
+    /**
+     * Adds a new Student to the underlying Collection.
+     * @param studentToAdd Student to add to this Group.
+     */
+    public void addStudent(Student studentToAdd) {
+        students.add(studentToAdd);
+    }
 
 	/**
 	 * Returns the group's student list.

@@ -5,17 +5,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0"
-      prefWidth="449.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="grader.controller.GroupsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.controller.GroupsController">
    <children>
-      <VBox prefHeight="313.0" prefWidth="441.0">
+      <VBox prefHeight="313.0" prefWidth="405.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefWidth="200.0">
                <children>
                   <Label text="Group Name">
                      <HBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="100.0" right="20.0" />
                      </HBox.margin>
                   </Label>
                   <TextField fx:id="tfGroupName" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="121.0" promptText="ex. Token CSC">
@@ -30,9 +28,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="345.0">
                <children>
-                  <Label text="Search Roster">
+                  <Label text="Filter Roster">
                      <HBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="100.0" right="20.0" />
                      </HBox.margin>
                   </Label>
                   <TextField fx:id="tfStudentSearch" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="121.0" promptText="Student Name">
@@ -52,12 +50,12 @@
                <children>
                   <Label text="Roster">
                      <HBox.margin>
-                        <Insets left="120.0" right="150.0" />
+                        <Insets left="85.0" right="100.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="Formed Group">
                      <HBox.margin>
-                        <Insets left="25.0" right="20.0" />
+                        <Insets left="50.0" right="20.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -67,32 +65,19 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="166.0" prefWidth="373.0">
                <children>
-                  <ListView fx:id="lRosterList" prefHeight="95.0" prefWidth="313.0">
+                  <ListView fx:id="lRosterList" prefHeight="116.0" prefWidth="178.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </ListView>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Button fx:id="bAddToGroup" mnemonicParsing="false" prefHeight="25.0" prefWidth="38.0" text="&gt;" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets left="3.0" right="3.0" top="20.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button fx:id="bRemoveFromGroup" mnemonicParsing="false" prefHeight="25.0" prefWidth="38.0" text="&lt;" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets left="3.0" right="3.0" top="20.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <ListView fx:id="lFormedGroup" prefHeight="93.0" prefWidth="205.0" />
+                  <VBox prefHeight="116.0" prefWidth="24.0" />
+                  <ListView fx:id="lRosterList1" prefHeight="116.0" prefWidth="178.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" top="10.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="360.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="390.0">
                <children>
                   <Button fx:id="bAdd" mnemonicParsing="false" onAction="#onAddPressed" prefHeight="25.0" prefWidth="88.0" text="Add Group">
                      <HBox.margin>

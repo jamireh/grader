@@ -35,7 +35,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Students">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add New" />
+              <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add Student" />
                   <MenuItem mnemonicParsing="false" onAction="#studentsSyncRoster" text="Sync Roster" />
                   <MenuItem mnemonicParsing="false" onAction="#studentsEditRoster" text="Edit Roster" />
                   <MenuItem mnemonicParsing="false" onAction="#studentsCreateGroup" text="Create Group" />
