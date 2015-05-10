@@ -12,10 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import java.util.Collection;
+import javafx.stage.Stage;
+
 import java.util.List;
 
 /**

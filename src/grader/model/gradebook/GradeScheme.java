@@ -112,4 +112,14 @@ public class GradeScheme
                 "ranges=" + ranges +
                 '}';
     }
+
+   /**
+    * Deep copies this GradeScheme.
+    * @return deep copy
+    */
+    public GradeScheme copy() {
+       GradeScheme copy = new GradeScheme();
+       Collections.copy(copy.ranges, this.ranges);
+       return copy;
+    }
 }

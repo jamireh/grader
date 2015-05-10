@@ -3,10 +3,12 @@ package grader;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 
@@ -27,6 +29,11 @@ public class Main extends Application {
         primaryStage.setTitle("Grader");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+           public void handle(WindowEvent we) {
+              System.exit(0);
+           }
+        });
 
         /*primaryStage.widthProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
