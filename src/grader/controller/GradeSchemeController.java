@@ -157,7 +157,6 @@ public class GradeSchemeController
             TextField textField = (TextField) event.getSource();
             Percentage percent = new Percentage(textField.getCharacters().toString());
             gradeScheme.updateGradeRange(LetterGrade.valueOfFromID(textField.getId()), percent);
-            initialize();
 
             System.out.println("Updated information: " + textField.getCharacters());
         }
@@ -173,8 +172,9 @@ public class GradeSchemeController
             alert.setTitle("Error Dialog");
             alert.setHeaderText("Overlapping Ranges");
             alert.setContentText("Please ensure that " + overlapExcept.getOverlapper() +
-                    "does not overlap with " + overlapExcept.getOverlapped());
+                    " does not overlap with " + overlapExcept.getOverlapped());
             alert.showAndWait();
+
         }
         catch (NullPointerException except) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -183,6 +183,8 @@ public class GradeSchemeController
             alert.setContentText("Please first select a course to modify");
             alert.showAndWait();
         }
+
+        initialize();
     }
 
     /**

@@ -7,7 +7,7 @@ import grader.model.errors.PercentageFormatException;
  *
  * @author Jon Amireh
  */
-public class Percentage
+public class Percentage implements Comparable
 {
     /**
      * Value between 0.0 and 100.0
@@ -72,5 +72,16 @@ public class Percentage
     public double getValue()
     {
         return value;
+    }
+
+    /**
+     * Compares this Percentage to the specified one.
+     * @param other the Percentage to compare to this one.
+     * @return neg. if this Percentage is less than the specified,
+     * pos. if this Percentage is less than the specified,
+     * 0 if they are considered equal
+     */
+    public int compareTo(Object other) {
+        return Double.compare(value, ((Percentage)other).getValue());
     }
 }

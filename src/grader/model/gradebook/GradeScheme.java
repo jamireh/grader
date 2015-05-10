@@ -63,14 +63,14 @@ public class GradeScheme
         Percentage higher = ranges.get(gradeToUpdate.ordinal() - 1).getLowerBound();
         Percentage lower = ranges.get(gradeToUpdate.ordinal() + 1).getLowerBound();
 
-        /*if (newPercent.compareTo(higher) <= 0) {
+        if (newPercent.compareTo(higher) >= 0) {
             throw new OverlappingRangeException(String.valueOf(newPercent.getValue()),
                     String.valueOf(higher.getValue()));
         }
-        else if (newPercent.compareTo(lower) >= 0) {
+        else if (newPercent.compareTo(lower) <= 0) {
             throw new OverlappingRangeException(String.valueOf(newPercent.getValue()),
                     String.valueOf(lower.getValue()));
-        }*/
+        }
 
         ranges.get(gradeToUpdate.ordinal()).setLowerBound(newPercent);
     }
@@ -84,6 +84,22 @@ public class GradeScheme
         System.out.println("Color has been updated");
 
         ranges.get(gradeToUpdate.ordinal()).setColor(newColor);
+    }
+
+    /**
+     * Retrieves the GradeRange in which the specified Percentage falls.
+     * @param percent the Percentage from which to find the GradeRange
+     * @return the GradeRange in which the specified Percentage falls,
+     * or null
+     */
+    public GradeRange getGradeRange(Percentage percent) {
+        GradeRange found = null;
+
+        for (GradeRange range : ranges)
+            if (percent.compareTo(range.getLowerBound()) >= 0)
+                found = range;
+
+        return found;
     }
 
     /**
