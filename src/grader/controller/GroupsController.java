@@ -1,5 +1,6 @@
 package grader.controller;
 
+import grader.model.errors.MissingInputException;
 import grader.model.file.WorkSpace;
 import grader.model.people.Group;
 import grader.model.people.Student;
@@ -85,6 +86,18 @@ public class GroupsController
 
     public void onAddPressed(ActionEvent event)
     {
+        try
+        {
+            WorkSpace.instance.getSection().addGroup(new Group(tfGroupName.getText(), new ArrayList<Student>(formedGroup)));
+        }
+        catch (InvalidNameException e)
+        {
+            tfGroupName.requestFocus();
+        }
+        catch (MissingInputException e)
+        {
+            lFormedGroup.requestFocus();
+        }
 
     }
 

@@ -1,5 +1,8 @@
 package grader.model.people;
 
+import grader.model.errors.MissingInputException;
+
+import javax.naming.InvalidNameException;
 import java.util.*;
 
 /**
@@ -17,6 +20,21 @@ public class Group
 	 * Name assigned to this Group.
 	 */
 	public String groupName;
+
+    /**
+     *
+     * @param students
+     */
+    public Group(String groupName, ArrayList<Student> students) throws InvalidNameException, MissingInputException
+    {
+        if (groupName.length() <= 1)
+            throw new InvalidNameException();
+        if (students.size() == 0)
+            throw new MissingInputException("No students in this group!");
+
+        this.groupName = groupName;
+        this.students = students;
+    }
 
 	/**
 	 * Modifies the group name to the one provided.
