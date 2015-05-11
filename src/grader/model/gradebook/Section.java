@@ -84,6 +84,16 @@ public class Section
         System.out.println("gradebook/Section.addStudent called");
 	}
 
+    /**
+     * Adds a new group to this section.
+     * @param group to add
+     */
+    public void addGroup(Group group)
+    {
+        groups.add(group);
+        System.out.println("gradebook/Section.addGroup called");
+    }
+
 	/**
 	*Add new TA.
 	*pre:

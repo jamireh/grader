@@ -65,10 +65,7 @@ public class Sidebar implements Observer {
                 }
             }
         }
-        if(cCourse != null)
-        {
-            WorkSpace.instance.sidebarSelect(cCourse, sSection, gGroup);
-        }
+        WorkSpace.instance.sidebarSelect(cCourse, sSection, gGroup);
     }
 
     /**

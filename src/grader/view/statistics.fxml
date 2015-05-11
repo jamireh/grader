@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<Pane layoutY="0.0" prefHeight="100.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.controller.StatsController">
+    <children>
+        <HBox fx:id="hbox" minWidth="1200.0" />
+    </children>
+</Pane>

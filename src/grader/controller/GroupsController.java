@@ -1,7 +1,15 @@
 package grader.controller;
 
+import grader.model.errors.MissingInputException;
+import grader.model.file.WorkSpace;
+import grader.model.people.Group;
+import grader.model.people.Student;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.input.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -9,6 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javax.naming.InvalidNameException;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import static grader.model.file.WorkSpace.*;
 
 /**
  * Controller for the group forming view.
@@ -21,17 +35,91 @@ public class GroupsController
     @FXML TextField tfStudentSearch;
     @FXML ListView lRosterList;
     @FXML ListView lFormedGroup;
-    @FXML Button bAddToGroup;
-    @FXML Button bRemoveFromGroup;
 
-    public void onAddStudent(ActionEvent event)
+    ObservableList<Student> sectionRoster;
+    ObservableList<Student> formedGroup;
+
+    Comparator<Student> comparator;
+    /**
+     * Initializes the groups.fxml with data from the model.
+     */
+    @FXML
+    private void initialize()
+    {
+        sectionRoster = FXCollections.observableArrayList(instance.getSection().getStudents());
+        formedGroup = FXCollections.observableArrayList(new ArrayList<Student>());
+        lRosterList.setItems(sectionRoster);
+        lFormedGroup.setItems(formedGroup);
+        comparator = new Comparator<Student>()
+        {
+            @Override
+            public int compare(Student o1, Student o2)
+            {
+                return o1.compareTo(o2);
+            }
+        };
+    }
+
+    @FXML
+    public void filterRoster(KeyEvent event)
     {
 
+        ArrayList<Student> filteredList = new ArrayList<Student>();
+        for (Student student : instance.getSection().getStudents())
+        {
+            if (student.getName().toString().toLowerCase().contains(tfStudentSearch.getText().toLowerCase()) &&
+                    !formedGroup.contains(student))
+                filteredList.add(student);
+        }
+        sectionRoster = FXCollections.observableArrayList(filteredList);
+        formedGroup.sort(comparator);
+        sectionRoster.sort(comparator);
+        lRosterList.setItems(sectionRoster);
+    }
+
+    @FXML
+    public void addToGroup(MouseEvent click)
+    {
+        if (click.getClickCount() == 2 && lRosterList.getSelectionModel().getSelectedItem() != null)
+        {
+            formedGroup.add((Student)lRosterList.getSelectionModel().getSelectedItem());
+            sectionRoster.remove((Student)lRosterList.getSelectionModel().getSelectedItem());
+        }
+        formedGroup.sort(comparator);
+        sectionRoster.sort(comparator);
+    }
+
+    @FXML
+    public void removeFromGroup(MouseEvent click)
+    {
+        if (click.getClickCount() == 2 && lFormedGroup.getSelectionModel().getSelectedItem() != null)
+        {
+            sectionRoster.add((Student) lFormedGroup.getSelectionModel().getSelectedItem());
+            formedGroup.remove((Student) lFormedGroup.getSelectionModel().getSelectedItem());
+        }
+        formedGroup.sort(comparator);
+        sectionRoster.sort(comparator);
     }
 
     public void onAddPressed(ActionEvent event)
     {
-        // nothing
+        Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
+        try
+        {
+            WorkSpace.instance.getSection().addGroup(new Group(tfGroupName.getText(), new ArrayList<Student>(formedGroup)));
+        }
+        catch (InvalidNameException e)
+        {
+            tfGroupName.requestFocus();
+            return;
+        }
+        catch (MissingInputException e)
+        {
+            lFormedGroup.requestFocus();
+            return;
+        }
+        stage.close();
+
     }
 
     public void onCancelPressed(ActionEvent event)

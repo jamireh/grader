@@ -127,6 +127,16 @@ public class WorkSpace extends Observable {
 	 * A list of undone deltas for undo/redo operations.
 	 */
 	public List<RawScore> futureDeltas;
+
+   /**
+    * Temporary GradeScheme for scope.
+    */
+   public GradeScheme gradeScheme;
+
+   /**
+    * Flag for GradeScheme changes.
+    */
+   public boolean gradeSchemeChanged;
    /////////////////////////////
 
 
@@ -281,6 +291,7 @@ public class WorkSpace extends Observable {
       this.group = group;
 
       loadScores();
+      loadGradeScheme();
 
       setChanged();
       notifyObservers();
@@ -383,9 +394,17 @@ public class WorkSpace extends Observable {
       notifyObservers();
    }
 
+	/**
+    * Sets the GradeScheme changed flag.
+	 */
+	public void setGradeSchemeChanged() {
+      gradeSchemeChanged = true;
+      setChanged();
+      notifyObservers();
+   }
+
    /**
-    * Overwrites the current section's grade scheme if a section is in scope.
-    * @param gradeScheme new grade scheme
+    * Commits temporary GradeScheme changes to the section.
     *                                                             <pre>
     post:
       //
@@ -393,11 +412,12 @@ public class WorkSpace extends Observable {
       //
       this'.section.getGradeScheme().equals(gradeScheme);
     */
-   public void updateGradeScheme(GradeScheme gradeScheme) {
-      if (section != null) {
-          section.setGradeScheme(gradeScheme);
-          setChanged();
-          notifyObservers();
+   public void updateGradeScheme() {
+      if (gradeSchemeChanged) {
+         section.setGradeScheme(this.gradeScheme);
+         gradeSchemeChanged = false;
+         setChanged();
+         notifyObservers();
       }
    }
    //////////////////////////////////
@@ -581,6 +601,15 @@ public class WorkSpace extends Observable {
       for (Student student : scopedStudents) {
          HashMap<Assignment, RawScore> scoresMap = gradebookScores.getScoresMap(student);
          scores.addScoresMap(student, scoresMap);
+      }
+   }
+
+   private void loadGradeScheme() {
+      gradeSchemeChanged = false;
+      if (section != null) {
+         this.gradeScheme = section.getGradeScheme().copy();
+      } else {
+         this.gradeScheme = null;
       }
    }
 }
