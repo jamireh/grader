@@ -61,9 +61,26 @@ public class GroupsController
     }
 
     @FXML
+    public void filterRoster(KeyEvent event)
+    {
+
+        ArrayList<Student> filteredList = new ArrayList<Student>();
+        for (Student student : instance.getSection().getStudents())
+        {
+            if (student.getName().toString().toLowerCase().contains(tfStudentSearch.getText().toLowerCase()) &&
+                    !formedGroup.contains(student))
+                filteredList.add(student);
+        }
+        sectionRoster = FXCollections.observableArrayList(filteredList);
+        formedGroup.sort(comparator);
+        sectionRoster.sort(comparator);
+        lRosterList.setItems(sectionRoster);
+    }
+
+    @FXML
     public void addToGroup(MouseEvent click)
     {
-        if (click.getClickCount() == 2)
+        if (click.getClickCount() == 2 && lRosterList.getSelectionModel().getSelectedItem() != null)
         {
             formedGroup.add((Student)lRosterList.getSelectionModel().getSelectedItem());
             sectionRoster.remove((Student)lRosterList.getSelectionModel().getSelectedItem());
@@ -75,7 +92,7 @@ public class GroupsController
     @FXML
     public void removeFromGroup(MouseEvent click)
     {
-        if (click.getClickCount() == 2)
+        if (click.getClickCount() == 2 && lFormedGroup.getSelectionModel().getSelectedItem() != null)
         {
             sectionRoster.add((Student) lFormedGroup.getSelectionModel().getSelectedItem());
             formedGroup.remove((Student) lFormedGroup.getSelectionModel().getSelectedItem());
@@ -86,6 +103,7 @@ public class GroupsController
 
     public void onAddPressed(ActionEvent event)
     {
+        Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
         try
         {
             WorkSpace.instance.getSection().addGroup(new Group(tfGroupName.getText(), new ArrayList<Student>(formedGroup)));
@@ -93,11 +111,14 @@ public class GroupsController
         catch (InvalidNameException e)
         {
             tfGroupName.requestFocus();
+            return;
         }
         catch (MissingInputException e)
         {
             lFormedGroup.requestFocus();
+            return;
         }
+        stage.close();
 
     }
 

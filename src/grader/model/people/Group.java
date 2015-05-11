@@ -22,8 +22,9 @@ public class Group
 	public String groupName;
 
     /**
-     *
-     * @param students
+     * Constructs a group with a name and list of students.
+     * @param groupName to call this group
+     * @param students to add to this group
      */
     public Group(String groupName, ArrayList<Student> students) throws InvalidNameException, MissingInputException
     {
@@ -34,6 +35,8 @@ public class Group
 
         this.groupName = groupName;
         this.students = students;
+
+        System.out.println("called add group from the model! model/people/Group->constructor called.");
     }
 
 	/**

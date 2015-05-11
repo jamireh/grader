@@ -33,7 +33,7 @@
                         <Insets left="100.0" right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="tfStudentSearch" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="121.0" promptText="Student Name">
+                  <TextField fx:id="tfStudentSearch" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#filterRoster" prefHeight="25.0" prefWidth="121.0" promptText="Student Name">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
