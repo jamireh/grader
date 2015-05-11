@@ -1,36 +1,31 @@
 package grader.controller;
 
 import grader.model.file.WorkSpace;
-import grader.model.items.Assignment;
-import grader.model.gradebook.stats.Statistics;
 import grader.model.gradebook.stats.StatsContainer;
-import grader.view.StatisticsBar;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 /**
- * Controller for the StatisticsBar bar and model.
+ * Controller for the Statistics model.
  * @author Quan Tran
  */
 public class StatsController implements Initializable {
-    private StatsContainer model = WorkSpace.instance.statistics;
-    private StatisticsBar view;
-
-    /**
-     * Constructs a new StatsController.
-     */
-    public StatsController() {
-        System.out.println("StatsController constructed s[agiqperihnpeirhn");
-        model.setController(this);
-    }
+    @FXML HBox hbox;
+    private StatsContainer stats = WorkSpace.instance.statistics;
+   // private StatisticsBar bar;
+    static TableView<String[]> table = null;
 
     /**
      * Initializes this StatsController.
@@ -39,21 +34,47 @@ public class StatsController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("StatsController initialized 3q98gnae08rgub8bfn9amfc87");
-        model.setController(this);
+        table = new TableView<String[]>();
+        hbox.setSpacing(5);
+        hbox.getChildren().addAll(table);
+
+        table.setEditable(true);
+        table.setMinWidth(1200);
+        table.setMaxWidth(1200);
+        table.setMaxHeight(600);
+        stats.setController(this);
+        stats.update(null, null);
     }
 
     /**
      * Renders the StatisticsBar bar in the view.
      */
-    public void render() {
-        List<Assignment> assignments = model.getAssignments();
-        Map<Assignment, Statistics> statsMap = model.getMap();
-        List<Statistics> statistics = new ArrayList<Statistics>();
+    public void render(String[][] statsTable) {
 
-        for (Assignment ass : assignments)
-            statistics.add(statsMap.get(ass));
+        table.getColumns().clear();
 
-        view = new StatisticsBar(FXCollections.observableList(statistics));
+        for (int i = 0; i < statsTable[0].length; i++) {
+            TableColumn tc = new TableColumn(null);
+            final int colNo = i;
+            tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
+                    return new SimpleStringProperty((p.getValue()[colNo]));
+                }
+            });
+            tc.setPrefWidth(90);
+            table.getColumns().add(tc);
+        }
+
+        for (int i = 0; i < statsTable.length; ++i) {
+            System.out.println("Row " + i);
+            for (int j = 0; j < statsTable[i].length; ++j)
+                System.out.println(statsTable[i][j]);
+        }
+
+        ObservableList<String[]> data = FXCollections.observableArrayList();
+        data.addAll(Arrays.asList(statsTable));
+
+        table.setItems(data);
     }
 }

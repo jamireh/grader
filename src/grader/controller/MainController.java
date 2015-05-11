@@ -32,6 +32,7 @@ public class MainController implements Initializable {
 
    @FXML SidebarController sidebarController;
    @FXML SpreadsheetController spreadsheetController;
+   @FXML StatsController statsController;
 
    static Course course;
 
@@ -48,7 +49,6 @@ public class MainController implements Initializable {
       vbContainer.setVisible(true);
       spreadsheet.setVisible(true);
       course = WorkSpace.instance.getCourse();
-      StatsController stats = new StatsController();
    }
 
     /* FILE MENU COMMANDS */
