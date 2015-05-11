@@ -25,6 +25,7 @@ public class MainController implements Initializable {
 
    @FXML SidebarController sidebarController;
    @FXML SpreadsheetController spreadsheetController;
+   @FXML StatsController statsController;
    @FXML MenubarController menubarController;
 
 
@@ -38,7 +39,7 @@ public class MainController implements Initializable {
       course = WorkSpace.instance.getCourse();
       StatsController stats = new StatsController();
    }
-      /**
+   /**
     * Controller method for Revert Grades.
     *
     * @param event action event

@@ -20,6 +20,7 @@ import java.util.Observer;
  * @author Quan Tran
  */
 public class StatsContainer implements Observer {
+    private final static int STATS_COUNT = 3;
     private StatsController controller;
     private List<Student> students;
     private List<Assignment> assignments;
@@ -55,11 +56,8 @@ public class StatsContainer implements Observer {
                 assignmentTree.getAssignmentIterator();
 
         assignments = new ArrayList<Assignment>();
-        while (itr.hasNext()) {
-            Assignment next = itr.next();
-            System.out.println(next);
-            assignments.add(next);
-        }
+        while (itr.hasNext())
+            assignments.add(itr.next());
     }
 
     /**
@@ -85,8 +83,25 @@ public class StatsContainer implements Observer {
      * Renders the statistics spreadsheet in the view.
      */
     public void render() {
-        if (controller != null)
-            controller.render();
+        if (controller != null) {
+            int size = assignments.size();
+            String[][] statsTable = new String[STATS_COUNT][size + 1];
+
+            statsTable[0][0] = "Max";
+            statsTable[1][0] = "Average";
+            statsTable[2][0] = "Min";
+
+            // populate stats table
+            for (int i = 0; i < size; ++i) {
+                Statistics current = stats.get(assignments.get(i));
+
+                statsTable[0][i + 1] = Double.toString(current.max);
+                statsTable[1][i + 1] = Double.toString(current.mean);
+                statsTable[2][i + 1] = Double.toString(current.min);
+            }
+
+            controller.render(statsTable);
+        }
     }
 
     /**
@@ -100,19 +115,5 @@ public class StatsContainer implements Observer {
         buildAssignments();
         buildStats();
         render();
-    }
-
-    // test
-    public static void main(String[] args) {
-        StatsContainer container = new StatsContainer();
-        container.update(null, null);
-        Map<Assignment, Statistics> map = container.getMap();
-        for (Assignment ass : map.keySet()) {
-            Statistics stats = map.get(ass);
-            System.out.println(ass + ". " +
-                    "mean: " + stats.mean + ", " +
-                    "min: " + stats.min + ", " +
-                    "max: " + stats.max);
-        }
     }
 }
