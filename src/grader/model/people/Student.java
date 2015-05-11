@@ -59,4 +59,9 @@ public class Student extends Person implements Comparable<Student>
       if (compareLast != 0)  return compareLast;
       else return compareFirst;
    }
+
+    public String toString()
+    {
+        return name.lastName + ", " + name.firstName;
+    }
 }

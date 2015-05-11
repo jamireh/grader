@@ -7,20 +7,12 @@ import grader.model.errors.PercentageFormatException;
  *
  * @author Jon Amireh
  */
-public class Percentage implements Comparable
+public class Percentage implements Comparable<Percentage>
 {
     /**
      * Value between 0.0 and 100.0
      */ 
     private double value;
-
-    /**
-     * Creates a default percentage with a 0% value
-     */
-    public Percentage()
-    {
-        this.value = 0.0;
-    }
 
     /**
      * Creates a Percentage with the given value
@@ -39,7 +31,7 @@ public class Percentage implements Comparable
             throw new PercentageFormatException(value);
         }
 
-        if(dValue < 0.0 || dValue > 100.0)
+        if(dValue < 0.0)
         {
             throw new PercentageFormatException(value);
         }
@@ -55,7 +47,7 @@ public class Percentage implements Comparable
      */
     public Percentage(double dValue) throws PercentageFormatException
     {
-        if(dValue < 0.0 || dValue > 100.0)
+        if(dValue < 0.0)
         {
             throw new PercentageFormatException(value);
         }
@@ -76,12 +68,14 @@ public class Percentage implements Comparable
 
     /**
      * Compares this Percentage to the specified one.
-     * @param other the Percentage to compare to this one.
+     * @param o the Percentage to compare to this one.
      * @return neg. if this Percentage is less than the specified,
      * pos. if this Percentage is less than the specified,
      * 0 if they are considered equal
      */
-    public int compareTo(Object other) {
-        return Double.compare(value, ((Percentage)other).getValue());
+    @Override
+    public int compareTo(Percentage o)
+    {
+        return Double.compare(value, o.getValue());
     }
 }

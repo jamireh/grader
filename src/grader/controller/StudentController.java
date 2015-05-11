@@ -1,6 +1,7 @@
 package grader.controller;
 
 import grader.model.errors.InvalidPhoneNumberException;
+import grader.model.file.WorkSpace;
 import grader.model.people.Name;
 import grader.model.people.Student;
 import javafx.event.ActionEvent;
@@ -39,7 +40,7 @@ public class StudentController
 
         try
         {
-            MainController.course.sections.get(0).addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
+            WorkSpace.instance.getSection().addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
                     tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText()));
         }
         catch (InvalidPhoneNumberException e)

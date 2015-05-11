@@ -11,56 +11,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1421.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.controller.MainController">
     <children>
-        <MenuBar prefHeight="30.0" minWidth="1420.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#fileNewCourse" text="New Course" />
-                        <MenuItem mnemonicParsing="false" onAction="#fileExport" text="Export..." />
-                        <MenuItem mnemonicParsing="false" onAction="#fileImport" text="Import..." />
-                        <MenuItem mnemonicParsing="false" onAction="#filePrint" text="Print..." />
-                        <MenuItem mnemonicParsing="false" onAction="#fileLogout" text="Logout" />
-                        <MenuItem mnemonicParsing="false" onAction="#fileQuit" text="Quit" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#editUndo" text="Undo" />
-                        <MenuItem mnemonicParsing="false" onAction="#editRedo" text="Redo" />
-                        <MenuItem mnemonicParsing="false" onAction="#editCut" text="Cut" />
-                        <MenuItem mnemonicParsing="false" onAction="#editCopy" text="Copy" />
-                        <MenuItem mnemonicParsing="false" onAction="#editPaste" text="Paste" />
-                        <MenuItem mnemonicParsing="false" onAction="#editFind" text="Find..." />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Students">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add New" />
-                        <MenuItem mnemonicParsing="false" onAction="#studentsSyncRoster" text="Sync Roster" />
-                        <MenuItem mnemonicParsing="false" onAction="#studentsEditRoster" text="Edit Roster" />
-                        <MenuItem mnemonicParsing="false" onAction="#studentsCreateGroup" text="Create Group" />
-                        <MenuItem mnemonicParsing="false" onAction="#studentsEditGroups" text="Edit Groups" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Grades">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#gradesAddCategory" text="Add Category" />
-                        <MenuItem mnemonicParsing="false" onAction="#gradesAddAssignment" text="Add Assignment" />
-                        <MenuItem mnemonicParsing="false" onAction="#gradesManage" text="Manage" />
-                        <MenuItem mnemonicParsing="false" onAction="#gradesPublish" text="Publish" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Curve">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#curvePieChart" text="Pie Chart" />
-                        <MenuItem mnemonicParsing="false" onAction="#curveHistogram" text="Histogram" />
-                        <MenuItem mnemonicParsing="false" onAction="#curveGradeScheme" text="Grade Scheme" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+        <fx:include fx:id="menubar" source="menubar.fxml" />
         <fx:include fx:id="sidebar" source="sidebar.fxml" />
-        <VBox fx:id="vbContainer" layoutX="220.0" layoutY="30.0" prefHeight="400.0" prefWidth="1200.0">
+        <VBox fx:id="vbContainer" layoutX="220.0" layoutY="30.0" prefHeight="440.0" prefWidth="1200.0">
             <children>
                 <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
                     <children>
@@ -83,7 +36,6 @@
                 </HBox>
                 <fx:include fx:id="spreadsheet" source="spreadsheet.fxml" />
                 <fx:include fx:id="statistics" source="statistics.fxml" />
-            </children>
-        </VBox>
+            </children></VBox>
     </children>
 </Pane>

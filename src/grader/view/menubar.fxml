@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="1420.0" prefHeight="30.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.controller.MenubarController">
+   <children>
+      <MenuBar minWidth="1420.0" prefHeight="30.0">
+         <menus>
+            <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#fileNewCourse" text="New Course" />
+                  <MenuItem mnemonicParsing="false" onAction="#fileExport" text="Export..." />
+                  <MenuItem mnemonicParsing="false" onAction="#fileImport" text="Import..." />
+                  <MenuItem mnemonicParsing="false" onAction="#filePrint" text="Print..." />
+                  <MenuItem mnemonicParsing="false" onAction="#fileLogout" text="Logout" />
+                  <MenuItem mnemonicParsing="false" onAction="#fileQuit" text="Quit" />
+               </items>
+            </Menu>
+            <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#editUndo" text="Undo" />
+                  <MenuItem mnemonicParsing="false" onAction="#editRedo" text="Redo" />
+                  <MenuItem mnemonicParsing="false" onAction="#editCut" text="Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#editCopy" text="Copy" />
+                  <MenuItem mnemonicParsing="false" onAction="#editPaste" text="Paste" />
+                  <MenuItem mnemonicParsing="false" onAction="#editFind" text="Find..." />
+               </items>
+            </Menu>
+            <Menu fx:id="studentMenu" mnemonicParsing="false" text="Students">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add Student" />
+                  <Menu mnemonicParsing="false" text="Roster">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#studentsSyncRoster" text="Sync Roster" />
+                        <MenuItem mnemonicParsing="false" onAction="#studentsEditRoster" text="Edit Roster" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Groups">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#studentsCreateGroup" text="Create Group" />
+                        <MenuItem mnemonicParsing="false" onAction="#studentsEditGroups" text="Edit Groups" />
+                    </items>
+                  </Menu>
+               </items>
+            </Menu>
+            <Menu fx:id="gradesMenu" mnemonicParsing="false" text="Grades">
+               <items>
+                  <Menu mnemonicParsing="false" text="Add">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#gradesAddCategory" text="Category" />
+                        <MenuItem mnemonicParsing="false" onAction="#gradesAddAssignment" text="Assignment" />
+                     </items>
+                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#gradesManage" text="Manage" />
+                  <MenuItem mnemonicParsing="false" onAction="#gradesPublish" text="Publish" />
+               </items>
+            </Menu>
+            <Menu fx:id="curveMenu" mnemonicParsing="false" text="Curve">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#curvePieChart" text="Pie Chart" />
+                  <MenuItem mnemonicParsing="false" onAction="#curveHistogram" text="Histogram" />
+                  <MenuItem mnemonicParsing="false" onAction="#curveGradeScheme" text="Grade Scheme" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
+</Pane>
