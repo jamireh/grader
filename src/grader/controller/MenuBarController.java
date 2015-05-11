@@ -19,7 +19,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MenubarController implements Initializable, Observer
+public class MenubarController implements Observer
 {
     private Stage stage;
     @FXML Menu fileMenu;
@@ -28,8 +28,8 @@ public class MenubarController implements Initializable, Observer
     @FXML Menu gradesMenu;
     @FXML Menu curveMenu;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
+    @FXML
+    public void initialize()
     {
         WorkSpace.instance.addObserver(this);
         update(null, null);

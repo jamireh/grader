@@ -65,13 +65,13 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="166.0" prefWidth="373.0">
                <children>
-                  <ListView fx:id="lRosterList" prefHeight="116.0" prefWidth="178.0">
+                  <ListView fx:id="lRosterList" onMouseClicked="#addToGroup" prefHeight="116.0" prefWidth="178.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </ListView>
                   <VBox prefHeight="116.0" prefWidth="24.0" />
-                  <ListView fx:id="lRosterList1" prefHeight="116.0" prefWidth="178.0" />
+                  <ListView fx:id="lFormedGroup" onMouseClicked="#removeFromGroup" prefHeight="116.0" prefWidth="178.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" top="10.0" />
