@@ -2,8 +2,7 @@ package grader.model.items;
 
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.Gradebook;
-import grader.model.gradebook.Percentage;
-import grader.model.gradebook.RawScore;
+import grader.model.gradebook.scores.RawScore;
 import grader.model.people.Student;
 
 import java.util.ArrayList;

@@ -1,7 +1,10 @@
 package grader.controller;
 
 import grader.model.file.WorkSpace;
-import grader.model.gradebook.Sidebar;
+import grader.model.gradebook.Course;
+import grader.model.gradebook.Gradebook;
+import grader.model.gradebook.Section;
+import grader.model.people.Group;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -10,25 +13,27 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 /**
  * Controller for the Sidebar model
  * @author Jon Amireh
  */
-public class SidebarController implements Initializable
+public class SidebarController implements Initializable, Observer
 {
     @FXML TreeView<String> tvCourses;
-    Sidebar sidebar = WorkSpace.instance.sidebar;
+
+    /** Workspace gradebook reference. */
+    private Gradebook gradebook;
+    private HashMap<String, HashMap<String, ArrayList<String>>> viewReference;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        sidebar.setController(this);
-        sidebar.update(null, null);
+        // Add observer once weird FX bullshit is fixed.
+//        WorkSpace.instance.addObserver(this);
+
         tvCourses.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<TreeItem<String>>() {
                     @Override
@@ -54,14 +59,15 @@ public class SidebarController implements Initializable
                                 group = newValue.getValue();
                                 break;
                         }
-                        sidebar.selectScope(course, section, group);
+                        selectScope(course, section, group);
                     }
                 });
+       update(null, null);
     }
 
-
-    public void render(final HashMap<String, HashMap<String, ArrayList<String>>> viewReference)
+    public void render()
     {
+        final HashMap<String, HashMap<String, ArrayList<String>>> viewReference = generateTreeView();
         TreeItem<String> rootView = new TreeItem<String>();
         rootView.setValue("Courses");
         for(String courseKey : viewReference.keySet())
@@ -79,5 +85,86 @@ public class SidebarController implements Initializable
             rootView.getChildren().add(course);
         }
         tvCourses.setRoot(rootView);
+    }
+
+    /**
+     * Selects the scope according to what was selected in the sidebar.
+     * @param course course scope
+     * @param section section scope
+     * @param group group scope
+     */
+    public void selectScope(String course, String section, String group) {
+        Course cCourse = null;
+        Section sSection = null;
+        Group gGroup = null;
+        if(course != null)
+        {
+            for(Course c : gradebook.courses)
+            {
+                if(c.name.equals(course))
+                {
+                    cCourse = c;
+                    break;
+                }
+            }
+        }
+        if(section != null)
+        {
+            for (Section s : cCourse.sections)
+            {
+                if (s.sectionName.equals(section))
+                {
+                    sSection = s;
+                    break;
+                }
+            }
+        }
+        if(group != null)
+        {
+            for(Group g : sSection.groups)
+            {
+                if(group.equals(g.groupName))
+                {
+                    gGroup = g;
+                    break;
+                }
+            }
+        }
+        WorkSpace.instance.sidebarSelect(cCourse, sSection, gGroup);
+    }
+
+    private HashMap<String, HashMap<String, ArrayList<String>>> generateTreeView()
+    {
+        HashMap<String, HashMap<String, ArrayList<String>>> viewReference =
+           new HashMap<String, HashMap<String, ArrayList<String>>>();
+
+        for(Course c : gradebook.courses)
+        {
+            HashMap<String, ArrayList<String>> sections = new HashMap<String, ArrayList<String>>();
+            for(Section s : c.sections)
+            {
+                ArrayList<String> group = new ArrayList<String>();
+                for(Group g : s.groups)
+                {
+                    group.add(g.groupName);
+                }
+                sections.put(s.sectionName, group);
+            }
+            viewReference.put(c.name, sections);
+        }
+        System.out.println(viewReference);
+
+        return viewReference;
+    }
+
+    /**
+     * Update method from the WorkSpace.
+     * Gets the workspace gradebook.
+     * @param obj unused
+     * @param args unused
+     */
+    public void update(Observable obj, Object args) {
+        this.gradebook = WorkSpace.instance.getGradebook();
+        render();
     }
 }

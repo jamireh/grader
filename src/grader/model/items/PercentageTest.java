@@ -1,4 +1,4 @@
-package grader.model.gradebook;
+package grader.model.items;
 
 import grader.model.errors.PercentageFormatException;
 import org.junit.Test;

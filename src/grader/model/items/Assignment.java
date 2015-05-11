@@ -7,7 +7,6 @@ package grader.model.items;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
-import grader.model.gradebook.Percentage;
 
 import java.time.LocalDate;
 

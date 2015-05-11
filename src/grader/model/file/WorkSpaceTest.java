@@ -1,10 +1,11 @@
 package grader.model.file;
 
 import grader.model.gradebook.*;
+import grader.model.gradebook.scores.RawScore;
+import grader.model.gradebook.scores.Scores;
+import grader.model.gradebook.Section;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
-
-import static org.junit.Assert.*;
 
 /**
  * The WorkSpaceTest class is the companion testing class for the grader

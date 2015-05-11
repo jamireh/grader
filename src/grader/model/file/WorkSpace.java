@@ -1,6 +1,10 @@
 package grader.model.file;
 
 import grader.model.gradebook.*;
+import grader.model.gradebook.gradescheme.GradeScheme;
+import grader.model.gradebook.scores.RawScore;
+import grader.model.gradebook.scores.Scores;
+import grader.model.gradebook.Section;
 import grader.model.gradebook.stats.*;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
@@ -38,7 +42,6 @@ public class WorkSpace extends Observable {
     */
    public static final WorkSpace instance = new WorkSpace();
    static {
-      instance.sidebar.update(null, null);
       instance.setChanged();
       instance.notifyObservers();
    }
@@ -52,15 +55,10 @@ public class WorkSpace extends Observable {
 	   deltas = new ArrayList<RawScore>();
 	   futureDeltas = new ArrayList<RawScore>();
 
-      // Separate so we don't notify it all the time
-      sidebar = new Sidebar();
-
-      spreadsheet = new Spreadsheet();
       statistics = new StatsContainer();
       pieChart = new PieChart();
       histogram = new Histogram();
 
-      addObserver(spreadsheet);
       addObserver(statistics);
       addObserver(pieChart);
       addObserver(histogram);
@@ -143,16 +141,6 @@ public class WorkSpace extends Observable {
    //////////////////////
    /* COMPONENT MODELS */
    //////////////////////
-   /**
-    * The gradebook sidebar model.
-    */
-   public Sidebar sidebar;
-
-	/**
-	 * The grade spreadsheet model.
-	 */
-	public Spreadsheet spreadsheet;
-
 	/**
 	 * The statistics model.
 	 */
@@ -389,7 +377,7 @@ public class WorkSpace extends Observable {
    }
 
 	/**
-    * Sets the GradeScheme changed flag.
+    * Sets the GradeScheme changed flag and notifies observers.
 	 */
 	public void setGradeSchemeChanged() {
       gradeSchemeChanged = true;
@@ -407,7 +395,7 @@ public class WorkSpace extends Observable {
       this'.section.getGradeScheme().equals(gradeScheme);
     */
    public void updateGradeScheme() {
-      if (gradeSchemeChanged) {
+      if (gradeSchemeChanged && section != null) {
          section.setGradeScheme(this.gradeScheme);
          gradeSchemeChanged = false;
          setChanged();

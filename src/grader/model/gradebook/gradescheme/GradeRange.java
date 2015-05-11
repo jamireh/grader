@@ -1,5 +1,6 @@
-package grader.model.gradebook;
+package grader.model.gradebook.gradescheme;
 
+import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
 
 /**

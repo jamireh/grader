@@ -1,4 +1,4 @@
-package grader.model.gradebook;
+package grader.model.gradebook.scores;
 
 import grader.model.items.Assignment;
 import grader.model.people.Student;

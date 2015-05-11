@@ -1,7 +1,6 @@
 package grader.model.items;
 
 import grader.model.errors.PercentageFormatException;
-import grader.model.gradebook.Percentage;
 
 /**
  * Represents a category of assignments.

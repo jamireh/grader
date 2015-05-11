@@ -1,8 +1,9 @@
-package grader.model.gradebook;
+package grader.model.gradebook.gradescheme;
 import java.util.*;
 
 import grader.model.errors.OverlappingRangeException;
 import grader.model.errors.PercentageFormatException;
+import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
 
 /**
