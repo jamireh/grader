@@ -54,6 +54,7 @@ public class WorkSpace extends Observable {
       gradebook = Gradebook.getCannedGradebook();
 	   deltas = new ArrayList<RawScore>();
 	   futureDeltas = new ArrayList<RawScore>();
+      gradeScheme = null;
 
       statistics = new StatsContainer();
       pieChart = new PieChart();
@@ -187,7 +188,7 @@ public class WorkSpace extends Observable {
 
     /**
      * Returns the currently built pie chart
-     * @return selected pie chart
+     * @return pie chart model
      */
     public PieChart getPieChart() { return pieChart;}
 
@@ -240,8 +241,7 @@ public class WorkSpace extends Observable {
 	 * @return grade scheme for section in scope
 	 */
 	public GradeScheme getGradeScheme() {
-	   if (section != null) return section.getGradeScheme();
-	   return null;
+      return gradeScheme;
    }
 	/////////////////////////////////
 
@@ -398,6 +398,7 @@ public class WorkSpace extends Observable {
       if (gradeSchemeChanged && section != null) {
          section.setGradeScheme(this.gradeScheme);
          gradeSchemeChanged = false;
+         loadGradeScheme();
          setChanged();
          notifyObservers();
       }
