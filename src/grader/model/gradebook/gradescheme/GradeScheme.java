@@ -13,7 +13,10 @@ import javafx.scene.paint.Color;
  * @author Tobias Bleisch
  */
 public class GradeScheme
-{   
+{
+    public final static double ceiling = 100;
+    public final static double floor = 0;
+
     /**
      * Comprised of every available grade range.
      */
@@ -61,7 +64,9 @@ public class GradeScheme
      */
     public void updateGradeRange(LetterGrade gradeToUpdate, Percentage newPercent) throws OverlappingRangeException {
         System.out.println("Divisions have been updated.");
-        Percentage higher = ranges.get(gradeToUpdate.ordinal() - 1).getLowerBound();
+
+        int index = gradeToUpdate.ordinal();
+        Percentage higher = index == 0 ? new Percentage(GradeScheme.ceiling) : ranges.get(index - 1).getLowerBound();
         Percentage lower = ranges.get(gradeToUpdate.ordinal() + 1).getLowerBound();
 
         if (newPercent.compareTo(higher) >= 0) {

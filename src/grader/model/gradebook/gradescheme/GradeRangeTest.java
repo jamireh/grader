@@ -1,5 +1,7 @@
 package grader.model.gradebook.gradescheme;
 
+import grader.model.items.Percentage;
+import javafx.scene.paint.Color;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -24,6 +26,12 @@ public class GradeRangeTest {
      *	                                       								 </pre>
      *	  @author Tobias Bleisch
      */
+
+    @Test
+    public void testConstructor() {
+        new GradeRange(new Percentage(82.3), LetterGrade.B_MINUS,
+                new Color(0, 0, 0, 0));
+    }
 
     @Test
     public void testValidGradeRange() throws Exception {
