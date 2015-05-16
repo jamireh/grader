@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 public class GradeScheme
 {
     public final static double ceiling = 100;
-    public final static double floor = 0;
 
     /**
      * Comprised of every available grade range.
@@ -99,13 +98,11 @@ public class GradeScheme
      * or null
      */
     public GradeRange getGradeRange(Percentage percent) {
-        GradeRange found = null;
-
         for (GradeRange range : ranges)
             if (percent.compareTo(range.getLowerBound()) >= 0)
-                found = range;
+                return range;
 
-        return found;
+        return null;
     }
 
     /**

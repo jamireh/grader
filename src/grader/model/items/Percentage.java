@@ -78,4 +78,32 @@ public class Percentage implements Comparable<Percentage>
     {
         return Double.compare(value, o.getValue());
     }
+
+    /**
+     * Compares this Percentage to the specified one for equality.
+     * @param o the Percentage to compare to this one.
+     * @return true if the specified Percentage is equal to this, false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Percentage that = (Percentage) o;
+
+        if (Double.compare(that.value, value) != 0) return false;
+
+        return true;
+    }
+
+    /**
+     * Generates a String representation of this Percentage.
+     * @return a String representation of this Percentage
+     */
+    @Override
+    public String toString() {
+        return "Percentage{" +
+                "value=" + value +
+                '}';
+    }
 }
