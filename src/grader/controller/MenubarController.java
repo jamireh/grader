@@ -7,7 +7,6 @@ import grader.model.file.WorkSpace;
 import grader.model.gradebook.Course;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -15,14 +14,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 public class MenubarController implements Observer
 {
-    private Stage stage;
+    private Stage lockedStage;
+    private Stage histogramStage;
+    private Stage piechartStage;
+    private Stage gradeschemeStage;
     @FXML Menu fileMenu;
     @FXML Menu editMenu;
     @FXML Menu studentMenu;
@@ -34,7 +34,11 @@ public class MenubarController implements Observer
     {
         WorkSpace.instance.addObserver(this);
         update(null, null);
-        stage = new Stage();
+        lockedStage = new Stage();
+        lockedStage.initModality(Modality.APPLICATION_MODAL);
+        piechartStage = new Stage();
+        histogramStage = new Stage();
+        gradeschemeStage = new Stage();
     }
 
     @Override
@@ -61,9 +65,16 @@ public class MenubarController implements Observer
         if(WorkSpace.instance.section == null)
         {
             studentMenu.setDisable(true);
+            curveMenu.setDisable(true);
         }
     }
 
+    public void setStageWithFocus(Parent root, String title)
+    {
+        lockedStage.setTitle(title);
+        lockedStage.setScene(new Scene(root));
+        lockedStage.show();
+    }
     /* FILE MENU COMMANDS */
 
     /**
@@ -72,9 +83,7 @@ public class MenubarController implements Observer
     public void fileNewCourse() throws IOException
     {
         Parent root = FXMLLoader.load(Main.courseResource);
-        stage.setTitle("New Course");
-        stage.setScene(new Scene(root));
-        stage.show();
+        setStageWithFocus(root, "New Course");
     }
 
     /**
@@ -156,8 +165,7 @@ public class MenubarController implements Observer
     public void editFind() throws IOException {
         System.out.println("Edit->Find clicked!");
         Parent root = FXMLLoader.load(Main.findResource);
-        stage.setScene(new Scene(root));
-        stage.show();
+        setStageWithFocus(root, "");
     }
 
     /* STUDENTS MENU COMMANDS */
@@ -168,10 +176,7 @@ public class MenubarController implements Observer
     public void studentsAddNew() throws IOException {
         System.out.println("Students->Add New clicked!");
         Parent root = FXMLLoader.load(Main.studentsResource);
-        stage.setTitle("Add Student");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        setStageWithFocus(root, "Add Student");
     }
 
     /**
@@ -196,10 +201,7 @@ public class MenubarController implements Observer
     public void studentsCreateGroup() throws IOException {
         System.out.println("Students->Create Group clicked!");
         Parent root = FXMLLoader.load(Main.groupsResource);
-        stage.setTitle("Add New Group");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        setStageWithFocus(root, "Add New Group");
     }
 
     /**
@@ -217,9 +219,7 @@ public class MenubarController implements Observer
     public void gradesAddCategory() throws IOException {
         System.out.println("Grades->Add Category clicked!");
         Parent root = FXMLLoader.load(Main.categoriesResource);
-        stage.setTitle("Add Category");
-        stage.setScene(new Scene(root));
-        stage.show();
+        setStageWithFocus(root, "Add Category");
     }
 
     /**
@@ -228,9 +228,7 @@ public class MenubarController implements Observer
     public void gradesAddAssignment() throws IOException {
         System.out.println("Grades->Add Assignment clicked!");
         Parent root = FXMLLoader.load(Main.assignmentsResource);
-        stage.setTitle("Add Assignment");
-        stage.setScene(new Scene(root));
-        stage.show();
+        setStageWithFocus(root, "Add Assignment");
     }
 
     /**
@@ -255,9 +253,9 @@ public class MenubarController implements Observer
     public void curvePieChart() throws IOException {
         System.out.println("Grades->Pie Chart clicked!");
         Parent root = FXMLLoader.load(Main.piechartResource);
-        stage.setTitle("Pie Chart");
-        stage.setScene(new Scene(root));
-        stage.show();
+        piechartStage.setTitle("Pie Chart");
+        piechartStage.setScene(new Scene(root));
+        piechartStage.show();
     }
 
     /**
@@ -266,9 +264,9 @@ public class MenubarController implements Observer
     public void curveHistogram() throws IOException {
         System.out.println("Grades->Histogram clicked!");
         Parent root = FXMLLoader.load(Main.histogramResource);
-        stage.setTitle("Histogram");
-        stage.setScene(new Scene(root));
-        stage.show();
+        histogramStage.setTitle("Histogram");
+        histogramStage.setScene(new Scene(root));
+        histogramStage.show();
     }
 
     /**
@@ -277,8 +275,8 @@ public class MenubarController implements Observer
     public void curveGradeScheme() throws IOException {
         System.out.println("Grades->Grade Scheme clicked!");
         Parent root = FXMLLoader.load(Main.gradeSchemeResource);
-        stage.setTitle("Grade Scheme");
-        stage.setScene(new Scene(root));
-        stage.show();
+        gradeschemeStage.setTitle("Grade Scheme");
+        gradeschemeStage.setScene(new Scene(root));
+        gradeschemeStage.show();
     }
 }
