@@ -65,6 +65,7 @@ public class MenubarController implements Observer
         if(WorkSpace.instance.section == null)
         {
             studentMenu.setDisable(true);
+            curveMenu.setDisable(true);
         }
     }
 
