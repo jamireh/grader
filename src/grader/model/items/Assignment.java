@@ -12,6 +12,8 @@ import java.time.LocalDate;
 
 /**
  * Represents an assignment of a specific category.
+ *
+ * @author Jon Amireh
  */
 public class Assignment
 {
