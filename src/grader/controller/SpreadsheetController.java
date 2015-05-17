@@ -89,8 +89,7 @@ public class SpreadsheetController implements Initializable, Observer
       // Populate scores table
       for (int studentIndex = 0; studentIndex < students.size(); ++studentIndex) {
          Student student = students.get(studentIndex);
-         student.getName();
-         grades[studentIndex][0] = student.getName().toString();
+         grades[studentIndex][0] = student.name.toString();
          for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
             grades[studentIndex][assignmentIndex + 1] =
                   Double.toString(

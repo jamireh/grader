@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -169,6 +170,7 @@ public class MenubarController implements Observer
         Parent root = FXMLLoader.load(Main.studentsResource);
         stage.setTitle("Add Student");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 

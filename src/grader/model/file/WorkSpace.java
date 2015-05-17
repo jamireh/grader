@@ -207,6 +207,16 @@ public class WorkSpace extends Observable {
       return group;
    }
 
+    /**
+     * Adds a group to the currently selected section
+     */
+    public void addGroup(Group g)
+    {
+        getSection().addGroup(g);
+        setChanged();
+        notifyObservers();
+    }
+
 	/**
 	 * Returns a list of students whose grades are being displayed
 	 * in the grade spreadsheet.
