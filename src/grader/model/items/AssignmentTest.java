@@ -2,8 +2,8 @@ package grader.model.items;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.time.LocalDate;
 
@@ -51,29 +51,36 @@ public class AssignmentTest
     }
 
     @Test(expected = PercentageFormatException.class)
-    public void testInvalidPercentage() throws RawScoreFormatException, PercentageFormatException
+    public void testInvalidPercentage()
     {
         String name = "Midterm";
         LocalDate date = LocalDate.now();
         String rawPoints = "100";
         String weight = "-20";
         Assignment a = new Assignment(name, date, rawPoints, weight);
-        Assert.assertNull("Construction resulted in a non-null Object", a);
     }
+
     @Test(expected = RawScoreFormatException.class)
-    public void testInvalidRawScore() throws RawScoreFormatException, PercentageFormatException
+    public void testInvalidRawScoreOne()
     {
         String name = "Midterm";
         LocalDate date = LocalDate.now();
         String rawPoints = "-5";
         String weight = "20";
         Assignment a = new Assignment(name, date, rawPoints, weight);
-        Assert.assertNull("Construction resulted in a non-null Object", a);
-
-        rawPoints = "NaN";
-        Assignment a1 = new Assignment(name, date, rawPoints, weight);
-        Assert.assertNull("Construction resulted in a non-null Object", a1);
     }
+
+    @Test(expected = RawScoreFormatException.class)
+    public void testInvalidRawScoreTwo()
+    {
+        String name = "Midterm";
+        LocalDate date = LocalDate.now();
+        String rawPoints = "-5";
+        String weight = "20";
+        rawPoints = "NaNaNaNaNaN";
+        Assignment a1 = new Assignment(name, date, rawPoints, weight);
+    }
+
     @Test
     public void testAdjustPointValue() throws Exception
     {
@@ -95,5 +102,26 @@ public class AssignmentTest
         String weight = "50";
         Assignment a = new Assignment(name, date, rawPoints, weight);
         Assert.assertEquals("Raw points not set properly", Integer.valueOf(rawPoints), (Integer) a.getPoints());
+    }
+
+    @Test
+    public void testToString() throws RawScoreFormatException, PercentageFormatException
+    {
+        String name = "Midterm";
+        LocalDate date = LocalDate.now();
+        String rawPoints = "100";
+        String weight = "50";
+        Assignment a = new Assignment(name, date, rawPoints, weight);
+        Assert.assertEquals("Name not set properly", name, a.toString());
+    }
+
+    @Test
+    public void testDebugConstructor()
+    {
+        String name = "Midterm";
+        Assignment a = new Assignment(name);
+        Assert.assertNotNull(a);
+        Assert.assertEquals("Name not set properly", name, a.name);
+        Assert.assertEquals("Raw Score not set properly", 100, a.getPoints());
     }
 }
