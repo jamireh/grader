@@ -60,6 +60,10 @@ public class GroupsController
         };
     }
 
+    /**
+     * filters the roster view
+     * @param event
+     */
     @FXML
     public void filterRoster(KeyEvent event)
     {

@@ -7,8 +7,9 @@ import java.util.*;
 
 /**
  * The Group class defines an organizational group of Students.
- *
  * Derived from the requirements documentation regarding student management.
+ *
+ * @author Connor Batch
  */
 public class Group
 {
@@ -28,7 +29,7 @@ public class Group
      */
     public Group(String groupName, ArrayList<Student> students) throws InvalidNameException, MissingInputException
     {
-        if (groupName.length() <= 1)
+        if (groupName.length() < 1)
             throw new InvalidNameException();
         if (students.size() == 0)
             throw new MissingInputException("No students in this group!");
@@ -43,9 +44,12 @@ public class Group
 	 * Modifies the group name to the one provided.
 	 * @param newGroupName String representing the new group name.
 	 */
-	public void editGroupName(String newGroupName) {
+	public void editGroupName(String newGroupName) throws InvalidNameException
+    {
+        if (newGroupName.length() < 1)
+            throw new InvalidNameException();
 	   groupName = newGroupName;
-   }
+    }
 
 	/**
 	 * Removes a Student currently within the group.

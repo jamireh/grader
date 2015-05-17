@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
  *
  * @author Connor Batch
  */
-public class Student extends Person implements Comparable<Student>
+public class Student implements Comparable<Student>
 {	
 	/**
 	 * The Name of this Student.
@@ -28,7 +28,8 @@ public class Student extends Person implements Comparable<Student>
 	 */
 	String phoneNumber;
 
-   public Student(Name name) {
+   public Student(Name name)
+   {
       this.name = name;
    }
 

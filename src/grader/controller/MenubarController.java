@@ -198,6 +198,7 @@ public class MenubarController implements Observer
         Parent root = FXMLLoader.load(Main.groupsResource);
         stage.setTitle("Add New Group");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
