@@ -19,7 +19,10 @@ import java.util.Observer;
 
 public class MenubarController implements Observer
 {
-    private Stage stage;
+    private Stage lockedStage;
+    private Stage histogramStage;
+    private Stage piechartStage;
+    private Stage gradeschemeStage;
     @FXML Menu fileMenu;
     @FXML Menu editMenu;
     @FXML Menu studentMenu;
@@ -31,7 +34,11 @@ public class MenubarController implements Observer
     {
         WorkSpace.instance.addObserver(this);
         update(null, null);
-        stage = new Stage();
+        lockedStage = new Stage();
+        lockedStage.initModality(Modality.APPLICATION_MODAL);
+        piechartStage = new Stage();
+        histogramStage = new Stage();
+        gradeschemeStage = new Stage();
     }
 
     @Override
@@ -63,10 +70,9 @@ public class MenubarController implements Observer
 
     public void setStageWithFocus(Parent root, String title)
     {
-        stage.setTitle(title);
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        lockedStage.setTitle(title);
+        lockedStage.setScene(new Scene(root));
+        lockedStage.show();
     }
     /* FILE MENU COMMANDS */
 
@@ -246,9 +252,9 @@ public class MenubarController implements Observer
     public void curvePieChart() throws IOException {
         System.out.println("Grades->Pie Chart clicked!");
         Parent root = FXMLLoader.load(Main.piechartResource);
-        stage.setTitle("Pie Chart");
-        stage.setScene(new Scene(root));
-        stage.show();
+        piechartStage.setTitle("Pie Chart");
+        piechartStage.setScene(new Scene(root));
+        piechartStage.show();
     }
 
     /**
@@ -257,9 +263,9 @@ public class MenubarController implements Observer
     public void curveHistogram() throws IOException {
         System.out.println("Grades->Histogram clicked!");
         Parent root = FXMLLoader.load(Main.histogramResource);
-        stage.setTitle("Histogram");
-        stage.setScene(new Scene(root));
-        stage.show();
+        histogramStage.setTitle("Histogram");
+        histogramStage.setScene(new Scene(root));
+        histogramStage.show();
     }
 
     /**
@@ -268,8 +274,8 @@ public class MenubarController implements Observer
     public void curveGradeScheme() throws IOException {
         System.out.println("Grades->Grade Scheme clicked!");
         Parent root = FXMLLoader.load(Main.gradeSchemeResource);
-        stage.setTitle("Grade Scheme");
-        stage.setScene(new Scene(root));
-        stage.show();
+        gradeschemeStage.setTitle("Grade Scheme");
+        gradeschemeStage.setScene(new Scene(root));
+        gradeschemeStage.show();
     }
 }
