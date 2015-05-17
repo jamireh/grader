@@ -5,6 +5,7 @@ import grader.model.gradebook.Course;
 import grader.model.gradebook.Gradebook;
 import grader.model.gradebook.Section;
 import grader.model.people.Group;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class SidebarController implements Initializable, Observer
     public void initialize(URL location, ResourceBundle resources)
     {
         // Add observer once weird FX bullshit is fixed.
-//        WorkSpace.instance.addObserver(this);
+        WorkSpace.instance.addObserver(this);
 
         tvCourses.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<TreeItem<String>>() {
@@ -59,7 +60,19 @@ public class SidebarController implements Initializable, Observer
                                 group = newValue.getValue();
                                 break;
                         }
-                        selectScope(course, section, group);
+                        final String finalCourse = course;
+                        final String finalSection = section;
+                        final String finalGroup = group;
+                        //Some weird rule that you can't update the Sidebar while listening to what is currently selected
+                        //so it has to be run on a separate thread, idk.
+                        Platform.runLater(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                selectScope(finalCourse, finalSection, finalGroup);
+                            }
+                        });
                     }
                 });
        update(null, null);
@@ -68,17 +81,31 @@ public class SidebarController implements Initializable, Observer
     public void render()
     {
         final HashMap<String, HashMap<String, ArrayList<String>>> viewReference = generateTreeView();
+        tvCourses.setRoot(null);
         TreeItem<String> rootView = new TreeItem<String>();
         rootView.setValue("Courses");
+        if(WorkSpace.instance.course != null)
+        {
+            rootView.setExpanded(true);
+        }
         for(String courseKey : viewReference.keySet())
         {
             TreeItem<String> course = new TreeItem<String>(courseKey);
+            if(WorkSpace.instance.course != null && WorkSpace.instance.section != null && courseKey.equals(WorkSpace.instance.course.name))
+            {
+                course.setExpanded(true);
+            }
             for (String  sectionKey : viewReference.get(courseKey).keySet())
             {
                 TreeItem<String> section = new TreeItem<String>(sectionKey);
+                if(WorkSpace.instance.section != null && WorkSpace.instance.group != null && sectionKey.equals(WorkSpace.instance.section.sectionName))
+                {
+                    section.setExpanded(true);
+                }
                 for(String group : viewReference.get(courseKey).get(sectionKey))
                 {
-                    section.getChildren().add(new TreeItem<String>(group));
+                    TreeItem<String> groupItem = new TreeItem<String>(group);
+                    section.getChildren().add(groupItem);
                 }
                 course.getChildren().add(section);
             }
@@ -152,8 +179,6 @@ public class SidebarController implements Initializable, Observer
             }
             viewReference.put(c.name, sections);
         }
-        System.out.println(viewReference);
-
         return viewReference;
     }
 
@@ -164,7 +189,23 @@ public class SidebarController implements Initializable, Observer
      * @param args unused
      */
     public void update(Observable obj, Object args) {
-        this.gradebook = WorkSpace.instance.getGradebook();
-        render();
+        boolean ignoreMe = false;
+        if(args != null)
+        {
+            Class[] toIgnore = ((Class[]) args);
+            for(int i = 0; i < toIgnore.length; i++)
+            {
+                if(toIgnore[i] == getClass())
+                {
+                    ignoreMe = true;
+                    break;
+                }
+            }
+        }
+        if(!ignoreMe)
+        {
+            this.gradebook = WorkSpace.instance.getGradebook();
+            render();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package grader.model.file;
 
+import grader.controller.SidebarController;
 import grader.model.gradebook.*;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.scores.RawScore;
@@ -276,7 +277,10 @@ public class WorkSpace extends Observable {
       loadGradeScheme();
 
       setChanged();
-      notifyObservers();
+       //Required for Sidebar to work properly.
+       //Essentially, Jon passes in an Array of Classes that he wishes to ignore this update.
+       //Because the Sidebar OnMouseClick calls this method, it shouldn't be updated; if it is, the Sidebar breaks, don't ask lol.
+      notifyObservers(new Class[] {SidebarController.class});
    }
 
    /**
