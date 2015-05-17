@@ -10,13 +10,13 @@ import grader.model.errors.PercentageFormatException;
 public class Category
 {
     /** the name of this category */
-    String name;
+    public String name;
 
     /** the amount of weight this category has in the final grade */
-    Percentage weight;
+    public Percentage weight;
 
     /** whether uncategorized assignments are graded by raw score or not */
-    boolean uncategorizedByRawScore;
+    public boolean uncategorizedByRawScore;
 
     public Category(String name, String weight, boolean uncategorizedByRawScore) throws PercentageFormatException
     {

@@ -1,11 +1,14 @@
-package grader.model.items;
+package test;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
-import org.junit.Assert;
+import grader.model.items.Assignment;
 import org.junit.Test;
 
 import java.time.LocalDate;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * The AssignmentTest class is the companion testing class for the grader
@@ -27,27 +30,27 @@ public class AssignmentTest
 {
 
     @Test
-    public void testConstructor() throws RawScoreFormatException, PercentageFormatException
+    public void testConstructor()
     {
         String name = "Midterm";
         LocalDate date = LocalDate.now();
         String rawPoints = "100";
         String weight = "50";
         Assignment a = new Assignment(name, date, rawPoints, weight);
-        Assert.assertNotNull("Construction resulted in a null Object", a);
-        Assert.assertEquals("Name not properly set", name, a.name);
-        Assert.assertEquals("DueDate not properly set", date, a.dueDate);
-        Assert.assertEquals("rawPoints not properly set", Integer.valueOf(rawPoints), (Integer) a.rawPoints);
-        Assert.assertEquals("weight not properly set", Double.valueOf(weight), (Double) a.weight.getValue());
-        Assert.assertTrue("weight flag not properly set", a.hasWeight);
+        assertThat(a, notNullValue());
+        assertThat(name, equalTo(a.name));
+        assertThat(date, equalTo(a.dueDate));
+        assertThat(Integer.valueOf(rawPoints), equalTo((Integer) a.rawPoints));
+        assertThat(Double.valueOf(weight), equalTo((Double) a.weight.getValue()));
+        assertThat(a.hasWeight, equalTo(true));
 
         Assignment a1 = new Assignment(name, date, rawPoints, "");
-        Assert.assertNotNull("Construction resulted in a null Object", a1);
-        Assert.assertEquals("Name not properly set", name, a1.name);
-        Assert.assertEquals("DueDate not properly set", date, a1.dueDate);
-        Assert.assertEquals("rawPoints not properly set", Integer.valueOf(rawPoints), (Integer) a1.rawPoints);
-        Assert.assertNull("weight not properly set", a1.weight);
-        Assert.assertFalse("weight flag not properly set", a1.hasWeight);
+        assertThat(a1, notNullValue());
+        assertThat(name, equalTo(a1.name));
+        assertThat(date, equalTo(a1.dueDate));
+        assertThat(Integer.valueOf(rawPoints), equalTo((Integer) a1.rawPoints));
+        assertThat(a1.weight, nullValue());
+        assertThat(a1.hasWeight, equalTo(false));
     }
 
     @Test(expected = PercentageFormatException.class)
@@ -91,7 +94,7 @@ public class AssignmentTest
         Assignment a = new Assignment(name, date, rawPoints, weight);
         int newValue = 20;
         a.adjustPointValue(newValue);
-        Assert.assertEquals("Raw points not set properly", newValue, a.rawPoints);
+        assertThat(newValue, equalTo(a.rawPoints));
     }
     @Test
     public void testGetPoints() throws Exception
@@ -101,7 +104,7 @@ public class AssignmentTest
         String rawPoints = "100";
         String weight = "50";
         Assignment a = new Assignment(name, date, rawPoints, weight);
-        Assert.assertEquals("Raw points not set properly", Integer.valueOf(rawPoints), (Integer) a.getPoints());
+        assertThat(Integer.valueOf(rawPoints), equalTo((Integer) a.getPoints()));
     }
 
     @Test
@@ -112,7 +115,7 @@ public class AssignmentTest
         String rawPoints = "100";
         String weight = "50";
         Assignment a = new Assignment(name, date, rawPoints, weight);
-        Assert.assertEquals("Name not set properly", name, a.toString());
+        assertThat(name, equalTo(a.toString()));
     }
 
     @Test
@@ -120,8 +123,8 @@ public class AssignmentTest
     {
         String name = "Midterm";
         Assignment a = new Assignment(name);
-        Assert.assertNotNull(a);
-        Assert.assertEquals("Name not set properly", name, a.name);
-        Assert.assertEquals("Raw Score not set properly", 100, a.getPoints());
+        assertThat(a, notNullValue());
+        assertThat(name, equalTo(a.name));
+        assertThat(100, equalTo(a.getPoints()));
     }
 }

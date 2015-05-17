@@ -19,7 +19,7 @@ public class Percentage implements Comparable<Percentage>
      * @param value String representing the Double representing the value
      * @throws PercentageFormatException if the value given is invalid
      */
-    public Percentage(String value) throws PercentageFormatException
+    public Percentage(String value)
     {
         double dValue;
         try
@@ -45,7 +45,7 @@ public class Percentage implements Comparable<Percentage>
      * @param dValue Double representing the value
      * @throws PercentageFormatException if the value given is invalid
      */
-    public Percentage(double dValue) throws PercentageFormatException
+    public Percentage(double dValue)
     {
         if(dValue < 0.0)
         {
@@ -91,9 +91,8 @@ public class Percentage implements Comparable<Percentage>
 
         Percentage that = (Percentage) o;
 
-        if (Double.compare(that.value, value) != 0) return false;
+        return Double.compare(that.value, value) == 0;
 
-        return true;
     }
 
     /**
@@ -102,7 +101,7 @@ public class Percentage implements Comparable<Percentage>
      */
     @Override
     public String toString() {
-        return "Percentage{" +
+        return "Percentage {" +
                 "value=" + value +
                 '}';
     }
