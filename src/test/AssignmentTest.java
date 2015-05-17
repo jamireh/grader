@@ -80,7 +80,7 @@ public class AssignmentTest
         LocalDate date = LocalDate.now();
         String rawPoints = "-5";
         String weight = "20";
-        rawPoints = "NaNaNaNaNaN";
+        rawPoints = "NaN";
         Assignment a1 = new Assignment(name, date, rawPoints, weight);
     }
 

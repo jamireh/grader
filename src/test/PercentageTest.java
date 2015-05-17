@@ -42,6 +42,12 @@ public class PercentageTest
     {
         Percentage p = new Percentage("NaN");
     }
+
+    @Test(expected= PercentageFormatException.class)
+    public void testInvalidString()
+    {
+        Percentage p = new Percentage("NaNaNaN");
+    }
     @Test
     public void testGetValue()
     {
@@ -70,5 +76,13 @@ public class PercentageTest
         assertThat(p, equalTo(p1));
         Percentage p2 = new Percentage("20.0");
         assertThat(p, not(equalTo(p2)));
+    }
+
+    @Test
+    public void testCompareTo()
+    {
+        Percentage p = new Percentage("10.0");
+        Percentage p1 = new Percentage(10.0);
+        assertThat(p.compareTo(p1), equalTo(0));
     }
 }

@@ -31,6 +31,11 @@ public class Percentage implements Comparable<Percentage>
             throw new PercentageFormatException(value);
         }
 
+        if(Double.isNaN(dValue))
+        {
+            throw new PercentageFormatException(value);
+        }
+
         if(dValue < 0.0)
         {
             throw new PercentageFormatException(value);
