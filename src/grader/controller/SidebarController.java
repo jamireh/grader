@@ -40,39 +40,42 @@ public class SidebarController implements Initializable, Observer
                     @Override
                     public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue)
                     {
-                        int level = tvCourses.getTreeItemLevel(newValue);
-                        String course = null, section = null, group = null;
-                        switch (level)
+                        if (newValue != null)
                         {
-                            case 1:
-                                course = newValue.getValue();
-                                section = null;
-                                group = null;
-                                break;
-                            case 2:
-                                course = newValue.getParent().getValue();
-                                section = newValue.getValue();
-                                group = null;
-                                break;
-                            case 3:
-                                course = newValue.getParent().getParent().getValue();
-                                section = newValue.getParent().getValue();
-                                group = newValue.getValue();
-                                break;
-                        }
-                        final String finalCourse = course;
-                        final String finalSection = section;
-                        final String finalGroup = group;
-                        //Some weird rule that you can't update the Sidebar while listening to what is currently selected
-                        //so it has to be run on a separate thread, idk.
-                        Platform.runLater(new Runnable()
-                        {
-                            @Override
-                            public void run()
+                            int level = tvCourses.getTreeItemLevel(newValue);
+                            String course = null, section = null, group = null;
+                            switch (level)
                             {
-                                selectScope(finalCourse, finalSection, finalGroup);
+                                case 1:
+                                    course = newValue.getValue();
+                                    section = null;
+                                    group = null;
+                                    break;
+                                case 2:
+                                    course = newValue.getParent().getValue();
+                                    section = newValue.getValue();
+                                    group = null;
+                                    break;
+                                case 3:
+                                    course = newValue.getParent().getParent().getValue();
+                                    section = newValue.getParent().getValue();
+                                    group = newValue.getValue();
+                                    break;
                             }
-                        });
+                            final String finalCourse = course;
+                            final String finalSection = section;
+                            final String finalGroup = group;
+                            //Some weird rule that you can't update the Sidebar while listening to what is currently selected
+                            //so it has to be run on a separate thread, idk.
+                            Platform.runLater(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    selectScope(finalCourse, finalSection, finalGroup);
+                                }
+                            });
+                        }
                     }
                 });
        update(null, null);

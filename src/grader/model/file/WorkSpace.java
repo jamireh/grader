@@ -1,18 +1,24 @@
 package grader.model.file;
 
-import grader.controller.SidebarController;
-import grader.model.gradebook.*;
+import grader.model.curve.Histogram;
+import grader.model.curve.PieChart;
+import grader.model.gradebook.Course;
+import grader.model.gradebook.Gradebook;
+import grader.model.gradebook.Section;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;
-import grader.model.gradebook.Section;
-import grader.model.gradebook.stats.*;
+import grader.model.gradebook.stats.StatsContainer;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
-import grader.model.people.*;
-import grader.model.curve.*;
+import grader.model.people.Group;
+import grader.model.people.Person;
+import grader.model.people.Student;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * The WorkSpace class is a singleton that contains all the information for the
@@ -277,10 +283,7 @@ public class WorkSpace extends Observable {
       loadGradeScheme();
 
       setChanged();
-       //Required for Sidebar to work properly.
-       //Essentially, Jon passes in an Array of Classes that he wishes to ignore this update.
-       //Because the Sidebar OnMouseClick calls this method, it shouldn't be updated; if it is, the Sidebar breaks, don't ask lol.
-      notifyObservers(new Class[] {SidebarController.class});
+      notifyObservers();
    }
 
    /**
