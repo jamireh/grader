@@ -80,7 +80,7 @@ public class Assignment
      */
     public void adjustPointValue(int newValue)
     {
-
+        this.rawPoints = newValue;
     }
 
     /**
