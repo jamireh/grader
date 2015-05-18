@@ -10,7 +10,11 @@ import grader.model.gradebook.scores.Scores;
 import grader.model.gradebook.Section;
 import grader.model.items.Assignment;
 import grader.model.items.Percentage;
+import grader.model.people.Group;
+import grader.model.people.Name;
 import grader.model.people.Student;
+
+import java.util.ArrayList;
 
 /**
  * The WorkSpaceTest class is the companion testing class for the grader
@@ -54,7 +58,7 @@ public class WorkSpaceTest {
     * Ensure that the scope is properly changed by the sidebarSelect method.
     */
    @org.junit.Test
-   public void testSidebarSelect() {
+   public void testSidebarSelect() throws Exception {
       Gradebook canned = WorkSpace.instance.getGradebook();
       Course course = canned.courses.get(0);
       Section section = course.sections.get(0);
@@ -64,6 +68,14 @@ public class WorkSpaceTest {
       assert(course.equals(WorkSpace.instance.getCourse()));
       assert(section.equals(WorkSpace.instance.getSection()));
       assert(WorkSpace.instance.getGroup() == null);
+
+
+      WorkSpace.instance.addGroup(new Group("Kewl Kids", ((ArrayList<Student>) section.getStudents())));
+      WorkSpace.instance.sidebarSelect(course, section, section.groups.get(0));
+
+      assert(course.equals(WorkSpace.instance.getCourse()));
+      assert(section.equals(WorkSpace.instance.getSection()));
+      assert(section.groups.equals(WorkSpace.instance.getSection().groups));
 
       WorkSpace.instance.sidebarSelect(null, null, null);
 
