@@ -1,5 +1,7 @@
-package grader.model.gradebook.gradescheme;
+package test;
 
+import grader.model.gradebook.gradescheme.GradeRange;
+import grader.model.gradebook.gradescheme.LetterGrade;
 import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
 import org.junit.Test;
@@ -146,7 +148,7 @@ public class GradeRangeTest {
     public void testToString() throws Exception {
         GradeRange gradeRange = new GradeRange(new Percentage(97.0),
                 LetterGrade.A_PLUS, Color.LIGHTGREEN);
-        assertEquals("GradeRange{lowerBound=Percentage{value=97.0}, " +
+        assertEquals("GradeRange{lowerBound=Percentage {value=97.0}, " +
                 "letterGrade=LetterGrade{letter='A+', textID1='A_Plus_Low', " +
                 "textID2='A_High', colorID='A_PLUS_COLOR'}, color=0x90ee90ff}", gradeRange.toString());
     }

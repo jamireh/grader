@@ -1,5 +1,7 @@
-package grader.model.gradebook.gradescheme;
+package test;
 
+import grader.model.gradebook.gradescheme.LetterGrade;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -35,7 +37,7 @@ public class LetterGradeTest {
      */
     @Test
     public void testConstructor() {
-        assertEquals(LetterGrade.A_PLUS, LetterGrade.valueOfFromID("A_Plus_Low"));
+        Assert.assertEquals(LetterGrade.A_PLUS, LetterGrade.valueOfFromID("A_Plus_Low"));
         assertEquals(LetterGrade.A_PLUS, LetterGrade.valueOfFromID("A_High"));
         assertEquals(LetterGrade.A_PLUS, LetterGrade.valueOfFromID("A_PLUS_COLOR"));
     }

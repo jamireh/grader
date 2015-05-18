@@ -1,8 +1,11 @@
-package grader.model.gradebook.gradescheme;
+package test;
 
 import grader.model.errors.OverlappingRangeException;
+import grader.model.gradebook.gradescheme.GradeScheme;
+import grader.model.gradebook.gradescheme.LetterGrade;
 import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -42,7 +45,7 @@ public class GradeSchemeTest {
     @Test
     public void testConstructor() {
         GradeScheme gradeScheme = new GradeScheme();
-        assertEquals(LetterGrade.SIZE.ordinal(), gradeScheme.ranges.size());
+        Assert.assertEquals(LetterGrade.SIZE.ordinal(), gradeScheme.ranges.size());
 
         for (int i = 0; i < LetterGrade.SIZE.ordinal(); i++)
             assertEquals(0, gradeScheme.ranges.get(i).getLetterGrade().
@@ -82,7 +85,7 @@ public class GradeSchemeTest {
     }
 
     /**
-     * Unit test the exception cases of updateGradeRange()
+     * Unit test the first exception case of updateGradeRange()
      * overloaded for Percentage.
      *
      *                                                                    <pre>
@@ -95,16 +98,62 @@ public class GradeSchemeTest {
      *
      *   3      22.0268%   OverlappingRangeException  Lower-Bound                                              </pre>
      */
-    @Test (expected= OverlappingRangeException.class)
-    public void testUpdateGradeRangePercentageException() throws Exception {
+    @Test
+    public void testUpdateGradeRangePercentageExceptionCase1() throws Exception {
         GradeScheme gradeScheme = new GradeScheme();
         Percentage percentageOne = new Percentage(83.4);
-        Percentage percentageTwo = new Percentage(90);
+        Percentage percentageTwo = new Percentage(98.0);
         Percentage percentageThree = new Percentage(22.0268);
 
-        gradeScheme.updateGradeRange(LetterGrade.A_PLUS, percentageOne);
-        gradeScheme.updateGradeRange(LetterGrade.A_MINUS, percentageTwo);
-        gradeScheme.updateGradeRange(LetterGrade.C, percentageThree);
+        try {
+            gradeScheme.updateGradeRange(LetterGrade.A_PLUS, percentageOne);
+            fail("Test Case 1 failed to throw exception.");
+        }
+        catch (OverlappingRangeException except) {}
+
+        try {
+            gradeScheme.updateGradeRange(LetterGrade.A_MINUS, percentageTwo);
+            fail("Test Case 2 failed to throw exception.");
+        }
+        catch (OverlappingRangeException except) {}
+
+        try {
+            gradeScheme.updateGradeRange(LetterGrade.C, percentageThree);
+            fail("Test Case 3 failed to throw exception.");
+        }
+        catch (OverlappingRangeException except) {}
+    }
+
+    /**
+     * Unit test the second exception case of updateGradeRange()
+     * overloaded for Percentage.
+     *
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input      Output                     Remarks
+     * ====================================================================
+     *   1      100.0%      OverlappingRangeException  Upper-Bound
+     *
+     *   2      105.4%      OverlappingRangeException  Above Upper-Bound
+     *   </pre>
+     */
+    @Test
+    public void testUpdateGradeRangePercentageExceptionCase2() throws Exception {
+        GradeScheme gradeScheme = new GradeScheme();
+        Percentage percentageOne = new Percentage(100.0);
+        Percentage percentageTwo = new Percentage(105.4);
+
+        try {
+            gradeScheme.updateGradeRange(LetterGrade.A_PLUS, percentageOne);
+            fail("Test Case 1 failed to throw exception.");
+        }
+        catch (OverlappingRangeException except) {}
+
+        try {
+            gradeScheme.updateGradeRange(LetterGrade.A_PLUS, percentageTwo);
+            fail("Test Case 2 failed to throw exception.");
+        }
+        catch (OverlappingRangeException except) {}
     }
 
 
@@ -136,51 +185,43 @@ public class GradeSchemeTest {
 
     /**
      * Unit test updateGradeRange() overloaded for Percentage.
+     * Upper-Bound and beyond Upper-Bound checked in exception tests
+     * of this method.
      *
      *                                                                    <pre>
      *  Test
      *  Case    Input      Output             Remarks
      * ====================================================================
-     *   1      105%      LetterGrade.A+      Above Upper-Bound
+     *   1      99%       LetterGrade.A+      In-Between Range
      *
-     *   2      100%      LetterGrade.A+      Upper-Bound
+     *   2      67%       LetterGrade.D_Plus  Border Range
      *
-     *   3      99%       LetterGrade.A+      In-Between Range
+     *   3      44.85%    LetterGrade.F       In-Between Range w/ decimals
      *
-     *   4      67%       LetterGrade.D_Plus  Border Range
-     *
-     *   5      44.85%    LetterGrade.F       In-Between Range w/ decimals
-     *
-     *   6      0%        LetterGrade.F       Lower-Bound
+     *   4      0%        LetterGrade.F       Lower-Bound
      *
      *   </pre>
      */
     @Test
-    public void testUpdateGradeRangePercentage() {
+    public void testUpdateGradeRangePercentage() throws OverlappingRangeException {
         GradeScheme gradeScheme = new GradeScheme();
 
-        Percentage percentOne = new Percentage(105);
-        Percentage percentTwo = new Percentage(100);
-        Percentage percentThree = new Percentage(99);
-        Percentage percentFour = new Percentage(67);
-        Percentage percentFive = new Percentage(44.85);
-        Percentage percentSix = new Percentage(0);
+        Percentage percentOne = new Percentage(99);
+        Percentage percentTwo = new Percentage(67);
+        Percentage percentThree = new Percentage(44.85);
+        Percentage percentFour = new Percentage(0.5);
 
-        assertEquals(gradeScheme.ranges.get(LetterGrade.A_PLUS.ordinal()),
-                gradeScheme.getGradeRange(percentOne));
-        assertEquals(gradeScheme.ranges.get(LetterGrade.A_PLUS.ordinal()),
-                gradeScheme.getGradeRange(percentTwo));
-        assertEquals(gradeScheme.ranges.get(LetterGrade.A_PLUS.ordinal()),
-                gradeScheme.getGradeRange(percentThree));
-        assertEquals(gradeScheme.ranges.get(LetterGrade.D_PLUS.ordinal()),
-                gradeScheme.getGradeRange(percentFour));
-        assertEquals(gradeScheme.ranges.get(LetterGrade.F.ordinal()),
-                gradeScheme.getGradeRange(percentFive));
-        assertEquals(gradeScheme.ranges.get(LetterGrade.F.ordinal()),
-                gradeScheme.getGradeRange(percentSix));
+        gradeScheme.updateGradeRange(LetterGrade.A_PLUS, percentOne);
+        assertEquals(percentOne, gradeScheme.ranges.get(LetterGrade.A_PLUS.ordinal()).getLowerBound());
+        gradeScheme.updateGradeRange(LetterGrade.D_PLUS, percentTwo);
+        assertEquals(percentTwo, gradeScheme.ranges.get(LetterGrade.D_PLUS.ordinal()).getLowerBound());
+        gradeScheme.updateGradeRange(LetterGrade.D_MINUS, percentThree);
+        assertEquals(percentThree, gradeScheme.ranges.get(LetterGrade.D_MINUS.ordinal()).getLowerBound());
+        gradeScheme.updateGradeRange(LetterGrade.D_MINUS, percentFour);
+        assertEquals(percentFour, gradeScheme.ranges.get(LetterGrade.D_MINUS.ordinal()).getLowerBound());
     }
 
-    @Test
+
     /**
      * Unit test the toString() method for the GradeScheme. This will
      * simply ensure that the GradeScheme is capable of printing out
@@ -194,6 +235,7 @@ public class GradeSchemeTest {
      *
      </pre>
      */
+    @Test
     public void testToString() throws Exception {
         GradeScheme gradeScheme = new GradeScheme();
         assertEquals("GradeScheme{" + "ranges=" + gradeScheme.ranges + '}',
