@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 
 /**
  * Test class for the Statistics class.
+ * @author Quan Tran
  */
 public class StatisticsTest {
     private static final double DELTA = 1e-12;
