@@ -1,6 +1,5 @@
 package test;
 
-import grader.model.errors.PercentageFormatException;
 import grader.model.items.Category;
 import org.junit.Test;
 
@@ -22,11 +21,20 @@ import static org.junit.Assert.assertThat;
  */
 public class CategoryTest
 {
-    @Test(expected = PercentageFormatException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void testInvalidPercentage()
     {
         String name = "Tests";
         String weight = "-10";
+        boolean categorize = false;
+        Category c = new Category(name, weight, categorize);
+    }
+
+    @Test(expected= IllegalArgumentException.class)
+    public void testInvalidName()
+    {
+        String name = "";
+        String weight = "10";
         boolean categorize = false;
         Category c = new Category(name, weight, categorize);
     }

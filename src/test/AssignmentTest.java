@@ -1,7 +1,5 @@
 package test;
 
-import grader.model.errors.PercentageFormatException;
-import grader.model.errors.RawScoreFormatException;
 import grader.model.items.Assignment;
 import org.junit.Test;
 
@@ -53,7 +51,7 @@ public class AssignmentTest
         assertThat(a1.hasWeight, equalTo(false));
     }
 
-    @Test(expected = PercentageFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testInvalidPercentage()
     {
         String name = "Midterm";
@@ -63,7 +61,17 @@ public class AssignmentTest
         Assignment a = new Assignment(name, date, rawPoints, weight);
     }
 
-    @Test(expected = RawScoreFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidName()
+    {
+        String name = "";
+        LocalDate date = LocalDate.now();
+        String rawPoints = "100";
+        String weight = "20";
+        Assignment a = new Assignment(name, date, rawPoints, weight);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testInvalidRawScoreOne()
     {
         String name = "Midterm";
@@ -73,7 +81,7 @@ public class AssignmentTest
         Assignment a = new Assignment(name, date, rawPoints, weight);
     }
 
-    @Test(expected = RawScoreFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testInvalidRawScoreTwo()
     {
         String name = "Midterm";
@@ -85,7 +93,7 @@ public class AssignmentTest
     }
 
     @Test
-    public void testAdjustPointValue() throws Exception
+    public void testAdjustPointValue()
     {
         String name = "Midterm";
         LocalDate date = LocalDate.now();
@@ -97,7 +105,7 @@ public class AssignmentTest
         assertThat(newValue, equalTo(a.rawPoints));
     }
     @Test
-    public void testGetPoints() throws Exception
+    public void testGetPoints()
     {
         String name = "Midterm";
         LocalDate date = LocalDate.now();
@@ -108,7 +116,7 @@ public class AssignmentTest
     }
 
     @Test
-    public void testToString() throws RawScoreFormatException, PercentageFormatException
+    public void testToString()
     {
         String name = "Midterm";
         LocalDate date = LocalDate.now();
