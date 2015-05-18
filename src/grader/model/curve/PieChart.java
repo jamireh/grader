@@ -6,24 +6,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import grader.model.file.*;
+import grader.model.gradebook.scores.RawScore;
 import grader.model.people.*;
-import grader.model.gradebook.*;
 import grader.model.items.*;
-import javafx.collections.FXCollections;
-
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.chart.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import java.util.*;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * The PieChart class takes all of its required data and functionality from the AbstractGraph class.

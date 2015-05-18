@@ -1,6 +1,8 @@
 package grader.controller;
 
 import grader.model.errors.InvalidPhoneNumberException;
+import grader.model.errors.InvalidUserIDException;
+import grader.model.errors.NameFormatException;
 import grader.model.file.WorkSpace;
 import grader.model.people.Name;
 import grader.model.people.Student;
@@ -43,6 +45,18 @@ public class StudentController
             WorkSpace.instance.getSection().addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
                     tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText()));
         }
+        catch (NameFormatException e)
+        {
+            tfFirst.requestFocus();
+            System.out.println("Name exception, try again.");
+            return;
+        }
+        catch (InvalidUserIDException e)
+        {
+            tfUserID.requestFocus();
+            System.out.println("UserID exception, try again.");
+            return;
+        }
         catch (InvalidPhoneNumberException e)
         {
             tfP1.requestFocus();
@@ -50,12 +64,6 @@ public class StudentController
             tfP2.setText("");
             tfP3.setText("");
             System.out.println("Invalid Phone Number exception, try again");
-            return;
-        }
-        catch (InvalidNameException e)
-        {
-            tfFirst.requestFocus();
-            System.out.println("Name exception, try again.");
             return;
         }
         stage.close();

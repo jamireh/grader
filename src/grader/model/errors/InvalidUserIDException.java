@@ -6,16 +6,17 @@ package grader.model.errors;
 
 /**
  * Exception thrown when an input name is not of a valid format.
+ * @author Connor Batch
  */
-public class NameFormatException extends RuntimeException {
+public class InvalidUserIDException extends Exception {
     String name;
 
     /**
      * Constructs a new NameFormatException for the given invalid name.
      * @param name the name that triggered this exception
      */
-    public NameFormatException(String name) {
-        super("Error: '" + name + "' is not a valid name.");
+    public InvalidUserIDException(String name) {
+        super("Error: '" + name + "' is not unique.");
         this.name = name;
     }
 

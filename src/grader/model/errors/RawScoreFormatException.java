@@ -4,7 +4,7 @@ package grader.model.errors;
  * Exception thrown when a entered raw score is invalid.
  * @author Jon Amireh
  */
-public class RawScoreFormatException extends Exception
+public class RawScoreFormatException extends RuntimeException
 {
     /**
      * Creates an exception with the given invalid value

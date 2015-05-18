@@ -1,5 +1,7 @@
 package grader.model.gradebook;
 
+import grader.model.errors.NameFormatException;
+import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Instructor;
@@ -151,7 +153,7 @@ public class Gradebook {
           {
               student = new Student(new Name(tokens[0], "", tokens[1]));
           }
-          catch (InvalidNameException e)
+          catch (NameFormatException e)
           {
               System.out.println("name exception occured in gradebook");
           }

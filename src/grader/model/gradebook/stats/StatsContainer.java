@@ -2,7 +2,7 @@ package grader.model.gradebook.stats;
 
 import grader.controller.StatsController;
 import grader.model.file.WorkSpace;
-import grader.model.gradebook.Scores;
+import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Student;

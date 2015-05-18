@@ -3,10 +3,10 @@ package grader.controller;
 import grader.model.errors.OverlappingRangeException;
 import grader.model.errors.PercentageFormatException;
 import grader.model.file.WorkSpace;
-import grader.model.gradebook.GradeRange;
-import grader.model.gradebook.GradeScheme;
-import grader.model.gradebook.LetterGrade;
-import grader.model.gradebook.Percentage;
+import grader.model.gradebook.gradescheme.GradeRange;
+import grader.model.gradebook.gradescheme.GradeScheme;
+import grader.model.gradebook.gradescheme.LetterGrade;
+import grader.model.items.Percentage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * GradeSchemeController is the controller for the 'GradeScheme' menu option.
@@ -25,8 +27,7 @@ import java.util.List;
  *
  * @author Tobias Bleisch
  */
-public class GradeSchemeController
-{
+public class GradeSchemeController implements Observer {
     @FXML ColorPicker A_PLUS_COLOR;
     @FXML ColorPicker A_COLOR;
     @FXML ColorPicker A_MINUS_COLOR;
@@ -76,11 +77,15 @@ public class GradeSchemeController
     GradeScheme gradeScheme;
 
     /**
-     * Constructor to set the current GradeScheme of this Controller's fxml thread
-     * from the WorkSpace.
+     * Constructor to set the current GradeScheme of this Controller's fxml
+     * thread from the WorkSpace.
      */
     public GradeSchemeController() {
-        gradeScheme = WorkSpace.instance.getGradeScheme();
+        WorkSpace.instance.addObserver(this);
+    }
+
+    public void update(Observable obs, Object obj) {
+        initialize();
     }
 
 
@@ -89,6 +94,7 @@ public class GradeSchemeController
      */
     @FXML
     private void initialize() {
+        gradeScheme = WorkSpace.instance.getGradeScheme();
         List<GradeRange> ranges = gradeScheme.ranges;
 
         A_PLUS_COLOR.setValue(ranges.get(LetterGrade.A_PLUS.ordinal()).getColor());
@@ -106,7 +112,7 @@ public class GradeSchemeController
         F_COLOR.setValue(ranges.get(LetterGrade.F.ordinal()).getColor());
 
 
-        A_Plus_High.setText("100");
+        A_Plus_High.setText(String.valueOf(GradeScheme.ceiling));
         A_Plus_High.setDisable(true);
         A_Plus_Low.setText(String.valueOf(ranges.get(LetterGrade.A_PLUS.ordinal()).getLowerBound().getValue()));
         A_High.setText(String.valueOf(ranges.get(LetterGrade.A_PLUS.ordinal()).getLowerBound().getValue()));
@@ -179,12 +185,12 @@ public class GradeSchemeController
         catch (NullPointerException except) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
-            alert.setHeaderText("No Currently Open Courses");
+            alert.setHeaderText("No currently-open Courses");
             alert.setContentText("Please first select a course to modify");
             alert.showAndWait();
         }
 
-        initialize();
+        WorkSpace.instance.setGradeSchemeChanged();
     }
 
     /**

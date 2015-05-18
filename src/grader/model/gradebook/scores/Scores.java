@@ -1,4 +1,4 @@
-package grader.model.gradebook;
+package grader.model.gradebook.scores;
 
 import grader.model.items.Assignment;
 import grader.model.people.Student;
@@ -6,7 +6,6 @@ import grader.model.people.Student;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**

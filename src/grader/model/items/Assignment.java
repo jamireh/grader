@@ -7,12 +7,13 @@ package grader.model.items;
 
 import grader.model.errors.PercentageFormatException;
 import grader.model.errors.RawScoreFormatException;
-import grader.model.gradebook.Percentage;
 
 import java.time.LocalDate;
 
 /**
  * Represents an assignment of a specific category.
+ *
+ * @author Jon Amireh
  */
 public class Assignment
 {
@@ -51,6 +52,7 @@ public class Assignment
         {
             throw new RawScoreFormatException(rawPoints);
         }
+
         if(this.rawPoints < 0)
         {
             throw new RawScoreFormatException(this.rawPoints);
@@ -81,7 +83,7 @@ public class Assignment
      */
     public void adjustPointValue(int newValue)
     {
-
+        this.rawPoints = newValue;
     }
 
     /**

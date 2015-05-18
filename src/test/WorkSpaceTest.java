@@ -1,10 +1,20 @@
-package grader.model.file;
+package test;
 
+import grader.model.errors.OverlappingRangeException;
+import grader.model.file.WorkSpace;
 import grader.model.gradebook.*;
+import grader.model.gradebook.gradescheme.GradeScheme;
+import grader.model.gradebook.gradescheme.LetterGrade;
+import grader.model.gradebook.scores.RawScore;
+import grader.model.gradebook.scores.Scores;
+import grader.model.gradebook.Section;
 import grader.model.items.Assignment;
+import grader.model.items.Percentage;
+import grader.model.people.Group;
+import grader.model.people.Name;
 import grader.model.people.Student;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 /**
  * The WorkSpaceTest class is the companion testing class for the grader
@@ -23,8 +33,6 @@ import static org.junit.Assert.*;
  *    Phase 5: Unit test updating, reverting, and saving grades, along with
  *             undo and redo functionality, including canUndo/canRedo
  *             and getLatestChange and getLatestUndo.
- *
- *    Phase 6: Repeat phases 1 through 5.
  *	                                       								 </pre>
  *
  *	@author Gregory Davis
@@ -42,6 +50,7 @@ public class WorkSpaceTest {
             .equals(Gradebook.getCannedGradebook()));
       assert(WorkSpace.instance.deltas.size() == 0);
       assert(WorkSpace.instance.futureDeltas.size() == 0);
+      assert(WorkSpace.instance.getPieChart() != null);
    }
 
    /**
@@ -49,7 +58,7 @@ public class WorkSpaceTest {
     * Ensure that the scope is properly changed by the sidebarSelect method.
     */
    @org.junit.Test
-   public void testSidebarSelect() {
+   public void testSidebarSelect() throws Exception {
       Gradebook canned = WorkSpace.instance.getGradebook();
       Course course = canned.courses.get(0);
       Section section = course.sections.get(0);
@@ -59,6 +68,14 @@ public class WorkSpaceTest {
       assert(course.equals(WorkSpace.instance.getCourse()));
       assert(section.equals(WorkSpace.instance.getSection()));
       assert(WorkSpace.instance.getGroup() == null);
+
+
+      WorkSpace.instance.addGroup(new Group("Kewl Kids", ((ArrayList<Student>) section.getStudents())));
+      WorkSpace.instance.sidebarSelect(course, section, section.groups.get(0));
+
+      assert(course.equals(WorkSpace.instance.getCourse()));
+      assert(section.equals(WorkSpace.instance.getSection()));
+      assert(section.groups.equals(WorkSpace.instance.getSection().groups));
 
       WorkSpace.instance.sidebarSelect(null, null, null);
 
@@ -87,7 +104,7 @@ public class WorkSpaceTest {
       assert(WorkSpace.instance.getStudents().equals(section.getStudents()));
 
       assert(WorkSpace.instance.getAssignmentTree().equals(course.getAssignmentTree()));
-      assert(WorkSpace.instance.getGradeScheme().equals(section.getGradeScheme()));
+      assert(WorkSpace.instance.getGradeScheme() != null);
 
       // TODO: Test scores object.
    }
@@ -103,10 +120,24 @@ public class WorkSpaceTest {
       Course course = canned.courses.get(0);
       Section section = course.sections.get(0);
 
-      WorkSpace.instance.sidebarSelect(course, section, null);
-      assert(WorkSpace.instance.getGradeScheme().equals(section.getGradeScheme()));
+      // Test for null grade scheme if section is null.
+      WorkSpace.instance.sidebarSelect(course, null, null);
+      assert(WorkSpace.instance.getGradeScheme() == null);
 
-      // TODO: Test once GradeScheme is working.
+      // Test proper creation of temporary grade scheme.
+      WorkSpace.instance.sidebarSelect(course, section, null);
+      GradeScheme scheme = WorkSpace.instance.getGradeScheme();
+      assert(scheme != null);
+
+      try {
+         scheme.updateGradeRange(LetterGrade.A_MINUS, new Percentage(89));
+         WorkSpace.instance.setGradeSchemeChanged();
+         assert(WorkSpace.instance.gradeSchemeChanged);
+         WorkSpace.instance.updateGradeScheme();
+         assert(!WorkSpace.instance.gradeSchemeChanged);
+      } catch (OverlappingRangeException e) {
+         assert(false);
+      }
    }
 
    /**
@@ -211,5 +242,7 @@ public class WorkSpaceTest {
       WorkSpace.instance.revertGrades();
       assert(!WorkSpace.instance.canUndo());
       assert(!WorkSpace.instance.canRedo());
+      assert(WorkSpace.instance.getLatestChange() == null);
+      assert(WorkSpace.instance.getLatestUndo() == null);
    }
 }

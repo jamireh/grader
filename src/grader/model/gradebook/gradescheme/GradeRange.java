@@ -1,5 +1,6 @@
-package grader.model.gradebook;
+package grader.model.gradebook.gradescheme;
 
+import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
 
 /**
@@ -9,8 +10,8 @@ import javafx.scene.paint.Color;
  *  this GradeRange, and the Color that will help to define this GradeRange.
  *
  *  The upper-bound percentage of this GradeRange is implicit, as it is defined
- *  relatively by the other GradeRanges above and below it. There is an absolute low
- *  and high percentage in this GradeRange hierarchy defined to be 0% and 100% respectively.
+ *  relatively by the other GradeRanges above and below it. There is no absolute high
+ *  but there is an absolute high percentage in this GradeRange hierarchy defined to be 0%.
  *
  *  @author Tobias Bleisch
  */
@@ -50,11 +51,11 @@ public class GradeRange
     }
 
     /**
-     * Mutator method for the lowerBound.
-     * @param lowerBound the lowerBound Percentage of this GradeRange.
+     * Accessor method for the color.
+     * @return the Color of this GradeRange.
      */
-    public void setLowerBound(Percentage lowerBound) {
-        this.lowerBound = lowerBound;
+    public Color getColor() {
+        return color;
     }
 
     /**
@@ -66,11 +67,11 @@ public class GradeRange
     }
 
     /**
-     * Accessor method for the color.
-     * @return the Color of this GradeRange.
+     * Mutator method for the lowerBound.
+     * @param lowerBound the lowerBound Percentage of this GradeRange.
      */
-    public Color getColor() {
-        return color;
+    public void setLowerBound(Percentage lowerBound) {
+        this.lowerBound = lowerBound;
     }
 
     /**

@@ -1,8 +1,9 @@
-package grader.model.gradebook;
+package grader.model.gradebook.gradescheme;
 import java.util.*;
 
 import grader.model.errors.OverlappingRangeException;
 import grader.model.errors.PercentageFormatException;
+import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
 
 /**
@@ -12,7 +13,9 @@ import javafx.scene.paint.Color;
  * @author Tobias Bleisch
  */
 public class GradeScheme
-{   
+{
+    public final static double ceiling = 100;
+
     /**
      * Comprised of every available grade range.
      */
@@ -60,7 +63,9 @@ public class GradeScheme
      */
     public void updateGradeRange(LetterGrade gradeToUpdate, Percentage newPercent) throws OverlappingRangeException {
         System.out.println("Divisions have been updated.");
-        Percentage higher = ranges.get(gradeToUpdate.ordinal() - 1).getLowerBound();
+
+        int index = gradeToUpdate.ordinal();
+        Percentage higher = index == 0 ? new Percentage(GradeScheme.ceiling) : ranges.get(index - 1).getLowerBound();
         Percentage lower = ranges.get(gradeToUpdate.ordinal() + 1).getLowerBound();
 
         if (newPercent.compareTo(higher) >= 0) {
@@ -93,13 +98,11 @@ public class GradeScheme
      * or null
      */
     public GradeRange getGradeRange(Percentage percent) {
-        GradeRange found = null;
-
         for (GradeRange range : ranges)
             if (percent.compareTo(range.getLowerBound()) >= 0)
-                found = range;
+                return range;
 
-        return found;
+        return null;
     }
 
     /**

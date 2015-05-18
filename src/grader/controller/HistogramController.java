@@ -4,29 +4,22 @@ package grader.controller;
  * @author Mallika Potter
  */
 
+import grader.model.gradebook.Section;
+import grader.model.gradebook.scores.RawScore;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
-import java.awt.*;
-import java.awt.Button;
 import java.net.URL;
 import java.util.*;
 
 import grader.model.file.*;
 import grader.model.people.*;
-import grader.model.gradebook.*;
 import grader.model.items.*;
 import grader.model.curve.Entry;
 

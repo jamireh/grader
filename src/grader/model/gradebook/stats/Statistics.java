@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class Statistics {
     public final double min, max, mean;
-    public final StringProperty pMin, pMax, pMean;
 
     /**
      * Constructs a new set of StatisticsBar for the given data collection.
@@ -32,9 +31,5 @@ public class Statistics {
         for (Double score : scores)
             total += score;
         mean = total / scores.size();
-
-        pMin = new SimpleStringProperty("" + min);
-        pMax = new SimpleStringProperty("" + max);
-        pMean = new SimpleStringProperty("" + mean);
     }
 }

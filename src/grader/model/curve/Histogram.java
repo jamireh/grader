@@ -4,9 +4,9 @@ package grader.model.curve;
  * @author Mallika Potter
  */
 
-import grader.model.gradebook.GradeScheme;
-import grader.model.gradebook.LetterGrade;
-import grader.model.gradebook.Percentage;
+import grader.model.gradebook.gradescheme.GradeScheme;
+import grader.model.gradebook.gradescheme.LetterGrade;
+import grader.model.items.Percentage;
 
 import java.util.HashMap;
 import java.util.Hashtable;

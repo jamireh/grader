@@ -60,6 +60,10 @@ public class GroupsController
         };
     }
 
+    /**
+     * filters the roster view
+     * @param event
+     */
     @FXML
     public void filterRoster(KeyEvent event)
     {
@@ -67,7 +71,7 @@ public class GroupsController
         ArrayList<Student> filteredList = new ArrayList<Student>();
         for (Student student : instance.getSection().getStudents())
         {
-            if (student.getName().toString().toLowerCase().contains(tfStudentSearch.getText().toLowerCase()) &&
+            if (student.name.toString().toLowerCase().contains(tfStudentSearch.getText().toLowerCase()) &&
                     !formedGroup.contains(student))
                 filteredList.add(student);
         }
@@ -106,7 +110,7 @@ public class GroupsController
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
         try
         {
-            WorkSpace.instance.getSection().addGroup(new Group(tfGroupName.getText(), new ArrayList<Student>(formedGroup)));
+            WorkSpace.instance.addGroup(new Group(tfGroupName.getText(), new ArrayList<Student>(formedGroup)));
         }
         catch (InvalidNameException e)
         {

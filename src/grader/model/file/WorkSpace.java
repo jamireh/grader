@@ -1,13 +1,24 @@
 package grader.model.file;
 
-import grader.model.gradebook.*;
-import grader.model.gradebook.stats.*;
+import grader.model.curve.Histogram;
+import grader.model.curve.PieChart;
+import grader.model.gradebook.Course;
+import grader.model.gradebook.Gradebook;
+import grader.model.gradebook.Section;
+import grader.model.gradebook.gradescheme.GradeScheme;
+import grader.model.gradebook.scores.RawScore;
+import grader.model.gradebook.scores.Scores;
+import grader.model.gradebook.stats.StatsContainer;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
-import grader.model.people.*;
-import grader.model.curve.*;
+import grader.model.people.Group;
+import grader.model.people.Person;
+import grader.model.people.Student;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * The WorkSpace class is a singleton that contains all the information for the
@@ -38,7 +49,6 @@ public class WorkSpace extends Observable {
     */
    public static final WorkSpace instance = new WorkSpace();
    static {
-      instance.sidebar.update(null, null);
       instance.setChanged();
       instance.notifyObservers();
    }
@@ -51,16 +61,12 @@ public class WorkSpace extends Observable {
       gradebook = Gradebook.getCannedGradebook();
 	   deltas = new ArrayList<RawScore>();
 	   futureDeltas = new ArrayList<RawScore>();
+      gradeScheme = null;
 
-      // Separate so we don't notify it all the time
-      sidebar = new Sidebar();
-
-      spreadsheet = new Spreadsheet();
       statistics = new StatsContainer();
       pieChart = new PieChart();
       histogram = new Histogram();
 
-      addObserver(spreadsheet);
       addObserver(statistics);
       addObserver(pieChart);
       addObserver(histogram);
@@ -143,16 +149,6 @@ public class WorkSpace extends Observable {
    //////////////////////
    /* COMPONENT MODELS */
    //////////////////////
-   /**
-    * The gradebook sidebar model.
-    */
-   public Sidebar sidebar;
-
-	/**
-	 * The grade spreadsheet model.
-	 */
-	public Spreadsheet spreadsheet;
-
 	/**
 	 * The statistics model.
 	 */
@@ -199,7 +195,7 @@ public class WorkSpace extends Observable {
 
     /**
      * Returns the currently built pie chart
-     * @return selected pie chart
+     * @return pie chart model
      */
     public PieChart getPieChart() { return pieChart;}
 
@@ -216,6 +212,16 @@ public class WorkSpace extends Observable {
    public Group getGroup() {
       return group;
    }
+
+    /**
+     * Adds a group to the currently selected section
+     */
+    public void addGroup(Group g)
+    {
+        getSection().addGroup(g);
+        setChanged();
+        notifyObservers();
+    }
 
 	/**
 	 * Returns a list of students whose grades are being displayed
@@ -258,8 +264,7 @@ public class WorkSpace extends Observable {
 	 * @return grade scheme for section in scope
 	 */
 	public GradeScheme getGradeScheme() {
-	   if (section != null) return section.getGradeScheme();
-	   return null;
+      return gradeScheme;
    }
 	/////////////////////////////////
 
@@ -395,7 +400,7 @@ public class WorkSpace extends Observable {
    }
 
 	/**
-    * Sets the GradeScheme changed flag.
+    * Sets the GradeScheme changed flag and notifies observers.
 	 */
 	public void setGradeSchemeChanged() {
       gradeSchemeChanged = true;
@@ -413,9 +418,10 @@ public class WorkSpace extends Observable {
       this'.section.getGradeScheme().equals(gradeScheme);
     */
    public void updateGradeScheme() {
-      if (gradeSchemeChanged) {
+      if (gradeSchemeChanged && section != null) {
          section.setGradeScheme(this.gradeScheme);
          gradeSchemeChanged = false;
+         loadGradeScheme();
          setChanged();
          notifyObservers();
       }

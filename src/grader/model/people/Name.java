@@ -27,7 +27,7 @@ public class Name
 	 */
 	String middleName;
 
-    public Name(String firstName, String middleName, String lastName) throws InvalidNameException
+    public Name(String firstName, String middleName, String lastName) throws NameFormatException
     {
         this.firstName = firstName;
         this.middleName = middleName;
@@ -35,7 +35,7 @@ public class Name
 
         if (firstName.length() == 0 || lastName.length() == 0 || firstName.matches("/^[A-z]+$/") || middleName
                 .matches("/^[A-z]+$/") || lastName.matches("/^[A-z]+$/"))
-            throw new InvalidNameException("");
+            throw new NameFormatException("");
     }
 
     /**
@@ -52,6 +52,7 @@ public class Name
        return firstName;
     }
 
+    @Override
     public String toString() {
         return firstName + " " + lastName;
     }

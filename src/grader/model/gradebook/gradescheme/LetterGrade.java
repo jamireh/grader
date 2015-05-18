@@ -1,4 +1,4 @@
-package grader.model.gradebook;
+package grader.model.gradebook.gradescheme;
 
 import java.util.HashMap;
 

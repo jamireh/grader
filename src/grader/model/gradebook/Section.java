@@ -6,6 +6,7 @@
 package grader.model.gradebook;
 
 import grader.model.curve.Histogram;
+import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.people.Group;
 import grader.model.people.Student;
 import grader.model.people.TA;
@@ -45,23 +46,23 @@ public class Section
 	*Collection of all groups associated with this section.
 	*Groups are quarter-long.
 	*/
-	ArrayList<Group> groups;
+	public ArrayList<Group> groups;
 
 	/**
 	*The TAs associated with this section.
 	*May have varying permissions.
 	*/
-	Collection<TA> tas;
+	public Collection<TA> tas;
 
 	/**
 	*String representing section number.
 	*/
-	String sectionNumber;
+	public String sectionNumber;
 
 	/**
 	*Name associated with section.
 	*/
-	String sectionName;
+	public String sectionName;
 
 	/**
 	*GradeScheme associated with this section.
