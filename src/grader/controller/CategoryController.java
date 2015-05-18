@@ -1,6 +1,5 @@
 package grader.controller;
 
-import grader.model.errors.PercentageFormatException;
 import grader.model.file.WorkSpace;
 import grader.model.items.Category;
 import javafx.collections.FXCollections;
@@ -8,9 +7,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -53,6 +54,7 @@ public class CategoryController implements Initializable {
         System.out.println("Parent: " + cbCatParent.getValue());
         System.out.println("Weight: " + tfWeight.getText());
         System.out.println("Weight Behavior: " + cbWeights.getValue());
+        System.out.println("Style: " + tfWeight.getStyle());
         boolean exceptionThrown = false;
         if(cbCatParent.getValue().equals("CPE 309"))
         {
@@ -63,31 +65,16 @@ public class CategoryController implements Initializable {
                     WorkSpace.instance.course.addCategory(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
                 }
             }
-            catch(PercentageFormatException e)
+            catch(IllegalArgumentException e)
             {
                 exceptionThrown = true;
-                tfWeight.setStyle("-fx-focus-color: #FF0000;");
-                tfWeight.requestFocus();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Incorrect Input");
+                alert.setContentText(e.getMessage());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
             }
-        }
-        else
-        {
-            /*try
-            {
-                MainController.course.categories.get(0).add(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
-            }
-            catch(PercentageFormatException e)
-            {
-                exceptionThrown = true;
-                tfWeight.setStyle("-fx-focus-color: #FF0000;");
-                tfWeight.requestFocus();
-            }
-            catch(WeightTotalException e)
-            {
-                exceptionThrown = true;
-                tfWeight.setStyle("-fx-focus-color: #FF0000;");
-                tfWeight.requestFocus();
-            }*/
         }
         if(!exceptionThrown)
         {

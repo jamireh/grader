@@ -32,24 +32,19 @@ public class GradeScheme
          * Create a generic GradeScheme to be used initially:
          * 90%-100%, A, Green | 80%-90%, B, Blue | 70%-80%, C, Yellow | 60%-70%, D, Purple | 0%-60%, F, Red
          */
-        try {
-            ranges.add(new GradeRange(new Percentage(97.0), LetterGrade.A_PLUS, Color.LIGHTGREEN));
-            ranges.add(new GradeRange(new Percentage(93.0), LetterGrade.A, Color.GREEN));
-            ranges.add(new GradeRange(new Percentage(90.0), LetterGrade.A_MINUS, Color.DARKGREEN));
-            ranges.add(new GradeRange(new Percentage(87.0), LetterGrade.B_PLUS, Color.LIGHTBLUE));
-            ranges.add(new GradeRange(new Percentage(83.0), LetterGrade.B, Color.BLUE));
-            ranges.add(new GradeRange(new Percentage(80.0), LetterGrade.B_MINUS, Color.DARKBLUE));
-            ranges.add(new GradeRange(new Percentage(77.0), LetterGrade.C_PLUS, Color.LIGHTYELLOW));
-            ranges.add(new GradeRange(new Percentage(73.0), LetterGrade.C, Color.YELLOW));
-            ranges.add(new GradeRange(new Percentage(70.0), LetterGrade.C_MINUS, Color.GOLD));
-            ranges.add(new GradeRange(new Percentage(67.0), LetterGrade.D_PLUS, Color.LAVENDER));
-            ranges.add(new GradeRange(new Percentage(63.0), LetterGrade.D, Color.PURPLE));
-            ranges.add(new GradeRange(new Percentage(60.0), LetterGrade.D_MINUS, Color.DARKVIOLET));
-            ranges.add(new GradeRange(new Percentage(0.0), LetterGrade.F, Color.RED));
-        }
-        catch (PercentageFormatException except) {
-            except.printStackTrace();
-        }
+        ranges.add(new GradeRange(new Percentage(97.0), LetterGrade.A_PLUS, Color.LIGHTGREEN));
+        ranges.add(new GradeRange(new Percentage(93.0), LetterGrade.A, Color.GREEN));
+        ranges.add(new GradeRange(new Percentage(90.0), LetterGrade.A_MINUS, Color.DARKGREEN));
+        ranges.add(new GradeRange(new Percentage(87.0), LetterGrade.B_PLUS, Color.LIGHTBLUE));
+        ranges.add(new GradeRange(new Percentage(83.0), LetterGrade.B, Color.BLUE));
+        ranges.add(new GradeRange(new Percentage(80.0), LetterGrade.B_MINUS, Color.DARKBLUE));
+        ranges.add(new GradeRange(new Percentage(77.0), LetterGrade.C_PLUS, Color.LIGHTYELLOW));
+        ranges.add(new GradeRange(new Percentage(73.0), LetterGrade.C, Color.YELLOW));
+        ranges.add(new GradeRange(new Percentage(70.0), LetterGrade.C_MINUS, Color.GOLD));
+        ranges.add(new GradeRange(new Percentage(67.0), LetterGrade.D_PLUS, Color.LAVENDER));
+        ranges.add(new GradeRange(new Percentage(63.0), LetterGrade.D, Color.PURPLE));
+        ranges.add(new GradeRange(new Percentage(60.0), LetterGrade.D_MINUS, Color.DARKVIOLET));
+        ranges.add(new GradeRange(new Percentage(0.0), LetterGrade.F, Color.RED));
     }
 
     /**
@@ -98,11 +93,15 @@ public class GradeScheme
      * or null
      */
     public GradeRange getGradeRange(Percentage percent) {
-        for (GradeRange range : ranges)
-            if (percent.compareTo(range.getLowerBound()) >= 0)
-                return range;
+        GradeRange found = null;
 
-        return null;
+        for (GradeRange range : ranges)
+            if (percent.compareTo(range.getLowerBound()) >= 0) {
+                found = range;
+                break;
+            }
+
+        return found;
     }
 
     /**

@@ -40,9 +40,16 @@ public class Assignment
      * @throws PercentageFormatException if the weight given is not a valid Percentage
      * @throws RawScoreFormatException if the rawPoints given is not a valid RawScore
      */
-    public Assignment(String name, LocalDate dueDate, String rawPoints, String weight) throws PercentageFormatException, RawScoreFormatException
+    public Assignment(String name, LocalDate dueDate, String rawPoints, String weight)
     {
-        this.name = name;
+        if(name.isEmpty())
+        {
+            throw new IllegalArgumentException("Please enter a non-empty name");
+        }
+        else
+        {
+            this.name = name;
+        }
         this.dueDate = dueDate;
         try
         {
@@ -50,12 +57,12 @@ public class Assignment
         }
         catch(NumberFormatException e)
         {
-            throw new RawScoreFormatException(rawPoints);
+            throw new IllegalArgumentException("Please enter raw score as a whole number greater than or equal 0");
         }
 
         if(this.rawPoints < 0)
         {
-            throw new RawScoreFormatException(this.rawPoints);
+            throw new IllegalArgumentException("Please enter raw score as a whole number greater than or equal 0");
         }
         if(!weight.isEmpty())
         {

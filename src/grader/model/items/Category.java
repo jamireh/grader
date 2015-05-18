@@ -1,7 +1,5 @@
 package grader.model.items;
 
-import grader.model.errors.PercentageFormatException;
-
 /**
  * Represents a category of assignments.
  * @author Jon Amireh
@@ -18,9 +16,16 @@ public class Category
     /** whether uncategorized assignments are graded by raw score or not */
     public boolean uncategorizedByRawScore;
 
-    public Category(String name, String weight, boolean uncategorizedByRawScore) throws PercentageFormatException
+    public Category(String name, String weight, boolean uncategorizedByRawScore)
     {
-        this.name = name;
+        if(name.isEmpty())
+        {
+            throw new IllegalArgumentException("Please enter a non-empty name");
+        }
+        else
+        {
+            this.name = name;
+        }
         this.weight = new Percentage(weight);
         this.uncategorizedByRawScore = uncategorizedByRawScore;
     }

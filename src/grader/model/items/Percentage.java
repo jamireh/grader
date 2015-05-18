@@ -22,23 +22,24 @@ public class Percentage implements Comparable<Percentage>
     public Percentage(String value)
     {
         double dValue;
+        value = value.replace("%", "");
         try
         {
             dValue = Double.valueOf(value);
         }
         catch(NumberFormatException e)
         {
-            throw new PercentageFormatException(value);
+            throw new IllegalArgumentException("Please enter a percentage greater than or equal to 0%");
         }
 
         if(Double.isNaN(dValue))
         {
-            throw new PercentageFormatException(value);
+            throw new IllegalArgumentException("Please enter a percentage greater than or equal to 0%");
         }
 
         if(dValue < 0.0)
         {
-            throw new PercentageFormatException(value);
+            throw new IllegalArgumentException("Please enter a percentage greater than or equal to 0%");
         }
         else
         {
@@ -54,7 +55,7 @@ public class Percentage implements Comparable<Percentage>
     {
         if(dValue < 0.0)
         {
-            throw new PercentageFormatException(value);
+            throw new IllegalArgumentException("Please enter a percentage greater than or equal to 0%");
         }
         else
         {

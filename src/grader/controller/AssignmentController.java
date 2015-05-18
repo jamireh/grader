@@ -1,7 +1,5 @@
 package grader.controller;
 
-import grader.model.errors.PercentageFormatException;
-import grader.model.errors.RawScoreFormatException;
 import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
 import javafx.collections.FXCollections;
@@ -10,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -64,38 +63,16 @@ public class AssignmentController implements Initializable {
                 }
 
             }
-            catch(PercentageFormatException e)
+            catch(RuntimeException e)
             {
                 exceptionThrown = true;
-                tfWeight.requestFocus();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Incorrect Input");
+                alert.setContentText(e.getMessage());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
             }
-            catch(RawScoreFormatException e)
-            {
-                exceptionThrown = true;
-                tfRawScore.requestFocus();
-            }
-        }
-        else
-        {
-            /*try
-            {
-                MainController.course.categories.get(0).add(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
-            }
-            catch(PercentageFormatException e)
-            {
-                exceptionThrown = true;
-                tfWeight.requestFocus();
-            }
-            catch(RawScoreFormatException e)
-            {
-                exceptionThrown = true;
-                tfRawScore.requestFocus();
-            }
-            catch(WeightTotalException e)
-            {
-                exceptionThrown = true;
-                tfWeight.requestFocus();
-            }*/
         }
         if(!exceptionThrown)
         {

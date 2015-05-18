@@ -1,6 +1,5 @@
 package test;
 
-import grader.model.errors.PercentageFormatException;
 import grader.model.items.Percentage;
 import org.junit.Test;
 
@@ -25,25 +24,25 @@ import static org.junit.Assert.assertThat;
  */
 public class PercentageTest
 {
-    @Test(expected= PercentageFormatException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void testNegativeNumber()
     {
         Percentage p = new Percentage("-10");
     }
 
-    @Test(expected= PercentageFormatException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void testNegativeNumberDouble()
     {
         Percentage p = new Percentage(-10.0);
     }
 
-    @Test(expected= PercentageFormatException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void testNaN()
     {
         Percentage p = new Percentage("NaN");
     }
 
-    @Test(expected= PercentageFormatException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void testInvalidString()
     {
         Percentage p = new Percentage("NaNaNaN");
