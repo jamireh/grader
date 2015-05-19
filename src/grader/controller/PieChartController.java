@@ -39,17 +39,54 @@ public class PieChartController implements Initializable{
 
         grader.model.curve.PieChart temp = WorkSpace.instance.getPieChart();
 
-        pieChartData = FXCollections.observableArrayList(
-                new javafx.scene.chart.PieChart.Data("A", temp.getNumA()),
-                new javafx.scene.chart.PieChart.Data("B", temp.getNumB()),
-                new javafx.scene.chart.PieChart.Data("C", temp.getNumC()),
-                new javafx.scene.chart.PieChart.Data("D", temp.getNumD()),
-                new javafx.scene.chart.PieChart.Data("F", temp.getNumF()));
+        pieChartData = FXCollections.observableArrayList();
+
+        if (temp.getNumAPlus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("A+", temp.getNumAPlus()));
+
+        if (temp.getNumA() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("A", temp.getNumA()));
+
+        if (temp.getNumAMinus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("A-", temp.getNumAMinus()));
+
+        if (temp.getNumBPlus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("B+", temp.getNumBPlus()));
+
+        if (temp.getNumB() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("B", temp.getNumB()));
+
+        if (temp.getNumBMinus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("B-", temp.getNumBMinus()));
+
+        if (temp.getNumCPlus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("C+", temp.getNumCPlus()));
+
+        if (temp.getNumC() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("C", temp.getNumC()));
+
+        if (temp.getNumCMinus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("C-", temp.getNumCMinus()));
+
+        if (temp.getNumDPlus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("D+", temp.getNumDPlus()));
+
+        if (temp.getNumD() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("D", temp.getNumD()));
+
+        if (temp.getNumDMinus() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("D-", temp.getNumDMinus()));
+
+        if (temp.getNumF() != 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("F", temp.getNumF()));
 
         piechart.setData(pieChartData);
 
 
     }
+
+
+
 
 
 

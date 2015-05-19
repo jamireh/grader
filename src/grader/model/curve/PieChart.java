@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.sun.corba.se.impl.ior.WireObjectKeyTemplate;
 import grader.model.file.*;
+import grader.model.gradebook.gradescheme.GradeRange;
+import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.scores.RawScore;
 import grader.model.people.*;
 import grader.model.items.*;
@@ -18,10 +21,18 @@ import grader.model.items.*;
 public class PieChart extends AbstractGraph implements Observer
 {
 
+    private int aPlus = 0;
     private int aS = 0;
+    private int aMinus = 0;
+    private int bPlus = 0;
     private int bS = 0;
+    private int bMinus = 0;
+    private int cPlus = 0;
     private int cS = 0;
+    private int cMinus = 0;
+    private int dPlus = 0;
     private int dS = 0;
+    private int dMinus = 0;
     private int fS = 0;
 
     private List<Student> students;
@@ -54,6 +65,17 @@ public class PieChart extends AbstractGraph implements Observer
     }
 
 
+
+    /**
+     * Returns percentage of A+s.
+     * @return percentage of A+s
+     */
+    public double getNumAPlus()
+    {
+        System.out.println("A+: " + aPlus);
+        return (aPlus/((double)students.size())) * 100;
+    }
+
     /**
      * Returns percentage of As.
      * @return percentage of As
@@ -62,6 +84,26 @@ public class PieChart extends AbstractGraph implements Observer
     {
         System.out.println("A: " + aS);
         return (aS/((double)students.size())) * 100;
+    }
+
+    /**
+     * Returns percentage of A-s.
+     * @return percentage of A-s
+     */
+    public double getNumAMinus()
+    {
+        System.out.println("A-: " + aMinus);
+        return (aMinus/((double)students.size())) * 100;
+    }
+
+    /**
+     * Returns percentage of B+s.
+     * @return percentage of B+s
+     */
+    public double getNumBPlus()
+    {
+        System.out.println("B+: " + bPlus);
+        return (bPlus/((double)students.size())) * 100;
     }
 
     /**
@@ -75,6 +117,26 @@ public class PieChart extends AbstractGraph implements Observer
     }
 
     /**
+     * Returns percentage of B-s.
+     * @return percentage of B-s
+     */
+    public double getNumBMinus()
+    {
+        System.out.println("B-: " + bMinus);
+        return (bMinus/((double)students.size())) * 100;
+    }
+
+    /**
+     * Returns percentage of C+s.
+     * @return percentage of C+s
+     */
+    public double getNumCPlus()
+    {
+        System.out.println("C+: " + cPlus);
+        return (cPlus/((double)students.size())) * 100;
+    }
+
+    /**
      * Returns percentage of Cs.
      * @return percentage of Cs
      */
@@ -85,6 +147,26 @@ public class PieChart extends AbstractGraph implements Observer
     }
 
     /**
+     * Returns percentage of C-s.
+     * @return percentage of C-s
+     */
+    public double getNumCMinus()
+    {
+        System.out.println("C-: " + cMinus);
+        return (cMinus/((double)students.size())) * 100;
+    }
+
+    /**
+     * Returns percentage of D+s.
+     * @return percentage of D+s
+     */
+    public double getNumDPlus()
+    {
+        System.out.println("D+: " + dPlus);
+        return (dPlus/((double)students.size())) * 100;
+    }
+
+    /**
      * Returns percentage of Ds.
      * @return percentage of Ds
      */
@@ -92,6 +174,16 @@ public class PieChart extends AbstractGraph implements Observer
     {
         System.out.println("D: " + dS);
         return (dS/((double)students.size())) * 100;
+    }
+
+    /**
+     * Returns percentage of D-s.
+     * @return percentage of D-s
+     */
+    public double getNumDMinus()
+    {
+        System.out.println("D-: " + dMinus);
+        return (dMinus/((double)students.size())) * 100;
     }
 
     /**
@@ -110,28 +202,54 @@ public class PieChart extends AbstractGraph implements Observer
      */
     private void addToGrade(Percentage percent)
     {
-        //System.out.println("added : " + percent.getValue());
-        double per = percent.getValue();
 
-        if (per >= 90.0)
+        GradeScheme current = WorkSpace.instance.getGradeScheme();
+        GradeRange range = current.getGradeRange(percent);
+
+        switch (range.getLetterGrade())
         {
-            aS++;
+            case A_PLUS:
+                aPlus++;
+                break;
+            case A:
+                aS++;
+                break;
+            case A_MINUS:
+                aMinus++;
+                break;
+            case B_PLUS:
+                bPlus++;
+                break;
+            case B:
+                bS++;
+                break;
+            case B_MINUS:
+                bMinus++;
+                break;
+            case C_PLUS:
+                cPlus++;
+                break;
+            case C:
+                cS++;
+                break;
+            case C_MINUS:
+                cMinus++;
+                break;
+            case D_PLUS:
+                dPlus++;
+                break;
+            case D:
+                dS++;
+                break;
+            case D_MINUS:
+                dMinus++;
+                break;
+            case F:
+                fS++;
+                break;
+            default:
+                break;
         }
-        else if (per >= 80.0)
-        {
-            bS++;
-        }
-        else if (per >= 70.0)
-        {
-            cS++;
-        }
-        else if (per >= 60.0)
-        {
-            dS++;
-        }
-        else
-        {
-            fS++;
-        }
+
     }
 }

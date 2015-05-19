@@ -4,6 +4,7 @@ package grader.model.curve;
  * @author Mallika Potter
  */
 
+import grader.model.gradebook.gradescheme.GradeRange;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.gradescheme.LetterGrade;
 import grader.model.items.Percentage;
@@ -15,7 +16,7 @@ import java.util.Observer;
 
 import grader.model.file.*;
 import grader.model.people.*;
-import grader.model.gradebook.*;
+import grader.model.gradebook.scores.*;
 import grader.model.items.*;
 
 /**
@@ -116,52 +117,12 @@ public class Histogram extends AbstractGraph implements Observer
         String letter;
         String stars = "";
 
-        switch (((int)percent))
-        {
-            case 99:
-                letter = "A+";
-                break;
-            case 94:
-                letter = "A";
-                break;
-            case 90:
-                letter = "A-";
-                break;
-            case 89:
-                letter = "B+";
-                break;
-            case 84:
-                letter = "B";
-                break;
-            case 80:
-                letter = "B-";
-                break;
-            case 79:
-                letter = "C+";
-                break;
-            case 74:
-                letter = "C";
-                break;
-            case 70:
-                letter = "C-";
-                break;
-            case 69:
-                letter = "D+";
-                break;
-            case 64:
-                letter = "D";
-                break;
-            case 60:
-                letter = "D-";
-                break;
-            case 0:
-                letter = "F";
-                break;
-            default:
-                letter = " ";
-                break;
+        GradeRange range = WorkSpace.instance.getGradeScheme().getGradeRange(new Percentage(percent));
 
-        }
+        if (percent == range.getLowerBound().getValue())
+            letter = range.getLetterGrade().letter;
+        else
+            letter = " ";
 
         for (int i = 0; i < vals.get(percent); i++)
         {
