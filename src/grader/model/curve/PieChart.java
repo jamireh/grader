@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ArrayList;
 
 import com.sun.corba.se.impl.ior.WireObjectKeyTemplate;
 import grader.model.file.*;
@@ -35,7 +36,9 @@ public class PieChart extends AbstractGraph implements Observer
     private int dMinus = 0;
     private int fS = 0;
 
+
     private List<Student> students;
+
 
 
     /**
