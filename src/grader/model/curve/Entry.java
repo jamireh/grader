@@ -32,4 +32,9 @@ public class Entry {
     {
         return star.get();
     }
+
+    public boolean equals(Entry e)
+    {
+        return e.getLetter().equals(letter) && e.getPercent().equals(percent) && e.getStar().equals(star);
+    }
 }
