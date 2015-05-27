@@ -5,11 +5,12 @@ import grader.model.curve.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+
 import static org.junit.Assert.assertEquals;
 
 /**
  * The HistogramTest class is the companion testing class for the
- * Histogram class. It implements the following module test plan:
+ * Histogram class. This is a line. It implements the following module test plan:
  *									                                       <pre>
  *    Phase 1: Unit test getEntry().
  *
