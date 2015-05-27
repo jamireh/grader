@@ -1,10 +1,10 @@
 package grader.model.gradebook.gradescheme;
-import java.util.*;
-
 import grader.model.errors.OverlappingRangeException;
-import grader.model.errors.PercentageFormatException;
 import grader.model.items.Percentage;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * GradeScheme represents the set of GradeRanges that allow for a student to
@@ -100,7 +100,8 @@ public class GradeScheme
                 found = range;
                 break;
             }
-
+        if(found == null)
+            System.out.println("break here");
         return found;
     }
 
