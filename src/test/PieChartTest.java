@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  * The PieChart class is the companion testing class for the
  * PieChart class. It implements the following module test plan:
  *									                                       <pre>
- *    Phase 1: Unit test the getter methods.
+ *    Phase 1: Unit test getEntry().
  *
  *    Phase 2: Unit test update()
  *
