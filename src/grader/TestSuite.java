@@ -1,6 +1,8 @@
+package grader;
+
+import grader.tests.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import test.*;
 
 /**
  * Used for jar execution. Unless you're Jon, don't touch.

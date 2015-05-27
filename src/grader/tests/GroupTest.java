@@ -1,4 +1,4 @@
-package test;
+package grader.tests;
 
 import grader.model.errors.InvalidPhoneNumberException;
 import grader.model.errors.InvalidUserIDException;

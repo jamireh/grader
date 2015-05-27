@@ -1,4 +1,4 @@
-package test;
+package grader.tests;
 
 import grader.model.errors.NameFormatException;
 import grader.model.people.Name;

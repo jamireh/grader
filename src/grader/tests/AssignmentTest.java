@@ -1,4 +1,4 @@
-package test;
+package grader.tests;
 
 import grader.model.items.Assignment;
 import org.junit.Test;

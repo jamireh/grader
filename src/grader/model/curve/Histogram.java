@@ -4,19 +4,18 @@ package grader.model.curve;
  * @author Mallika Potter
  */
 
+import grader.model.file.WorkSpace;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.gradescheme.LetterGrade;
+import grader.model.gradebook.scores.RawScore;
+import grader.model.items.Assignment;
 import grader.model.items.Percentage;
+import grader.model.people.Student;
 
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Observable;
 import java.util.Observer;
-
-import grader.model.file.*;
-import grader.model.people.*;
-import grader.model.gradebook.*;
-import grader.model.items.*;
 
 /**
  * The Histogram class defines the necessary components for graphically changing the GradeScheme

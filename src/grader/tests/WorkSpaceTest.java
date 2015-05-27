@@ -1,4 +1,4 @@
-package test;
+package grader.tests;
 
 import grader.model.errors.OverlappingRangeException;
 import grader.model.file.WorkSpace;

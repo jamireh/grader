@@ -1,4 +1,4 @@
-package test;
+package grader.tests;
 
 import grader.model.gradebook.stats.Statistics;
 import org.junit.Before;

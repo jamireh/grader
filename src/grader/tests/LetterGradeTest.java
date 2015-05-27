@@ -1,4 +1,4 @@
-package test;
+package grader.tests;
 
 import grader.model.gradebook.gradescheme.LetterGrade;
 import org.junit.Assert;
