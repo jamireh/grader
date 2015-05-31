@@ -74,7 +74,6 @@ public class Section
 	public void addStudent(Student student)
 	{
 	    students.add(student);
-        System.out.println("gradebook/Section.addStudent called");
 	}
 
     /**
@@ -84,7 +83,6 @@ public class Section
     public void addGroup(Group group)
     {
         groups.add(group);
-        System.out.println("gradebook/Section.addGroup called");
     }
 
 	/**
@@ -115,7 +113,6 @@ public class Section
     public void pushGradeScheme()
     {
         gradeScheme = histogram.push();
-        System.out.println("Updated GradeScheme saved in Section.");
     }
 
     /**
