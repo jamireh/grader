@@ -175,8 +175,37 @@ public class MenubarController implements Observer
      */
     public void studentsAddNew() throws IOException {
         System.out.println("Students->Add New clicked!");
-        Parent root = FXMLLoader.load(Main.studentsResource);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.studentsResource);
+        fxmlLoader.setController(new StudentController());
+        Parent root;
+        try
+        {
+            root = fxmlLoader.load();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException();
+        }
         setStageWithFocus(root, "Add Student");
+    }
+
+    /**
+     * Controller method for Students->Add New.
+     */
+    public void editStudent() throws IOException {
+        System.out.println("Students->Edit Student clicked!");
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.studentsResource);
+        fxmlLoader.setController(new EditStudentController());
+        Parent root;
+        try
+        {
+            root = fxmlLoader.load();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException();
+        }
+        setStageWithFocus(root, "Edit Student");
     }
 
     /**
@@ -200,15 +229,38 @@ public class MenubarController implements Observer
      */
     public void studentsCreateGroup() throws IOException {
         System.out.println("Students->Create Group clicked!");
-        Parent root = FXMLLoader.load(Main.groupsResource);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.groupsResource);
+        fxmlLoader.setController(new GroupsController());
+        Parent root;
+        try
+        {
+            root = fxmlLoader.load();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException();
+        }
         setStageWithFocus(root, "Add New Group");
     }
 
     /**
      * Controller method for Students->Edit Groups.
      */
-    public void studentsEditGroups() {
+    public void studentsEditGroups()
+    {
         System.out.println("Students->Edit Groups clicked!");
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.groupsResource);
+        fxmlLoader.setController(new EditGroupController());
+        Parent root;
+        try
+        {
+            root = fxmlLoader.load();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException();
+        }
+        setStageWithFocus(root, "Edit Group");
     }
 
     /* GRADES MENU COMMANDS */

@@ -46,6 +46,14 @@ public class Name
     }
 
     /**
+     * Gets middle name
+     */
+    public String getMiddleName()
+    {
+        return middleName;
+    }
+
+    /**
      * Gets this student's first name.
      */
     public String getFirstName() {

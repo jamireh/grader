@@ -51,6 +51,19 @@ public class Group
 	   groupName = newGroupName;
     }
 
+    /**
+     * Overwrites the students in this group with a new list.
+     * @param students to be a part of the group
+     * @throws MissingInputException if no students in the group
+     */
+    public void setGroupMembers(ArrayList<Student> students) throws MissingInputException
+    {
+        if (students.size() == 0)
+            throw new MissingInputException("No students in this group!");
+
+        this.students = students;
+    }
+
 	/**
 	 * Removes a Student currently within the group.
 	 * @param studentToRemove Student to add to this Group.

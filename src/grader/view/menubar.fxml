@@ -30,7 +30,12 @@
             </Menu>
             <Menu fx:id="studentMenu" mnemonicParsing="false" text="Students">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add Student" />
+                  <Menu mnemonicParsing="false" text="Students">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add Student" />
+                        <MenuItem mnemonicParsing="false" onAction="#editStudent" text="Edit Student" />
+                     </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Roster">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#studentsSyncRoster" text="Sync Roster" />
