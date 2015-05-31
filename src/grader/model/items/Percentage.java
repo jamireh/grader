@@ -93,7 +93,6 @@ public class Percentage implements Comparable<Percentage>
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
         Percentage that = (Percentage) o;
 
