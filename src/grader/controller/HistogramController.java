@@ -4,28 +4,23 @@ package grader.controller;
  * @author Mallika Potter
  */
 
+import grader.model.curve.Entry;
+import grader.model.file.WorkSpace;
 import grader.model.gradebook.Section;
-import grader.model.gradebook.scores.RawScore;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.event.EventHandler;
 import javafx.scene.input.*;
 
 import java.net.URL;
-import java.util.*;
-
-
-import grader.model.file.*;
-import grader.model.people.*;
-import grader.model.items.*;
-import grader.model.curve.Entry;
-import javafx.scene.input.MouseEvent;
+import java.util.Hashtable;
+import java.util.ResourceBundle;
 
 
 public class HistogramController implements Initializable {
@@ -70,7 +65,7 @@ public class HistogramController implements Initializable {
     @FXML
     private void cancelButtonAction(ActionEvent event)
     {
-        System.out.println("Cancel Button Selected.");
+
     }
 
 
@@ -117,8 +112,6 @@ public class HistogramController implements Initializable {
 
                         String selected = letter.getItem();
                         if (selected != null) {
-                            System.out.println("select : " + selected);
-
                         }
                     }
                     }
@@ -176,7 +169,6 @@ public class HistogramController implements Initializable {
                             //System.out.println(text);
                             //System.out.println(letter.getText());
                             letter.setText(text);
-                            System.out.println("Row = " + letter.getIndex());
                             //data.add(moving);
                             //table.setItems(data);
                             success = true;

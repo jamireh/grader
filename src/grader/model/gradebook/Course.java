@@ -63,13 +63,11 @@ public class Course
 	*/
 	public void addCategory(Category cate)
 	{
-		System.out.println("gradebook.Course.add(Category) called");
 		categories.add(cate);
 	}
 
 	public void syncRoster()
 	{
-		System.out.println("gradebook.Course.syncRoster() called");
 	}
 
 	/**
@@ -99,7 +97,6 @@ public class Course
 	 * @param assignment Assignment to add
 	 */
     public void addAssignment(Assignment assignment) {
-       System.out.println("gradebook.Course.add(Assignment) called");
        assignments.addTo(null, assignment);
     }
 

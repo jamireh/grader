@@ -147,7 +147,6 @@ public class GradeSchemeController implements Observer {
      * @param event The ActionEvent that kicks off this method.
      */
     public void onDoneButtonClicked(ActionEvent event) {
-        System.out.println("Done button clicked");
         Stage stage = (Stage) bDone.getScene().getWindow();
         stage.close();
     }
@@ -163,8 +162,6 @@ public class GradeSchemeController implements Observer {
             TextField textField = (TextField) event.getSource();
             Percentage percent = new Percentage(textField.getCharacters().toString());
             gradeScheme.updateGradeRange(LetterGrade.valueOfFromID(textField.getId()), percent);
-
-            System.out.println("Updated information: " + textField.getCharacters());
         }
         catch (PercentageFormatException percentExcept) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -202,7 +199,5 @@ public class GradeSchemeController implements Observer {
         ColorPicker cp = (ColorPicker) event.getSource();
         Color color = cp.getValue();
         gradeScheme.updateGradeRange(LetterGrade.valueOfFromID(cp.getId()), color);
-
-        System.out.println("Color updated: " + ((ColorPicker)event.getSource()).getValue());
     }
 }

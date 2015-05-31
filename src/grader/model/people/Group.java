@@ -36,8 +36,6 @@ public class Group
 
         this.groupName = groupName;
         this.students = students;
-
-        System.out.println("called add group from the model! model/people/Group->constructor called.");
     }
 
 	/**

@@ -77,7 +77,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumAPlus()
     {
-        System.out.println("A+: " + aPlus);
         return (aPlus/((double)students.size())) * 100;
     }
 
@@ -87,7 +86,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumA()
     {
-        System.out.println("A: " + aS);
         return (aS/((double)students.size())) * 100;
     }
 
@@ -97,7 +95,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumAMinus()
     {
-        System.out.println("A-: " + aMinus);
         return (aMinus/((double)students.size())) * 100;
     }
 
@@ -107,7 +104,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumBPlus()
     {
-        System.out.println("B+: " + bPlus);
         return (bPlus/((double)students.size())) * 100;
     }
 
@@ -117,7 +113,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumB()
     {
-        System.out.println("B: " + bS);
         return (bS/((double)students.size())) * 100;
     }
 
@@ -127,7 +122,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumBMinus()
     {
-        System.out.println("B-: " + bMinus);
         return (bMinus/((double)students.size())) * 100;
     }
 
@@ -137,7 +131,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumCPlus()
     {
-        System.out.println("C+: " + cPlus);
         return (cPlus/((double)students.size())) * 100;
     }
 
@@ -147,7 +140,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumC()
     {
-        System.out.println("C: " + cS);
         return (cS/((double)students.size())) * 100;
     }
 
@@ -157,7 +149,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumCMinus()
     {
-        System.out.println("C-: " + cMinus);
         return (cMinus/((double)students.size())) * 100;
     }
 
@@ -167,7 +158,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumDPlus()
     {
-        System.out.println("D+: " + dPlus);
         return (dPlus/((double)students.size())) * 100;
     }
 
@@ -177,7 +167,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumD()
     {
-        System.out.println("D: " + dS);
         return (dS/((double)students.size())) * 100;
     }
 
@@ -187,7 +176,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumDMinus()
     {
-        System.out.println("D-: " + dMinus);
         return (dMinus/((double)students.size())) * 100;
     }
 
@@ -197,7 +185,6 @@ public class PieChart extends AbstractGraph implements Observer
      */
     public double getNumF()
     {
-        System.out.println("F: " + fS);
         return (fS/((double)students.size())) * 100;
     }
 

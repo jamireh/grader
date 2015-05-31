@@ -50,11 +50,6 @@ public class CategoryController implements Initializable {
 
     public void onAddButtonClick(ActionEvent actionEvent)
     {
-        System.out.println("Name: " + tfCatName.getText());
-        System.out.println("Parent: " + cbCatParent.getValue());
-        System.out.println("Weight: " + tfWeight.getText());
-        System.out.println("Weight Behavior: " + cbWeights.getValue());
-        System.out.println("Style: " + tfWeight.getStyle());
         boolean exceptionThrown = false;
         if(cbCatParent.getValue().equals("CPE 309"))
         {

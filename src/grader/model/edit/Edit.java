@@ -30,7 +30,6 @@ public class Edit {
             WorkSpace.instance.getLatestUndo())
     */
    public static void undo() {
-      System.out.println("Edit->Undo");
       WorkSpace.instance.undo();
    }
 
@@ -55,7 +54,6 @@ public class Edit {
             WorkSpace.instance.getLatestUndo())
     */
     public static void redo() {
-       System.out.println("Edit->Redo");
        WorkSpace.instance.redo();
     }
 
@@ -71,7 +69,6 @@ public class Edit {
       && WorkSpace.instance.selectedContext'.empty();
     */
     public static void cut() {
-        System.out.println("Edit->Cut");
     }
 
    /**
@@ -84,7 +81,6 @@ public class Edit {
       WorkSpace.instance.clipboard.equals(WorkSpace.instance.selectedContext);
     */
     public static void copy() {
-        System.out.println("Edit->Copy");
     }
 
    /**
@@ -104,6 +100,5 @@ public class Edit {
       WorkSpace.instance.selectedContext.equals(WorkSpace.instance.clipboard);
     */
     public static void paste() {
-        System.out.println("Edit->Paste");
     }
 }

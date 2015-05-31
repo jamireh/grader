@@ -2,10 +2,6 @@ package grader.controller;
 
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.stats.StatsContainer;
-
-import java.net.URL;
-import java.util.*;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,6 +12,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+
+import java.net.URL;
+import java.util.Arrays;
+import java.util.ResourceBundle;
 
 /**
  * Controller for the Statistics model.
@@ -64,12 +64,6 @@ public class StatsController implements Initializable {
             });
             tc.setPrefWidth(90);
             table.getColumns().add(tc);
-        }
-
-        for (int i = 0; i < statsTable.length; ++i) {
-            System.out.println("Row " + i);
-            for (int j = 0; j < statsTable[i].length; ++j)
-                System.out.println(statsTable[i][j]);
         }
 
         ObservableList<String[]> data = FXCollections.observableArrayList();

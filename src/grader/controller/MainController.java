@@ -45,7 +45,6 @@ public class MainController implements Initializable {
     * @param event action event
     */
    public void onRevertButtonClicked(ActionEvent event) {
-      System.out.println("Revert button clicked");
       WorkSpace.instance.revertGrades();
    }
 
@@ -55,7 +54,6 @@ public class MainController implements Initializable {
     * @param event action event
     */
    public void onSaveButtonClicked(ActionEvent event) {
-      System.out.println("Save button clicked");
       WorkSpace.instance.saveGrades();
    }
 
@@ -65,7 +63,6 @@ public class MainController implements Initializable {
     * @param event action event
     */
    public void onSavePostButtonClicked(ActionEvent event) {
-      System.out.println("Save & Post button clicked");
       WorkSpace.instance.saveGrades();
    }
 
