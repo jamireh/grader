@@ -54,8 +54,16 @@ public class StudentTest
     public void testEditStudentExceptionInvalidPhoneNumber() throws Exception
     {
         Name name = new Name("Connor", "Raymond", "Batch");
-        Student student = new Student(name, "cbatch", "");
+        Student student = new Student(name, "cbatch", "5555555555");
         student.editStudentInfo(name, "jamireh", "sdfsdfsd");
+    }
+
+    @org.junit.Test (expected = InvalidPhoneNumberException.class)
+    public void testEditStudentExceptionInvalidPhoneNumber2() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "cbatch", "5555555555");
+        student.editStudentInfo(name, "jamireh", "555555555");
     }
 
     @org.junit.Test (expected = InvalidUserIDException.class)
@@ -83,7 +91,14 @@ public class StudentTest
     public void testPhoneNumberException() throws Exception
     {
         Name name = new Name("Connor", "Raymond", "Batch");
-        Student student = new Student(name, "", "sdf");
+        Student student = new Student(name, "cbatch", "sdf");
+    }
+
+    @org.junit.Test(expected = InvalidPhoneNumberException.class)
+    public void testPhoneNumberException2() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "sdf", "555555555");
     }
 
     @org.junit.Test
