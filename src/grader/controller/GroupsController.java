@@ -9,11 +9,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.input.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.naming.InvalidNameException;
@@ -114,11 +116,23 @@ public class GroupsController
         }
         catch (InvalidNameException e)
         {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             tfGroupName.requestFocus();
             return;
         }
         catch (MissingInputException e)
         {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             lFormedGroup.requestFocus();
             return;
         }
@@ -129,7 +143,6 @@ public class GroupsController
     public void onCancelPressed(ActionEvent event)
     {
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
-        System.out.println("Cancel Pressed");
         stage.close();
     }
 }

@@ -38,7 +38,42 @@ public class StudentTest
     {
         Name name = new Name("Connor", "Raymond", "Batch");
         Student student = new Student(name, "cbatch", "");
+        student = new Student(name, "cbatch", "5555555555");
         assertNotNull(student);
+    }
+
+    @org.junit.Test
+    public void testEditStudent() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "cbatch", "");
+        student.editStudentInfo(name, "jamireh", "");
+        assertNotNull(student);
+    }
+
+    @org.junit.Test (expected = InvalidPhoneNumberException.class)
+    public void testEditStudentExceptionInvalidPhoneNumber() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "cbatch", "5555555555");
+        student.editStudentInfo(name, "jamireh", "sdfsdfsd");
+    }
+
+    @org.junit.Test (expected = InvalidPhoneNumberException.class)
+    public void testEditStudentExceptionInvalidPhoneNumber2() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "cbatch", "5555555555");
+        student.editStudentInfo(name, "jamireh", "5545555555");
+        student.editStudentInfo(name, "jamireh", "555555555");
+    }
+
+    @org.junit.Test (expected = InvalidUserIDException.class)
+    public void testEditStudentInvalidUserID() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "cbatch", "");
+        student.editStudentInfo(name, "", "");
     }
 
     @org.junit.Test(expected = NameFormatException.class)
@@ -58,7 +93,14 @@ public class StudentTest
     public void testPhoneNumberException() throws Exception
     {
         Name name = new Name("Connor", "Raymond", "Batch");
-        Student student = new Student(name, "", "sdf");
+        Student student = new Student(name, "cbatch", "sdf");
+    }
+
+    @org.junit.Test(expected = InvalidPhoneNumberException.class)
+    public void testPhoneNumberException2() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        Student student = new Student(name, "sdf", "555555555");
     }
 
     @org.junit.Test

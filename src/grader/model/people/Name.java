@@ -33,9 +33,9 @@ public class Name
         this.middleName = middleName;
         this.lastName = lastName;
 
-        if (firstName.length() == 0 || lastName.length() == 0 || firstName.matches("/^[A-z]+$/") || middleName
-                .matches("/^[A-z]+$/") || lastName.matches("/^[A-z]+$/"))
-            throw new NameFormatException("");
+        if (firstName.length() == 0 || lastName.length() == 0 || !firstName.matches("[a-zA-Z]+") ||
+                (middleName.length() != 0 && !middleName.matches("[a-zA-Z]+") )|| !lastName.matches("[a-zA-Z]+"))
+            throw new NameFormatException(firstName + " " + middleName + " " + lastName);
     }
 
     /**

@@ -9,10 +9,8 @@ import grader.model.curve.Histogram;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.people.Group;
 import grader.model.people.Student;
-import grader.model.people.TA;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -47,12 +45,6 @@ public class Section
 	*Groups are quarter-long.
 	*/
 	public ArrayList<Group> groups;
-
-	/**
-	*The TAs associated with this section.
-	*May have varying permissions.
-	*/
-	public Collection<TA> tas;
 
 	/**
 	*String representing section number.
@@ -94,16 +86,6 @@ public class Section
         groups.add(group);
         System.out.println("gradebook/Section.addGroup called");
     }
-
-	/**
-	*Add new TA.
-	*pre:
-	*	!tas.contains(ta);
-	*/
-	public void addTA(TA ta)
-	{
-
-	}
 
 	/**
 	 * Returns this section's grade scheme.

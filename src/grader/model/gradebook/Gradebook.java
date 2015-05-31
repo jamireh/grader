@@ -4,11 +4,9 @@ import grader.model.errors.NameFormatException;
 import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
-import grader.model.people.Instructor;
 import grader.model.people.Name;
 import grader.model.people.Student;
 
-import javax.naming.InvalidNameException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,24 +23,9 @@ public class Gradebook {
 	public ArrayList<Course> courses;
 
 	/**
-	*The Instructor associated with this gradebook.
-	*No limits on permissions.
-	*/
-	public Instructor instructor;
-
-	/**
 	 * The gradebook's master score table.
 	 */
 	public Scores scores;
-
-	/**
-	*Set Instructor associated with this gradebook.
-	*pre:
-	*	instructor.equals(null);
-	*/
-	public void setInstructor(Instructor ins) {
-	   this.instructor = ins;
-   }
 
 	/**
 	*Add courses to collection associated with this gradebook.
