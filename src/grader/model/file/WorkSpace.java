@@ -325,8 +325,9 @@ public class WorkSpace extends Observable {
     */
    public void updateGrade(Student student, Assignment assignment,
                            double score) {
+      RawScore raw = new RawScore(student, assignment, score);
       futureDeltas.clear();
-      deltas.add(new RawScore(student, assignment, score));
+      deltas.add(raw);
       scores.updateRawScore(student, assignment, score);
       setChanged();
       notifyObservers();
@@ -601,6 +602,7 @@ public class WorkSpace extends Observable {
          HashMap<Assignment, RawScore> scoresMap = gradebookScores.getScoresMap(student);
          scores.addScoresMap(student, scoresMap);
       }
+      scores = scores.copy();
    }
 
    private void loadGradeScheme() {
