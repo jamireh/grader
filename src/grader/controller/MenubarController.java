@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,6 +29,7 @@ public class MenubarController implements Observer
     @FXML Menu studentMenu;
     @FXML Menu gradesMenu;
     @FXML Menu curveMenu;
+    @FXML MenuItem editGroupMenuItem;
 
     @FXML
     public void initialize()
@@ -55,6 +57,7 @@ public class MenubarController implements Observer
         studentMenu.setDisable(false);
         gradesMenu.setDisable(false);
         curveMenu.setDisable(false);
+        editGroupMenuItem.setDisable(true);
         
         if(WorkSpace.instance.course == null)
         {
@@ -66,6 +69,10 @@ public class MenubarController implements Observer
         {
             studentMenu.setDisable(true);
             curveMenu.setDisable(true);
+        }
+        if(WorkSpace.instance.group != null)
+        {
+            editGroupMenuItem.setDisable(false);
         }
     }
 

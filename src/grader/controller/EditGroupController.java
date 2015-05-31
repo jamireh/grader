@@ -2,27 +2,23 @@ package grader.controller;
 
 import grader.model.errors.MissingInputException;
 import grader.model.file.WorkSpace;
-import grader.model.people.Group;
 import grader.model.people.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.input.*;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javax.naming.InvalidNameException;
-
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
-import static grader.model.file.WorkSpace.*;
+import static grader.model.file.WorkSpace.instance;
 
 /**
  * Controller for the group forming view.
@@ -132,6 +128,7 @@ public class EditGroupController
             lFormedGroup.requestFocus();
             return;
         }
+        WorkSpace.instance.sidebarSelect(WorkSpace.instance.course, WorkSpace.instance.section, WorkSpace.instance.getGroup());
         stage.close();
 
     }

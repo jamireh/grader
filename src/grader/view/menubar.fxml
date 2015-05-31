@@ -45,7 +45,7 @@
                   <Menu mnemonicParsing="false" text="Groups">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#studentsCreateGroup" text="Create Group" />
-                        <MenuItem mnemonicParsing="false" onAction="#studentsEditGroups" text="Edit Groups" />
+                        <MenuItem fx:id="editGroupMenuItem" mnemonicParsing="false" onAction="#studentsEditGroups" text="Edit Groups" />
                     </items>
                   </Menu>
                </items>
