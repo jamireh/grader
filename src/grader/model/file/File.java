@@ -29,7 +29,6 @@ public class File {
                  course.name.equals(name));
     */
    public static void newCourse(String name) {
-       System.out.println("File->New Course:  " + name);
    }
 
    /**
@@ -37,7 +36,6 @@ public class File {
     * *Planned functionality -- NOT MODELED*
     */
    public static void exportGradebook() {
-       System.out.println("File->Export");
    }
 
    /**
@@ -45,7 +43,6 @@ public class File {
     * *Planned functionality -- NOT MODELED*
     */
    public static void importGradebook() {
-       System.out.println("File->Import");
    }
 
    /**
@@ -53,7 +50,6 @@ public class File {
     * *Planned functionality -- NOT MODELED*
     */
    public static void print() {
-       System.out.println("File->Print");
    }
 
    /**
@@ -72,13 +68,12 @@ public class File {
       WorkSpace.instance.user == null;
     */
    public static void logout() {
-       System.out.println("File->Logout");
    }
 
    /**
     * Quits the application.
     */
    public static void quit() {
-       System.out.println("File->Quit");
+       System.exit(0);
    }
 }

@@ -57,8 +57,6 @@ public class GradeScheme
      *    bar != null);
      */
     public void updateGradeRange(LetterGrade gradeToUpdate, Percentage newPercent) throws OverlappingRangeException {
-        System.out.println("Divisions have been updated.");
-
         int index = gradeToUpdate.ordinal();
         Percentage higher = index == 0 ? new Percentage(GradeScheme.ceiling) : ranges.get(index - 1).getLowerBound();
         Percentage lower = ranges.get(gradeToUpdate.ordinal() + 1).getLowerBound();
@@ -81,8 +79,6 @@ public class GradeScheme
      * @param newColor the new Color to update the GradeRange with
      */
     public void updateGradeRange(LetterGrade gradeToUpdate, Color newColor) {
-        System.out.println("Color has been updated");
-
         ranges.get(gradeToUpdate.ordinal()).setColor(newColor);
     }
 
@@ -100,8 +96,6 @@ public class GradeScheme
                 found = range;
                 break;
             }
-        if(found == null)
-            System.out.println("break here");
         return found;
     }
 

@@ -44,13 +44,6 @@ public class AssignmentController implements Initializable {
 
     public void onAddButtonPress(ActionEvent actionEvent)
     {
-        System.out.println("Name: " + tfCatName.getText());
-        System.out.println("Parent: " + cbCatParent.getValue());
-        System.out.println("Raw Scores: " + tfRawScore.getText());
-        System.out.println("Weight: " + tfWeight.getText());
-        System.out.println("Due Date: " + dpDueDate.getValue());
-        System.out.println("Handin: " + chbHandin.isSelected() + (chbHandin.isSelected() ? " directory: " + tfHandin.getText() : ""));
-
         boolean exceptionThrown = false;
 
         if(cbCatParent.getValue().equals("CPE 309"))

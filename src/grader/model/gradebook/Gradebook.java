@@ -116,11 +116,6 @@ public class Gradebook {
 
       AssignmentTree.AssignmentIterator itr =
          course.getAssignmentTree().getAssignmentIterator();
-
-      System.out.println("Canned gradebook assignments:");
-      while (itr.hasNext()) {
-          System.out.println(itr.next());
-      }
    }
 
    private static void addCannedSection(Course course, String number, String[] names) {

@@ -1,9 +1,6 @@
 package grader.model.items;
 
-import grader.model.file.WorkSpace;
-import grader.model.gradebook.Gradebook;
 import grader.model.gradebook.scores.RawScore;
-import grader.model.people.Student;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -242,88 +239,6 @@ public class AssignmentTree
 
     //level iterator
     //return list of categories
-
-    public static void main(String[] args)
-    {
-        Gradebook gradebook = WorkSpace.instance.gradebook;
-        WorkSpace.instance.sidebarSelect(gradebook.courses.get(0), gradebook.courses.get(0).sections.get(1), null);
-        AssignmentTree at = WorkSpace.instance.getAssignmentTree();
-        double EPSILON = 0.00001;
-        for(Student s : WorkSpace.instance.getStudents())
-        {
-            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
-            double test = 0.0;
-            double total = 0.0;
-            for(RawScore rs : map.values())
-            {
-                test += rs.getScore();
-            }
-            for(Assignment a : map.keySet())
-            {
-                total += a.rawPoints;
-            }
-            double expected = test/total;
-            double received = at.calculatePercentage(map).getValue();
-            if(!(expected == received || Math.abs(expected - received) < EPSILON))
-            {
-                System.err.println("COMPARISON FAILED");
-            }
-            else if(expected >= 60.0)
-            {
-                System.out.println("GRADE NOT F");
-            }
-        }
-
-
-
-        //System.out.println("breakpoint");
-        /*AssignmentTree at = new AssignmentTree();
-        try
-        {
-            Assignment finalExam = new Assignment("final", LocalDate.now(), "100", "0.3");
-            at.addTo(null, finalExam);
-            Category tests = new Category("tests", "0.7", false);
-            at.addTo(null, tests);
-            Category quizzes = new Category("quizzes", "0.2", false);
-            Category midterms = new Category("midterms", "0.7", false);
-            at.addTo(tests, quizzes);
-            at.addTo(tests, midterms);
-
-            Assignment m1 = new Assignment("m1", LocalDate.now(), "50", "");
-            Assignment m2 = new Assignment("m2", LocalDate.now(), "50", "");
-            Assignment q1 = new Assignment("q1", LocalDate.now(), "10", "");
-            Assignment a1 = new Assignment("a1", LocalDate.now(), "10", "");
-            at.addTo(quizzes, q1);
-            at.addTo(midterms, m1);
-            at.addTo(midterms, m2);
-            at.addTo(tests, a1);
-
-            HashMap<Assignment, RawScore> map = new HashMap<Assignment, RawScore>();
-            Student foo = new Student(new Name("Foo", "", "Bar"));
-            map.put(finalExam, new RawScore(foo, finalExam, 100.0));
-            map.put(m1, new RawScore(foo, m1, 50.0));
-            map.put(m2, new RawScore(foo, m2, 50.0));
-            map.put(q1, new RawScore(foo, q1, 0.0));
-            map.put(a1, new RawScore(foo, a1, 10.0));
-
-            System.out.println(at.calculatePercentage(map).getValue());
-
-            Iterator<Assignment> iter = at.getAssignmentIterator();
-            while(iter.hasNext())
-            {
-                Assignment a = iter.next();
-                System.out.println(a.name);
-            }
-
-            for(Category c : at.getCategories())
-            {
-                System.out.println(c.name);
-            }
-        }
-        catch(RawScoreFormatException e) {}
-        catch(PercentageFormatException e) {}
-        catch(InvalidNameException e) {}*/
-    }
 
     /**
      * Iterator class for the AssignmentTree.

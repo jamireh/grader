@@ -47,7 +47,6 @@ public class Find {
                                       student.name.contains(name)))))
     */
    public Collection<Student> findStudents(String name, String courseName) {
-       System.out.println("Find student " + name + " in " + courseName);
        return null;
    }
 
@@ -80,7 +79,6 @@ public class Find {
                               assignment.name.contains(name))));
     */
    public Collection<Assignment> findAssignments(String name, String courseName) {
-       System.out.println("Find assignment " + name + " in " + courseName);
        return null;
    }
 }

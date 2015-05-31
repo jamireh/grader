@@ -33,8 +33,6 @@ public class CourseController implements Initializable {
 
     public void onAddButtonClick(ActionEvent actionEvent)
     {
-        System.out.println("Department: " + cbDept.getValue());
-        System.out.println("Course Number: " + tfCourseNum.getText());
         Stage stage = (Stage) bAdd.getScene().getWindow();
         stage.close();
     }

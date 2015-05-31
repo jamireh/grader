@@ -77,7 +77,6 @@ public class Histogram extends AbstractGraph implements Observer
     public void categorizeScores() {}
 
     public void apply() {
-        System.out.println("Apply method called.");
     }
 
     /**
