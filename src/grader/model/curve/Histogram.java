@@ -119,7 +119,7 @@ public class Histogram extends AbstractGraph implements Observer
         GradeRange range = WorkSpace.instance.getGradeScheme().getGradeRange(new Percentage(percent));
 
         if (percent == range.getLowerBound().getValue())
-            letter = range.getLetterGrade().letter;
+            letter = range.getLetterGrade().letter + " -------";
         else
             letter = " ";
 

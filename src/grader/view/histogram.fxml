@@ -9,22 +9,13 @@
 
 <AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.controller.HistogramController">
    <children>
-   <TableView fx:id="table" layoutX="44.0" layoutY="29.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
+   <TableView fx:id="table" GridPane.columnIndex="0" GridPane.rowIndex="1" layoutX="44.0" layoutY="29.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
      <columns>
        <TableColumn fx:id="letterCol" prefWidth="75.0" text="Letter">
-           <cellValueFactory>
-                  <PropertyValueFactory property="letter" />
-               </cellValueFactory>
          </TableColumn>
        <TableColumn fx:id="percentCol" prefWidth="75.0" text="Percent">
-           <cellValueFactory>
-                  <PropertyValueFactory property="percent" />
-               </cellValueFactory>
             </TableColumn>
          <TableColumn fx:id="starCol" prefWidth="75.0">
-             <cellValueFactory>
-                  <PropertyValueFactory property="star" />
-               </cellValueFactory>
          </TableColumn>
      </columns>
    </TableView>
