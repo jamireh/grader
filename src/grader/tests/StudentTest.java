@@ -38,6 +38,7 @@ public class StudentTest
     {
         Name name = new Name("Connor", "Raymond", "Batch");
         Student student = new Student(name, "cbatch", "");
+        student = new Student(name, "cbatch", "5555555555");
         assertNotNull(student);
     }
 
@@ -63,6 +64,7 @@ public class StudentTest
     {
         Name name = new Name("Connor", "Raymond", "Batch");
         Student student = new Student(name, "cbatch", "5555555555");
+        student.editStudentInfo(name, "jamireh", "5545555555");
         student.editStudentInfo(name, "jamireh", "555555555");
     }
 
