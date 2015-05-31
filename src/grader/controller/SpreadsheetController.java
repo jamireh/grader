@@ -1,6 +1,7 @@
 package grader.controller;
 
 import grader.model.file.WorkSpace;
+import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
@@ -31,12 +32,12 @@ public class SpreadsheetController implements Initializable, Observer
 {
     @FXML HBox hbTable;
 
-    static TableView<String[]> table = null;
+    static TableView<SpreadsheetCell[]> table = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-       table = new TableView<String[]>();
+       table = new TableView<SpreadsheetCell[]>();
        hbTable.setSpacing(5);
        hbTable.getChildren().addAll(table);
 
@@ -49,7 +50,7 @@ public class SpreadsheetController implements Initializable, Observer
        update(null, null);
     }
 
-    public void setupGradebook(String[] headers, String[][] grades)
+    public void setupGradebook(String[] headers, SpreadsheetCell[][] grades)
     {
        table.setEditable(true);
        table.getColumns().clear();
@@ -57,31 +58,37 @@ public class SpreadsheetController implements Initializable, Observer
           TableColumn tc = new TableColumn(headers[i]);
           tc.setEditable(i != 0);
           final int colNo = i;
-          tc.setCellFactory(TextFieldTableCell.<String[]>forTableColumn());
+          tc.setCellFactory(TextFieldTableCell.<SpreadsheetCell[]>forTableColumn());
 
-          tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+          tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SpreadsheetCell[], String>, ObservableValue<String>>() {
              @Override
-             public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
-                return new SimpleStringProperty((p.getValue()[colNo]));
+             public ObservableValue<String> call(TableColumn.CellDataFeatures<SpreadsheetCell[], String> p) {
+                return new SimpleStringProperty(((p.getValue()[colNo].toString())));
              }
           });
           tc.setPrefWidth(90);
           table.getColumns().add(tc);
 
-          tc.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<String[], String>>() {
-                   @Override
-                   public void handle(TableColumn.CellEditEvent<String[], String> t) {
-                      int row = t.getTablePosition().getRow();
-                      ObservableList<String[]> ol = t.getTableView().getItems();
-                      TableColumn column = t.getTableColumn();
-                      System.out.printf("Selected %s %s\n", ol.get(row)[0], column.getText());
+          if (i != 0) {
+             tc.setOnEditCommit(
+                   new EventHandler<TableColumn.CellEditEvent<SpreadsheetCell[], String>>() {
+                      @Override
+                      public void handle(TableColumn.CellEditEvent<SpreadsheetCell[], String> t) {
+                         int row = t.getTablePosition().getRow();
+                         int col = t.getTablePosition().getColumn();
+                         ObservableList<SpreadsheetCell[]> ol = t.getTableView().getItems();
+                         System.out.printf("Selected %s %s\n", ol.get(row)[col].getScore().getStudent().toString(),
+                               ol.get(row)[col].getScore().getAssignment().toString());
+
+                         RawScore rawScore = ol.get(row)[col].getScore();
+                         WorkSpace.instance.updateGrade(rawScore.getStudent(), rawScore.getAssignment(), Double.parseDouble(t.getNewValue()));
+                      }
                    }
-                }
-          );
+             );
+          }
        }
 
-       ObservableList<String[]> data = FXCollections.observableArrayList();
+       ObservableList<SpreadsheetCell[]> data = FXCollections.observableArrayList();
        data.addAll(Arrays.asList(grades));
 
        table.setItems(data);
@@ -100,19 +107,20 @@ public class SpreadsheetController implements Initializable, Observer
       List<Student> students = WorkSpace.instance.getStudents();
       Scores scores = WorkSpace.instance.getScores();
 
-      String[][] grades = new String[students.size()][assignments.size() + 1];
+      SpreadsheetCell[][] grades = new SpreadsheetCell[students.size()][assignments.size() + 1];
       String[] headers = new String[assignments.size() + 1];
       headers[0] = "Student";
 
       // Populate scores table
       for (int studentIndex = 0; studentIndex < students.size(); ++studentIndex) {
          Student student = students.get(studentIndex);
-         grades[studentIndex][0] = student.name.toString();
+         grades[studentIndex][0] = new SpreadsheetCell(student);
          for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
             grades[studentIndex][assignmentIndex + 1] =
-                  Double.toString(
-                        scores.getRawScore(student,
-                              assignments.get(assignmentIndex)));
+                  new SpreadsheetCell(scores.getScoresMap(student).get(assignments.get(assignmentIndex)));
+//                  Double.toString(
+//                        scores.getRawScore(student,
+//                              assignments.get(assignmentIndex)));
          }
       }
 
@@ -122,5 +130,30 @@ public class SpreadsheetController implements Initializable, Observer
       }
 
       setupGradebook(headers, grades);
+   }
+
+   private class SpreadsheetCell {
+      public Student student;
+      public RawScore rawScore;
+
+      public SpreadsheetCell(Student student) {
+         this.student = student;
+         this.rawScore = null;
+      }
+
+      public SpreadsheetCell(RawScore rawScore) {
+         this.rawScore = rawScore;
+         this.student = null;
+      }
+
+      public RawScore getScore() {
+         return rawScore;
+      }
+
+      public String toString() {
+         if (student != null) return student.toString();
+         if (rawScore != null) return "" + rawScore.getScore();
+         return "";
+      }
    }
 }
