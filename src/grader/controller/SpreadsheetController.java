@@ -9,9 +9,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -49,10 +51,14 @@ public class SpreadsheetController implements Initializable, Observer
 
     public void setupGradebook(String[] headers, String[][] grades)
     {
+       table.setEditable(true);
        table.getColumns().clear();
        for (int i = 0; i < headers.length; i++) {
           TableColumn tc = new TableColumn(headers[i]);
+          tc.setEditable(i != 0);
           final int colNo = i;
+          tc.setCellFactory(TextFieldTableCell.<String[]>forTableColumn());
+
           tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
              @Override
              public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
@@ -61,6 +67,18 @@ public class SpreadsheetController implements Initializable, Observer
           });
           tc.setPrefWidth(90);
           table.getColumns().add(tc);
+
+          tc.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<String[], String>>() {
+                   @Override
+                   public void handle(TableColumn.CellEditEvent<String[], String> t) {
+                      int row = t.getTablePosition().getRow();
+                      ObservableList<String[]> ol = t.getTableView().getItems();
+                      TableColumn column = t.getTableColumn();
+                      System.out.printf("Selected %s %s\n", ol.get(row)[0], column.getText());
+                   }
+                }
+          );
        }
 
        ObservableList<String[]> data = FXCollections.observableArrayList();
