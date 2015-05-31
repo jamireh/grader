@@ -7,6 +7,7 @@ import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,13 +92,15 @@ public class StatsContainer implements Observer {
             statsTable[1][0] = "Average";
             statsTable[2][0] = "Min";
 
+            DecimalFormat format = new DecimalFormat("#.0#");
+
             // populate stats table
             for (int i = 0; i < size; ++i) {
                 Statistics current = stats.get(assignments.get(i));
 
-                statsTable[0][i + 1] = Double.toString(current.max);
-                statsTable[1][i + 1] = Double.toString(current.mean);
-                statsTable[2][i + 1] = Double.toString(current.min);
+                statsTable[0][i + 1] = format.format(current.max);
+                statsTable[1][i + 1] = format.format(current.mean);
+                statsTable[2][i + 1] = format.format(current.min);
             }
 
             controller.render(statsTable);
