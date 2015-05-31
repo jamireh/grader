@@ -14,23 +14,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.TableView;
+import javafx.event.EventHandler;
+import javafx.scene.input.*;
 
 import java.net.URL;
 import java.util.*;
+
 
 import grader.model.file.*;
 import grader.model.people.*;
 import grader.model.items.*;
 import grader.model.curve.Entry;
+import javafx.scene.input.MouseEvent;
 
 
 public class HistogramController implements Initializable {
 
     //private boolean smallData = true;
+    private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
 
     private Section section = new Section();
 
     private Hashtable<Double, Integer> vals = new Hashtable<Double, Integer>();
+    private Entry moving;
 
 
     @FXML
@@ -40,9 +46,9 @@ public class HistogramController implements Initializable {
     @FXML
     private TableView<grader.model.curve.Entry> table = new TableView<grader.model.curve.Entry>();
 
-    @FXML private TableColumn letterCol;
-    @FXML private TableColumn percentCol;
-    @FXML private TableColumn starCol;
+    @FXML private TableColumn<Entry, String> letterCol;
+    @FXML private TableColumn<Entry, String> percentCol;
+    @FXML private TableColumn<Entry, String> starCol;
 
     @FXML private javafx.scene.control.Button cancelButton;
     @FXML private javafx.scene.control.Button saveButton;
@@ -73,6 +79,7 @@ public class HistogramController implements Initializable {
         // TODO
         //WorkSpace.instance.addObserver(this);
 
+
         grader.model.curve.Histogram hist = WorkSpace.instance.getHistogram();
 
         for (int i = 100; i >= 0; i--) {
@@ -82,57 +89,117 @@ public class HistogramController implements Initializable {
         letterCol.setMinWidth(100);
         percentCol.setMinWidth(100);
         starCol.setMinWidth(200);
+
+
+
+
+
+        letterCol.setCellFactory(cellData -> {
+            TableCell<Entry, String> letter = new TableCell<Entry, String>(){
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+                    }
+                }
+
+            };
+
+            letter.setOnMouseClicked(new EventHandler<MouseEvent>() { //click
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2) { // double click
+
+                        String selected = letter.getItem();
+                        if (selected != null) {
+                            System.out.println("select : " + selected);
+
+                        }
+                    }
+                    }
+                }
+
+                );
+
+                letter.setOnDragDetected(new EventHandler<MouseEvent>()
+
+                                         { //drag
+                                             @Override
+                                             public void handle(MouseEvent event) {
+                                                 // drag was detected, start drag-and-drop gesture
+                                                 //moving = letter.getSelectionModel().getSelectedItem();
+                                                 String selected = letter.getItem();
+                                                 if (selected != null) {
+                                                     //System.out.println(selected);
+                                                     Dragboard db = letter.startDragAndDrop(TransferMode.ANY);
+                                                     ClipboardContent content = new ClipboardContent();
+                                                     content.putString(selected);
+                                                     db.setContent(content);
+                                                     event.consume();
+                                                 }
+                                             }
+                                         }
+
+                );
+
+                letter.setOnDragOver(new EventHandler<DragEvent>()
+
+                                     {
+                                         @Override
+                                         public void handle(DragEvent event) {
+                                             // data is dragged over the target
+                                             Dragboard db = event.getDragboard();
+                                             if (event.getDragboard().hasString()) {
+                                                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                                             }
+                                             event.consume();
+                                         }
+                                     }
+
+                );
+
+                letter.setOnDragDropped(new EventHandler<DragEvent>()
+
+                {
+                    @Override
+                    public void handle(DragEvent event) {
+                        Dragboard db = event.getDragboard();
+                        boolean success = false;
+                        if (event.getDragboard().hasString()) {
+
+                            String text = db.getString();
+                            //System.out.println(text);
+                            //System.out.println(letter.getText());
+                            letter.setText(text);
+                            System.out.println("Row = " + letter.getIndex());
+                            //data.add(moving);
+                            //table.setItems(data);
+                            success = true;
+                        }
+                        event.setDropCompleted(success);
+                        event.consume();
+                        //System.out.println("Dropped");
+                    }
+                });
+
+
+            return letter;
+
+        });
+
+        letterCol.setCellValueFactory(cellData -> cellData.getValue().letterProperty());
+        percentCol.setCellValueFactory(cellData -> cellData.getValue().percentProperty());
+        starCol.setCellValueFactory(cellData -> cellData.getValue().starProperty());
+
+
         table.setItems(data);
 
-        /*table.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                if (smallData)
-                {
-                    table.setItems(dataLarge);
-                    smallData = false;
-                }
-                else
-                {
-                    table.setItems(data);
-                    smallData = true;
-                }
-            }
-        });*/
+
     }
-
-    public static class Entry {
-
-        private final SimpleStringProperty letter;
-        public final SimpleStringProperty percent;
-        public final SimpleStringProperty star;
-
-        public Entry(String let, String per, String st)
-        {
-            letter = new SimpleStringProperty(let);
-            percent = new SimpleStringProperty(per);
-            star = new SimpleStringProperty(st);
-        }
-
-        public String getLetter()
-        {
-            return letter.get();
-        }
-
-        public String getPercent()
-        {
-            return percent.get();
-        }
-
-        public String getStar()
-        {
-            return star.get();
-        }
-    }
-
-
-
-
-
-
 
 }
