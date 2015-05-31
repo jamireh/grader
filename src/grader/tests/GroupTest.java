@@ -74,7 +74,7 @@ public class GroupTest
         assertEquals(2, kewlKids.getStudents().size());
     }
 
-    @Test
+    @Test (expected = MissingInputException.class)
     public void testSetGroupMembers() throws Exception
     {
         initialize();
@@ -84,6 +84,7 @@ public class GroupTest
         coolGuys.add(connor);
         kewlKids.setGroupMembers(coolGuys);
         assertEquals(2, kewlKids.getStudents().size());
+        kewlKids.setGroupMembers(new ArrayList<Student>());
     }
 
     @Test

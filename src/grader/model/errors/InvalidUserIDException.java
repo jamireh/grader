@@ -16,7 +16,7 @@ public class InvalidUserIDException extends Exception {
      * @param name the name that triggered this exception
      */
     public InvalidUserIDException(String name) {
-        super("Error: '" + name + "' is not unique.");
+        super("Error: '" + name + "' is not a valid userID.");
         this.name = name;
     }
 

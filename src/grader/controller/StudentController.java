@@ -9,8 +9,10 @@ import grader.model.people.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 
@@ -47,23 +49,35 @@ public class StudentController
         }
         catch (NameFormatException e)
         {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             tfFirst.requestFocus();
-            System.out.println("Name exception, try again.");
             return;
         }
         catch (InvalidUserIDException e)
         {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             tfUserID.requestFocus();
-            System.out.println("UserID exception, try again.");
             return;
         }
         catch (InvalidPhoneNumberException e)
         {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             tfP1.requestFocus();
-            tfP1.setText("");
-            tfP2.setText("");
-            tfP3.setText("");
-            System.out.println("Invalid Phone Number exception, try again");
             return;
         }
         stage.close();
@@ -72,7 +86,6 @@ public class StudentController
     public void onCancelPressed(ActionEvent event)
     {
         Stage stage = ((Stage) ((Node) event.getSource()).getScene().getWindow());
-        System.out.println("Cancel Pressed");
         stage.close();
     }
 }

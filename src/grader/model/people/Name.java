@@ -35,7 +35,7 @@ public class Name
 
         if (firstName.length() == 0 || lastName.length() == 0 || firstName.matches("/^[A-z]+$/") || middleName
                 .matches("/^[A-z]+$/") || lastName.matches("/^[A-z]+$/"))
-            throw new NameFormatException("");
+            throw new NameFormatException(firstName + " " + middleName + " " + lastName);
     }
 
     /**

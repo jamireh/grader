@@ -31,6 +31,14 @@ public class NameTest
     }
 
     @Test
+    public void testGetMiddleName() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "Batch");
+        assertEquals("Raymond", name.getMiddleName());
+        assertNotEquals("raymond", name.getMiddleName());
+    }
+
+    @Test
     public void testToString() throws Exception
     {
         Name name = new Name("Connor", "Raymond", "Batch");
