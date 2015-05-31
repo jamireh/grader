@@ -612,6 +612,9 @@ public class WorkSpace extends Observable {
       scores = scores.copy();
    }
 
+   /**
+    * Loads a copy of the section's GradeScheme.
+    */
    private void loadGradeScheme() {
       gradeSchemeChanged = false;
       if (section != null) {
