@@ -16,10 +16,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 
 /**
@@ -54,21 +57,26 @@ public class SpreadsheetController implements Initializable, Observer
     {
        table.setEditable(true);
        table.getColumns().clear();
+
        for (int i = 0; i < headers.length; i++) {
           TableColumn tc = new TableColumn(headers[i]);
           tc.setEditable(i != 0);
           final int colNo = i;
           tc.setCellFactory(TextFieldTableCell.<SpreadsheetCell[]>forTableColumn());
 
-          tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SpreadsheetCell[], String>, ObservableValue<String>>() {
-             @Override
-             public ObservableValue<String> call(TableColumn.CellDataFeatures<SpreadsheetCell[], String> p) {
-                return new SimpleStringProperty(((p.getValue()[colNo].toString())));
-             }
-          });
+          tc.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<SpreadsheetCell[], String>,
+                      ObservableValue<String>>() {
+                   @Override
+                   public ObservableValue<String> call(
+                         TableColumn.CellDataFeatures<SpreadsheetCell[], String> p) {
+                      return new SimpleStringProperty(((p.getValue()[colNo].toString())));
+                   }
+                });
           tc.setPrefWidth(90);
           table.getColumns().add(tc);
 
+          // Make score cell columns editable.
           if (i != 0) {
              tc.setOnEditCommit(
                    new EventHandler<TableColumn.CellEditEvent<SpreadsheetCell[], String>>() {
@@ -77,11 +85,12 @@ public class SpreadsheetController implements Initializable, Observer
                          int row = t.getTablePosition().getRow();
                          int col = t.getTablePosition().getColumn();
                          ObservableList<SpreadsheetCell[]> ol = t.getTableView().getItems();
-                         System.out.printf("Selected %s %s\n", ol.get(row)[col].getScore().getStudent().toString(),
-                               ol.get(row)[col].getScore().getAssignment().toString());
-
+                         ol.get(row)[col].hasChanged = true;
                          RawScore rawScore = ol.get(row)[col].getScore();
-                         WorkSpace.instance.updateGrade(rawScore.getStudent(), rawScore.getAssignment(), Double.parseDouble(t.getNewValue()));
+                         WorkSpace.instance.updateGrade(
+                               rawScore.getStudent(),
+                               rawScore.getAssignment(),
+                               Double.parseDouble(t.getNewValue()));
                       }
                    }
              );
@@ -118,9 +127,6 @@ public class SpreadsheetController implements Initializable, Observer
          for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
             grades[studentIndex][assignmentIndex + 1] =
                   new SpreadsheetCell(scores.getScoresMap(student).get(assignments.get(assignmentIndex)));
-//                  Double.toString(
-//                        scores.getRawScore(student,
-//                              assignments.get(assignmentIndex)));
          }
       }
 
@@ -132,18 +138,24 @@ public class SpreadsheetController implements Initializable, Observer
       setupGradebook(headers, grades);
    }
 
+   /**
+    * Spreadsheet TableView cell for holding either a Student or a RawScore.
+    */
    private class SpreadsheetCell {
       public Student student;
       public RawScore rawScore;
+      public boolean hasChanged;
 
       public SpreadsheetCell(Student student) {
          this.student = student;
          this.rawScore = null;
+         this.hasChanged = false;
       }
 
       public SpreadsheetCell(RawScore rawScore) {
          this.rawScore = rawScore;
          this.student = null;
+         this.hasChanged = false;
       }
 
       public RawScore getScore() {
