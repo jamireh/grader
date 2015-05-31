@@ -49,6 +49,30 @@ public class NameTest
     @Test (expected = NameFormatException.class)
     public void testNameException() throws Exception
     {
-        Name name = new Name("", "Raymond", "");
+        Name name = new Name("", "Raymond", "Batch");
+    }
+
+    @Test (expected = NameFormatException.class)
+    public void testNameException1() throws Exception
+    {
+        Name name = new Name("1", "Raymond", "Batch");
+    }
+
+    @Test (expected = NameFormatException.class)
+    public void testNameException2() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "2");
+    }
+
+    @Test (expected = NameFormatException.class)
+    public void testNameException3() throws Exception
+    {
+        Name name = new Name("Connor", "3", "Batch");
+    }
+
+    @Test (expected = NameFormatException.class)
+    public void testNameException4() throws Exception
+    {
+        Name name = new Name("Connor", "Raymond", "");
     }
 }
