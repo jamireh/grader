@@ -21,18 +21,30 @@ public class Student implements Comparable<Student>
     /**
      * The unique userID of this Student.
      */
-    String userID;
+    public String userID;
 
 	/**
 	 * The phone number of this Student.
 	 */
-	String phoneNumber;
+	public String phoneNumber;
 
+    /**
+     * Alternate constructor for student.
+     * @param name
+     */
    public Student(Name name)
    {
       this.name = name;
    }
 
+    /**
+     * Contructor for Student
+     * @param name
+     * @param userID
+     * @param phoneNumber
+     * @throws InvalidPhoneNumberException
+     * @throws InvalidUserIDException
+     */
    public Student(Name name, String userID, String phoneNumber) throws InvalidPhoneNumberException, InvalidUserIDException
    {
        if (phoneNumber.length() != 0 && (phoneNumber.length() != 10 || !phoneNumber.matches("^[0-9]+$")))
@@ -43,6 +55,26 @@ public class Student implements Comparable<Student>
        this.userID = userID;
        this.phoneNumber = phoneNumber;
    }
+
+    /**
+     * Sets the students information accordingly.
+     * @param name
+     * @param userID
+     * @param phoneNumber
+     * @throws InvalidPhoneNumberException
+     * @throws InvalidUserIDException
+     */
+    public void editStudentInfo(Name name, String userID, String phoneNumber) throws InvalidPhoneNumberException,
+                                                                                  InvalidUserIDException
+    {
+        if (phoneNumber.length() != 0 && (phoneNumber.length() != 10 || !phoneNumber.matches("^[0-9]+$")))
+            throw new InvalidPhoneNumberException(phoneNumber);
+        if (userID.length() == 0)
+            throw new InvalidUserIDException(userID);
+        this.name = name;
+        this.userID = userID;
+        this.phoneNumber = phoneNumber;
+    }
 
    /**
     * Compares two students by last, then first name, lexicographically.

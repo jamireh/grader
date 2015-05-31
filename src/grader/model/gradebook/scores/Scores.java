@@ -225,4 +225,15 @@ public class Scores {
       HashMap<Assignment, RawScore> scores) {
       rawScores.put(student, scores);
    }
+
+   public Scores copy() {
+      Scores copy = new Scores();
+      for (Student student : this.rawScores.keySet()) {
+         for (Assignment assignment : this.rawScores.get(student).keySet()) {
+            RawScore raw = this.rawScores.get(student).get(assignment);
+            copy.addRawScore(student, assignment, raw.getScore());
+         }
+      }
+      return copy;
+   }
 }

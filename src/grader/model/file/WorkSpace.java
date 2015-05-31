@@ -12,7 +12,6 @@ import grader.model.gradebook.stats.StatsContainer;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Group;
-import grader.model.people.Person;
 import grader.model.people.Student;
 
 import java.util.ArrayList;
@@ -71,12 +70,6 @@ public class WorkSpace extends Observable {
       addObserver(pieChart);
       addObserver(histogram);
    }
-
-	/**
-	 * The currently logged in user.
-	 */
-	public Person user;
-
 
 	////////////////////////////////////
 	/* CLIPBOARD -- MOVE TO NEW CLASS */
@@ -332,8 +325,9 @@ public class WorkSpace extends Observable {
     */
    public void updateGrade(Student student, Assignment assignment,
                            double score) {
+      RawScore raw = new RawScore(student, assignment, score);
       futureDeltas.clear();
-      deltas.add(new RawScore(student, assignment, score));
+      deltas.add(raw);
       scores.updateRawScore(student, assignment, score);
       setChanged();
       notifyObservers();
@@ -608,6 +602,7 @@ public class WorkSpace extends Observable {
          HashMap<Assignment, RawScore> scoresMap = gradebookScores.getScoresMap(student);
          scores.addScoresMap(student, scoresMap);
       }
+      scores = scores.copy();
    }
 
    private void loadGradeScheme() {

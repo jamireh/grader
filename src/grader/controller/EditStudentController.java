@@ -23,7 +23,7 @@ import javax.naming.InvalidNameException;
  *
  * @author Connor Batch
  */
-public class StudentController
+public class EditStudentController
 {
     @FXML TextField tfFirst;
     @FXML TextField tfMiddle;
@@ -32,6 +32,25 @@ public class StudentController
     @FXML TextField tfP1;
     @FXML TextField tfP2;
     @FXML TextField tfP3;
+
+
+    /**
+     * initializes the controls with the current student information
+     */
+    @FXML
+    private void initialize()
+    {
+        tfFirst.setText(WorkSpace.instance.getSection().getStudents().get(0).name.getFirstName());
+        tfMiddle.setText(WorkSpace.instance.getSection().getStudents().get(0).name.getMiddleName());
+        tfLast.setText(WorkSpace.instance.getSection().getStudents().get(0).name.getLastName());
+        tfUserID.setText(WorkSpace.instance.getSection().getStudents().get(0).userID);
+        if (WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.length() == 10)
+        {
+            tfP1.setText(WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.substring(0, 2));
+            tfP2.setText(WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.substring(3, 5));
+            tfP3.setText(WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.substring(6, 9));
+        }
+    }
 
     /**
      * Verifies through the model that the student is valid.
@@ -44,8 +63,9 @@ public class StudentController
 
         try
         {
-            WorkSpace.instance.getSection().addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
-                    tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText()));
+            // TODO NEED TO ACCESS THE CORRECT SELECTED STUDENT
+            WorkSpace.instance.getSection().getStudents().get(0).editStudentInfo(new Name(tfFirst.getText(), tfMiddle
+                    .getText(), tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText());
         }
         catch (NameFormatException e)
         {
