@@ -10,11 +10,11 @@
          <menus>
             <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#fileNewCourse" text="New Course" />
-                  <MenuItem mnemonicParsing="false" onAction="#fileExport" text="Export..." />
-                  <MenuItem mnemonicParsing="false" onAction="#fileImport" text="Import..." />
-                  <MenuItem mnemonicParsing="false" onAction="#filePrint" text="Print..." />
-                  <MenuItem mnemonicParsing="false" onAction="#fileLogout" text="Logout" />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#fileNewCourse" text="New Course" />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#fileExport" text="Export..." />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#fileImport" text="Import..." />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#filePrint" text="Print..." />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#fileLogout" text="Logout" />
                   <MenuItem mnemonicParsing="false" onAction="#fileQuit" text="Quit" />
                </items>
             </Menu>
