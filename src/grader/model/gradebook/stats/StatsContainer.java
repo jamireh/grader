@@ -2,9 +2,11 @@ package grader.model.gradebook.stats;
 
 import grader.controller.StatsController;
 import grader.model.file.WorkSpace;
+import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
+import grader.model.items.Percentage;
 import grader.model.people.Student;
 
 import java.text.DecimalFormat;
@@ -28,6 +30,7 @@ public class StatsContainer implements Observer {
     private AssignmentTree assignmentTree;
     private Scores scores;
     private Map<Assignment, Statistics> stats;
+    private Statistics totalGradeStats;
 
     /**
      * Gets the list of Assignments used by this container.
@@ -78,6 +81,17 @@ public class StatsContainer implements Observer {
             // add the value to the map
             stats.put(ass, new Statistics(rawScores));
         }
+        ArrayList<Double> totalScores = new ArrayList<Double>();
+        for (Student s : students)
+        {
+            HashMap<Assignment, RawScore> map = WorkSpace.instance.getScores().getScoresMap(s);
+            Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
+            totalScores.add(percent.getValue());
+        }
+        //if update was called with a course
+        if(!totalScores.isEmpty())
+            totalGradeStats = new Statistics(totalScores);
+
     }
 
     /**
@@ -86,7 +100,7 @@ public class StatsContainer implements Observer {
     public void render() {
         if (controller != null) {
             int size = assignments.size();
-            String[][] statsTable = new String[STATS_COUNT][size + 1];
+            String[][] statsTable = new String[STATS_COUNT][size + 2];
 
             statsTable[0][0] = "Max";
             statsTable[1][0] = "Average";
@@ -101,6 +115,13 @@ public class StatsContainer implements Observer {
                 statsTable[0][i + 1] = format.format(current.max);
                 statsTable[1][i + 1] = format.format(current.mean);
                 statsTable[2][i + 1] = format.format(current.min);
+            }
+            //if update was called with a course
+            if(totalGradeStats != null)
+            {
+                statsTable[0][size + 1] = format.format(totalGradeStats.max);
+                statsTable[1][size + 1] = format.format(totalGradeStats.mean);
+                statsTable[2][size + 1] = format.format(totalGradeStats.min);
             }
 
             controller.render(statsTable);
