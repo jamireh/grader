@@ -20,8 +20,8 @@
             </Menu>
             <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#editUndo" text="Undo" />
-                  <MenuItem mnemonicParsing="false" onAction="#editRedo" text="Redo" />
+                  <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" onAction="#editUndo" text="Undo" />
+                  <MenuItem fx:id="redoMenuItem" mnemonicParsing="false" onAction="#editRedo" text="Redo" />
                   <MenuItem mnemonicParsing="false" onAction="#editCut" text="Cut" />
                   <MenuItem mnemonicParsing="false" onAction="#editCopy" text="Copy" />
                   <MenuItem mnemonicParsing="false" onAction="#editPaste" text="Paste" />
@@ -36,7 +36,7 @@
                         <MenuItem fx:id="editStudentMenuItem" mnemonicParsing="false" onAction="#editStudent" text="Edit Student" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Roster">
+                  <Menu disable="true" mnemonicParsing="false" text="Roster">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#studentsSyncRoster" text="Sync Roster" />
                         <MenuItem mnemonicParsing="false" onAction="#studentsEditRoster" text="Edit Roster" />
@@ -58,8 +58,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#gradesAddAssignment" text="Assignment" />
                      </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#gradesManage" text="Manage" />
-                  <MenuItem mnemonicParsing="false" onAction="#gradesPublish" text="Publish" />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#gradesManage" text="Manage" />
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#gradesPublish" text="Publish" />
                </items>
             </Menu>
             <Menu fx:id="curveMenu" mnemonicParsing="false" text="Curve">

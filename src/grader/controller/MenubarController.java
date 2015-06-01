@@ -31,6 +31,8 @@ public class MenubarController implements Observer
     @FXML Menu curveMenu;
     @FXML MenuItem editGroupMenuItem;
     @FXML MenuItem editStudentMenuItem;
+    @FXML MenuItem undoMenuItem;
+    @FXML MenuItem redoMenuItem;
 
     @FXML
     public void initialize()
@@ -60,6 +62,8 @@ public class MenubarController implements Observer
         curveMenu.setDisable(false);
         editGroupMenuItem.setDisable(true);
         editStudentMenuItem.setDisable(true);
+        undoMenuItem.setDisable(!WorkSpace.instance.canUndo());
+        redoMenuItem.setDisable(!WorkSpace.instance.canRedo());
         
         if(WorkSpace.instance.course == null)
         {
