@@ -10,8 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.*;
@@ -72,7 +71,31 @@ public class SidebarController implements Initializable, Observer
                                 @Override
                                 public void run()
                                 {
-                                    selectScope(finalCourse, finalSection, finalGroup);
+                                    if(WorkSpace.instance.canUndo())
+                                    {
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.setTitle("Unsaved Changes");
+                                        alert.setHeaderText("Changes have been detected");
+                                        alert.setContentText("Choose your option.");
+
+                                        ButtonType buttonTypeRevert = new ButtonType("Revert");
+                                        ButtonType buttonTypeSave = new ButtonType("Save");
+
+                                        alert.getButtonTypes().setAll(buttonTypeRevert, buttonTypeSave);
+
+                                        Optional<ButtonType> result = alert.showAndWait();
+                                        if (result.get() == buttonTypeRevert) {
+                                            WorkSpace.instance.revertGrades();
+                                            selectScope(finalCourse, finalSection, finalGroup);
+                                        } else if (result.get() == buttonTypeSave) {
+                                            WorkSpace.instance.saveGrades();
+                                            selectScope(finalCourse, finalSection, finalGroup);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        selectScope(finalCourse, finalSection, finalGroup);
+                                    }
                                 }
                             });
                         }

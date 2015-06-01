@@ -14,10 +14,7 @@ import grader.model.items.AssignmentTree;
 import grader.model.people.Group;
 import grader.model.people.Student;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * The WorkSpace class is a singleton that contains all the information for the
@@ -228,6 +225,16 @@ public class WorkSpace extends Observable {
 	   if (course != null) return course.getStudents();
 	   return new ArrayList<Student>();
    }
+
+    public void addStudent(Student s)
+    {
+        section.addStudent(s);
+        Iterator ai = getAssignmentTree().getAssignmentIterator();
+        while(ai.hasNext())
+        {
+            gradebook.getScores().addRawScore(s, (Assignment) ai.next(), 0.0);
+        }
+    }
 
 	/**
 	 * Returns a map of the assignments of which grades are being

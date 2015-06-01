@@ -13,16 +13,14 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.*;
-import java.util.List;
 
 
 /**
@@ -114,6 +112,7 @@ public class SpreadsheetController implements Initializable, Observer
       }
 
       List<Student> students = WorkSpace.instance.getStudents();
+      Collections.sort(students);
       Scores scores = WorkSpace.instance.getScores();
 
       SpreadsheetCell[][] grades = new SpreadsheetCell[students.size()][assignments.size() + 1];

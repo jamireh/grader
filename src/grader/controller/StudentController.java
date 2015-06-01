@@ -11,12 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
-import javax.naming.InvalidNameException;
 
 /**
  * Controls the Add Student manually view.
@@ -44,7 +40,9 @@ public class StudentController
 
         try
         {
-            WorkSpace.instance.getSection().addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
+            /*WorkSpace.instance.getSection().addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
+                    tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText()));*/
+            WorkSpace.instance.addStudent(new Student(new Name(tfFirst.getText(), tfMiddle.getText(),
                     tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText()));
         }
         catch (NameFormatException e)
@@ -80,6 +78,7 @@ public class StudentController
             tfP1.requestFocus();
             return;
         }
+        WorkSpace.instance.sidebarSelect(WorkSpace.instance.course, WorkSpace.instance.section, WorkSpace.instance.group);
         stage.close();
     }
 
