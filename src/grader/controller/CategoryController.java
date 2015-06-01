@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CategoryController implements Initializable {
+public class CategoryController {
     @FXML ComboBox cbCatParent;
     @FXML TextField tfCatName;
     @FXML Button bAdd;
@@ -25,17 +25,15 @@ public class CategoryController implements Initializable {
     @FXML TextField tfWeight;
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
+    @FXML
+    public void initialize()
     {
-        ObservableList<String> parentOptions =
-                FXCollections.observableArrayList(
-                        "CPE 309",
-                        "Tests",
-                        "Projects",
-                        "Quizzes",
-                        "Midterms"
-                );
+        ObservableList<String> parentOptions = FXCollections.observableArrayList();
+        parentOptions.add(WorkSpace.instance.getCourse().name);
+        for(Category c : WorkSpace.instance.getCourse().categories)
+        {
+            parentOptions.add(c.name);
+        }
         cbCatParent.setValue(parentOptions.get(0));
         cbCatParent.setItems(parentOptions);
         ObservableList<String> weightOptions =
@@ -51,28 +49,26 @@ public class CategoryController implements Initializable {
     public void onAddButtonClick(ActionEvent actionEvent)
     {
         boolean exceptionThrown = false;
-        if(cbCatParent.getValue().equals("CPE 309"))
+        try
         {
-            try
+            if(WorkSpace.instance.course != null)
             {
-                if(WorkSpace.instance.course != null)
-                {
-                    WorkSpace.instance.course.addCategory(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
-                }
+                WorkSpace.instance.course.addCategory(new Category(tfCatName.getText(), tfWeight.getText(), cbWeights.getItems().indexOf(cbWeights.getValue()) != 0));
             }
-            catch(IllegalArgumentException e)
-            {
-                exceptionThrown = true;
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Dialog");
-                alert.setHeaderText("Incorrect Input");
-                alert.setContentText(e.getMessage());
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.showAndWait();
-            }
+        }
+        catch(IllegalArgumentException e)
+        {
+            exceptionThrown = true;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
         }
         if(!exceptionThrown)
         {
+            WorkSpace.instance.update();
             Stage stage = (Stage) bAdd.getScene().getWindow();
             stage.close();
         }

@@ -78,7 +78,7 @@ public class StudentController
             tfP1.requestFocus();
             return;
         }
-        WorkSpace.instance.sidebarSelect(WorkSpace.instance.course, WorkSpace.instance.section, WorkSpace.instance.group);
+        WorkSpace.instance.update();
         stage.close();
     }
 

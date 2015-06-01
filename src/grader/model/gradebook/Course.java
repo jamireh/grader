@@ -63,7 +63,8 @@ public class Course
 	*/
 	public void addCategory(Category cate)
 	{
-		categories.add(cate);
+		assignments.addTo(null, cate);
+        categories.add(cate);
 	}
 
 	public void syncRoster()
@@ -96,8 +97,8 @@ public class Course
 	 * Adds the given assignment to the root of the AssignmentTree
 	 * @param assignment Assignment to add
 	 */
-    public void addAssignment(Assignment assignment) {
-       assignments.addTo(null, assignment);
+    public void addAssignment(Category parent, Assignment assignment) {
+       assignments.addTo(parent, assignment);
     }
 
 	/**

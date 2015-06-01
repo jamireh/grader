@@ -2,6 +2,7 @@ package grader.controller;
 
 import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
+import grader.model.items.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,14 +30,12 @@ public class AssignmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        ObservableList<String> parentOptions =
-                FXCollections.observableArrayList(
-                        "CPE 309",
-                        "Tests",
-                        "Projects",
-                        "Quizzes",
-                        "Midterms"
-                );
+        ObservableList<String> parentOptions = FXCollections.observableArrayList();
+        parentOptions.add(WorkSpace.instance.getCourse().name);
+        for(Category c : WorkSpace.instance.getCourse().categories)
+        {
+            parentOptions.add(c.name);
+        }
         cbCatParent.setValue(parentOptions.get(0));
         cbCatParent.setItems(parentOptions);
 
@@ -46,29 +45,30 @@ public class AssignmentController implements Initializable {
     {
         boolean exceptionThrown = false;
 
-        if(cbCatParent.getValue().equals("CPE 309"))
+        try
         {
-            try
+            if(WorkSpace.instance.course != null)
             {
-                if(WorkSpace.instance.course != null)
-                {
-                    WorkSpace.instance.course.addAssignment(new Assignment(tfCatName.getText(), dpDueDate.getValue(), tfRawScore.getText(), tfWeight.getText()));
-                }
+                Category parent = cbCatParent.getSelectionModel().getSelectedIndex() == 0 ? null : WorkSpace
+                    .instance.getCourse().categories.get(cbCatParent.getSelectionModel().getSelectedIndex() - 1);
+                WorkSpace.instance.addAssignment(parent, new Assignment(tfCatName.getText(), dpDueDate
+                        .getValue(), tfRawScore.getText(), tfWeight.getText()));
+            }
 
-            }
-            catch(RuntimeException e)
-            {
-                exceptionThrown = true;
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Dialog");
-                alert.setHeaderText("Incorrect Input");
-                alert.setContentText(e.getMessage());
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.showAndWait();
-            }
+        }
+        catch(RuntimeException e)
+        {
+            exceptionThrown = true;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Incorrect Input");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
         }
         if(!exceptionThrown)
         {
+            WorkSpace.instance.update();
             Stage stage = (Stage) bAdd.getScene().getWindow();
             stage.close();
         }

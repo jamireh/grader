@@ -145,14 +145,14 @@ public class AssignmentTree
         for (int i = 0; i < nodes.size(); i++)
         {
             Category c = nodes.get(i).category;
-            node.total += c.weight.getValue();
+            node.total += c.weight.getValue()/100.0;
         }
         ArrayList<Assignment> unweightAssignments = new ArrayList<Assignment>();
         for(Assignment a : node.assignments)
         {
             if(a.hasWeight)
             {
-                node.total += a.weight.getValue();
+                node.total += a.weight.getValue() / 100.0;
                 node.grade += a.weight.getValue() * (map.get(a).getScore()/a.rawPoints);
             }
             else
@@ -201,7 +201,7 @@ public class AssignmentTree
         {
             return node.grade;
         }
-        return node.grade * node.category.weight.getValue();
+        return node.grade * (node.category.weight.getValue() / 100.0);
         
     }
 

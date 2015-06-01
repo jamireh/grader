@@ -69,7 +69,7 @@ public class Gradebook {
 
       for (String assignmentName : Arrays.asList(assignmentNames)) {
          Assignment assignment = new Assignment(assignmentName);
-         course.addAssignment(assignment);
+         course.addAssignment(null, assignment);
       }
 
       cannedGradebook.addCourse(course);

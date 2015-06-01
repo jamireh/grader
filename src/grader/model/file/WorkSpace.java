@@ -13,6 +13,7 @@ import grader.model.gradebook.scores.Scores;
 import grader.model.gradebook.stats.StatsContainer;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
+import grader.model.items.Category;
 import grader.model.people.Group;
 import grader.model.people.Student;
 
@@ -306,11 +307,25 @@ public class WorkSpace extends Observable {
       notifyObservers();
    }
 
+    public void update()
+    {
+        WorkSpace.instance.sidebarSelect(WorkSpace.instance.course, WorkSpace.instance.section, WorkSpace.instance.group);
+    }
+
     public void setSelectedStudent(Student s)
     {
         this.selectedStudent = s;
         setChanged();
         notifyObservers(new Class[] {SpreadsheetController.class, SidebarController.class});
+    }
+
+    public void addAssignment(Category parent, Assignment a)
+    {
+        for(Student s : getStudents())
+        {
+            gradebook.getScores().addRawScore(s, a, 0.0);
+        }
+        course.addAssignment(parent, a);
     }
 
    /**
