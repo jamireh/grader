@@ -98,8 +98,7 @@ public class SpreadsheetController implements Initializable, Observer
 
        for (int i = 0; i < headers.length; i++) {
           TableColumn tc = new TableColumn(headers[i]);
-          tc.setEditable(i != 0);
-           tc.setEditable(i != totalGradeIndex);
+          tc.setEditable(i != 0 && i != totalGradeIndex);
           final int colNo = i;
           tc.setCellFactory(TextFieldTableCell.<SpreadsheetCell[]>forTableColumn());
 
@@ -116,7 +115,7 @@ public class SpreadsheetController implements Initializable, Observer
           table.getColumns().add(tc);
 
           // Make score cell columns editable.
-          if (i != 0 || i != totalGradeIndex) {
+          if (i != 0 && i != totalGradeIndex) {
              tc.setOnEditCommit(
                    new EventHandler<TableColumn.CellEditEvent<SpreadsheetCell[], String>>() {
                       @Override
