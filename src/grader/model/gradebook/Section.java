@@ -99,20 +99,14 @@ public class Section
       this.gradeScheme = gradeScheme;
    }
 
-    /**
-     * Handles updating histogram.
-     */
-    public void applyHistogram()
-    {
-        histogram.apply();
-    }
 
     /**
      * Takes in new pushed grade-scheme.
+     * @param scheme new scheme to be pushed.
      */
-    public void pushGradeScheme()
+    public void pushGradeScheme(GradeScheme scheme)
     {
-        gradeScheme = histogram.push();
+        gradeScheme = scheme;
     }
 
     /**

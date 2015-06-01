@@ -4,6 +4,7 @@ package grader.model.curve;
  * @author Mallika Potter
  */
 
+import grader.model.errors.OverlappingRangeException;
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.gradescheme.GradeRange;
 import grader.model.gradebook.gradescheme.GradeScheme;
@@ -76,15 +77,26 @@ public class Histogram extends AbstractGraph implements Observer
      */
     public void categorizeScores() {}
 
+    /**
+     * Updates current gradescheme to temp section gradescheme.
+     */
     public void apply() {
+        WorkSpace.instance.gradeScheme = tempGradeScheme;
+        WorkSpace.instance.setGradeSchemeChanged();
     }
 
     /**
      * Returns changed gradescheme to Section.
      */
-    public GradeScheme push() {
-        return tempGradeScheme;
+    public void push() {
+
+        WorkSpace.instance.gradeScheme = tempGradeScheme;
+        WorkSpace.instance.getSection().pushGradeScheme(tempGradeScheme);
+        WorkSpace.instance.gradeSchemeChanged = true;
+        WorkSpace.instance.updateGradeScheme();
     }
+
+    /**
 
     /**
      * Updates the Histogram.
@@ -96,6 +108,8 @@ public class Histogram extends AbstractGraph implements Observer
         }
 
         java.util.List<Student> students = WorkSpace.instance.getStudents();
+        tempGradeScheme = WorkSpace.instance.getGradeScheme();
+
 
         for (Student s : students)
         {
@@ -110,15 +124,84 @@ public class Histogram extends AbstractGraph implements Observer
 
     }
 
+    public void adjustHistogram(double oldPercent, double newPercent, String letter)
+    {
+
+        try {
+            LetterGrade let = LetterGrade.valueOfFromID(letter);
+            tempGradeScheme.updateGradeRange(let, new Percentage(newPercent));
+        }
+        catch (OverlappingRangeException e)
+        {
+            if (oldPercent > newPercent) {
+                //System.out.println("Lower");
+                boolean movedSomething = false;
+
+                for (int i = 1; i < ((int) oldPercent); i++)
+                {
+                    double temp = (double) i;
+                    GradeRange range = tempGradeScheme.getGradeRange(new Percentage(temp));
+                    if (temp == range.getLowerBound().getValue())
+                    {
+                        try {
+                            tempGradeScheme.updateGradeRange(range.getLetterGrade(), new Percentage(temp-1));
+                            movedSomething = true;
+                        }
+                        catch (OverlappingRangeException e2)
+                        {
+                            //System.out.println("Can't move");
+                        }
+                    }
+                }
+
+                if (movedSomething) {
+                    adjustHistogram(oldPercent, newPercent, letter);
+                }
+            }
+            else
+            {
+                //System.out.println("Higher");
+                boolean movedSomething = false;
+
+                for (int i = 100; i > ((int) oldPercent); i--)
+                {
+                    double temp = (double) i;
+                    GradeRange range = tempGradeScheme.getGradeRange(new Percentage(temp));
+                    if (temp == range.getLowerBound().getValue())
+                    {
+                        try {
+                            tempGradeScheme.updateGradeRange(range.getLetterGrade(), new Percentage(temp+1));
+                            movedSomething = true;
+                        }
+                        catch (OverlappingRangeException e3)
+                        {
+                            //System.out.println("Can't move");
+                        }
+                    }
+                }
+
+                if (movedSomething) {
+                    adjustHistogram(oldPercent, newPercent, letter);
+                }
+            }
+        }
+    }
+
+    /**
+     * Creates new Entry.
+     * @param percent key for Entry.
+     * @return new entry.
+     */
+
     public Entry getEntry(double percent)
     {
         String letter;
         String stars = "";
 
-        GradeRange range = WorkSpace.instance.getGradeScheme().getGradeRange(new Percentage(percent));
+        GradeRange range = tempGradeScheme.getGradeRange(new Percentage(percent));
 
         if (percent == range.getLowerBound().getValue())
-            letter = range.getLetterGrade().letter + " -------";
+            letter = range.getLetterGrade().letter;
         else
             letter = " ";
 

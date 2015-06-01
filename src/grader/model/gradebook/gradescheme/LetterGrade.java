@@ -70,6 +70,7 @@ public enum LetterGrade
      */
     static {
         for (LetterGrade grade : LetterGrade.values()) {
+            map.put(grade.letter, grade);
             map.put(grade.textID1, grade);
             map.put(grade.textID2, grade);
             map.put(grade.colorID, grade);
