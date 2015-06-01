@@ -6,7 +6,10 @@ import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
@@ -46,6 +50,41 @@ public class SpreadsheetController implements Initializable, Observer
        table.setMinWidth(1200);
        table.setMaxWidth(1200);
        table.setMaxHeight(600);
+
+        table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                //Check whether item is selected and set value of selected item to Label
+                if(table.getSelectionModel().getSelectedItem() != null && WorkSpace.instance.section != null)
+                {
+                    TableView.TableViewSelectionModel selectionModel = table.getSelectionModel();
+                    ObservableList selectedCells = selectionModel.getSelectedCells();
+                    if(!selectedCells.isEmpty())
+                    {
+                        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+                        //System.out.println(WorkSpace.instance.getStudents().get(tablePosition.getRow()).name);
+                        StringProperty val = (StringProperty) table.getColumns().get(0).getCellObservableValue(tablePosition
+                                .getRow());
+                        String[] split = val.get().split(", ");
+                        for (Student s : WorkSpace.instance.getStudents())
+                        {
+                            if (s.name.getFirstName().equals(split[1]) && s.name.getLastName().equals(split[0]))
+                            {
+                                Platform.runLater(new Runnable()
+                                {
+                                    @Override
+                                    public void run()
+                                    {
+                                        WorkSpace.instance.setSelectedStudent(s);
+                                    }
+                                });
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
        WorkSpace.instance.addObserver(this);
        update(null, null);
@@ -106,40 +145,60 @@ public class SpreadsheetController implements Initializable, Observer
        table.setItems(data);
     }
 
-   public void update(Observable obs, Object arg) {
-      List<Assignment> assignments = new ArrayList<Assignment>();
-      AssignmentTree.AssignmentIterator itr =
-            WorkSpace.instance.getAssignmentTree().getAssignmentIterator();
+   public void update(Observable obs, Object args) {
+       boolean ignoreMe = false;
+       if(args != null)
+       {
+           Class[] toIgnore = ((Class[]) args);
+           for(int i = 0; i < toIgnore.length; i++)
+           {
+               if(toIgnore[i] == getClass())
+               {
+                   ignoreMe = true;
+                   break;
+               }
+           }
+       }
+       if(!ignoreMe)
+       {
+           List<Assignment> assignments = new ArrayList<Assignment>();
+           AssignmentTree.AssignmentIterator itr =
+                   WorkSpace.instance.getAssignmentTree().getAssignmentIterator();
 
-      while (itr.hasNext()) {
-         Assignment assignment = itr.next();
-         assignments.add(assignment);
-      }
+           while (itr.hasNext())
+           {
+               Assignment assignment = itr.next();
+               assignments.add(assignment);
+           }
 
-      List<Student> students = WorkSpace.instance.getStudents();
-      Collections.sort(students);
-      Scores scores = WorkSpace.instance.getScores();
+           List<Student> students = WorkSpace.instance.getStudents();
+           Collections.sort(students);
+           Scores scores = WorkSpace.instance.getScores();
 
-      SpreadsheetCell[][] grades = new SpreadsheetCell[students.size()][assignments.size() + 1];
-      String[] headers = new String[assignments.size() + 1];
-      headers[0] = "Student";
+           SpreadsheetCell[][] grades = new SpreadsheetCell[students.size()][assignments.size() + 1];
+           String[] headers = new String[assignments.size() + 1];
+           headers[0] = "Student";
 
-      // Populate scores table
-      for (int studentIndex = 0; studentIndex < students.size(); ++studentIndex) {
-         Student student = students.get(studentIndex);
-         grades[studentIndex][0] = new SpreadsheetCell(student);
-         for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
-            grades[studentIndex][assignmentIndex + 1] =
-                  new SpreadsheetCell(scores.getScoresMap(student).get(assignments.get(assignmentIndex)));
-         }
-      }
+           // Populate scores table
+           for (int studentIndex = 0; studentIndex < students.size(); ++studentIndex)
+           {
+               Student student = students.get(studentIndex);
+               grades[studentIndex][0] = new SpreadsheetCell(student);
+               for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex)
+               {
+                   grades[studentIndex][assignmentIndex + 1] =
+                           new SpreadsheetCell(scores.getScoresMap(student).get(assignments.get(assignmentIndex)));
+               }
+           }
 
-      // Populate column headers
-      for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
-         headers[assignmentIndex + 1] = assignments.get(assignmentIndex).toString();
-      }
+           // Populate column headers
+           for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex)
+           {
+               headers[assignmentIndex + 1] = assignments.get(assignmentIndex).toString();
+           }
 
-      setupGradebook(headers, grades);
+           setupGradebook(headers, grades);
+       }
    }
 
    /**

@@ -32,6 +32,8 @@ public class EditStudentController
     @FXML TextField tfP1;
     @FXML TextField tfP2;
     @FXML TextField tfP3;
+    
+    private Student currentStudent;
 
 
     /**
@@ -40,15 +42,17 @@ public class EditStudentController
     @FXML
     private void initialize()
     {
-        tfFirst.setText(WorkSpace.instance.getSection().getStudents().get(0).name.getFirstName());
-        tfMiddle.setText(WorkSpace.instance.getSection().getStudents().get(0).name.getMiddleName());
-        tfLast.setText(WorkSpace.instance.getSection().getStudents().get(0).name.getLastName());
-        tfUserID.setText(WorkSpace.instance.getSection().getStudents().get(0).userID);
-        if (WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.length() == 10)
+        currentStudent = WorkSpace.instance.selectedStudent;
+        
+        tfFirst.setText(currentStudent.name.getFirstName());
+        tfMiddle.setText(currentStudent.name.getMiddleName());
+        tfLast.setText(currentStudent.name.getLastName());
+        tfUserID.setText(currentStudent.userID);
+        if (currentStudent.phoneNumber != null && currentStudent.phoneNumber.length() == 10)
         {
-            tfP1.setText(WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.substring(0, 2));
-            tfP2.setText(WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.substring(3, 5));
-            tfP3.setText(WorkSpace.instance.getSection().getStudents().get(0).phoneNumber.substring(6, 9));
+            tfP1.setText(currentStudent.phoneNumber.substring(0, 3));
+            tfP2.setText(currentStudent.phoneNumber.substring(3, 6));
+            tfP3.setText(currentStudent.phoneNumber.substring(6, 10));
         }
     }
 
@@ -63,8 +67,7 @@ public class EditStudentController
 
         try
         {
-            // TODO NEED TO ACCESS THE CORRECT SELECTED STUDENT
-            WorkSpace.instance.getSection().getStudents().get(0).editStudentInfo(new Name(tfFirst.getText(), tfMiddle
+            currentStudent.editStudentInfo(new Name(tfFirst.getText(), tfMiddle
                     .getText(), tfLast.getText()), tfUserID.getText(), tfP1.getText() + tfP2.getText() + tfP3.getText());
         }
         catch (NameFormatException e)
@@ -100,6 +103,7 @@ public class EditStudentController
             tfP1.requestFocus();
             return;
         }
+        WorkSpace.instance.sidebarSelect(WorkSpace.instance.course, WorkSpace.instance.section, WorkSpace.instance.group);
         stage.close();
     }
 

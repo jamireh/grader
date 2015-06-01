@@ -1,5 +1,7 @@
 package grader.model.file;
 
+import grader.controller.SidebarController;
+import grader.controller.SpreadsheetController;
 import grader.model.curve.Histogram;
 import grader.model.curve.PieChart;
 import grader.model.gradebook.Course;
@@ -202,6 +204,7 @@ public class WorkSpace extends Observable {
    public Group getGroup() {
       return group;
    }
+    public Student selectedStudent;
 
     /**
      * Adds a group to the currently selected section
@@ -294,6 +297,7 @@ public class WorkSpace extends Observable {
       this.course = course;
       this.section = section;
       this.group = group;
+       this.selectedStudent = null;
 
       loadScores();
       loadGradeScheme();
@@ -301,6 +305,13 @@ public class WorkSpace extends Observable {
       setChanged();
       notifyObservers();
    }
+
+    public void setSelectedStudent(Student s)
+    {
+        this.selectedStudent = s;
+        setChanged();
+        notifyObservers(new Class[] {SpreadsheetController.class, SidebarController.class});
+    }
 
    /**
     * Creates a delta for a score for the given student and assignment.

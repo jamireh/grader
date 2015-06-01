@@ -30,6 +30,7 @@ public class MenubarController implements Observer
     @FXML Menu gradesMenu;
     @FXML Menu curveMenu;
     @FXML MenuItem editGroupMenuItem;
+    @FXML MenuItem editStudentMenuItem;
 
     @FXML
     public void initialize()
@@ -58,6 +59,7 @@ public class MenubarController implements Observer
         gradesMenu.setDisable(false);
         curveMenu.setDisable(false);
         editGroupMenuItem.setDisable(true);
+        editStudentMenuItem.setDisable(true);
         
         if(WorkSpace.instance.course == null)
         {
@@ -73,6 +75,10 @@ public class MenubarController implements Observer
         if(WorkSpace.instance.group != null)
         {
             editGroupMenuItem.setDisable(false);
+        }
+        if(WorkSpace.instance.selectedStudent != null)
+        {
+            editStudentMenuItem.setDisable(false);
         }
     }
 
@@ -207,7 +213,7 @@ public class MenubarController implements Observer
         }
         catch (IOException e)
         {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
         setStageWithFocus(root, "Edit Student");
     }

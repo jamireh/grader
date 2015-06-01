@@ -33,7 +33,7 @@
                   <Menu mnemonicParsing="false" text="Students">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#studentsAddNew" text="Add Student" />
-                        <MenuItem mnemonicParsing="false" onAction="#editStudent" text="Edit Student" />
+                        <MenuItem fx:id="editStudentMenuItem" mnemonicParsing="false" onAction="#editStudent" text="Edit Student" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Roster">
