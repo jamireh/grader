@@ -85,10 +85,15 @@ public class SpreadsheetController implements Initializable, Observer
                          ObservableList<SpreadsheetCell[]> ol = t.getTableView().getItems();
                          ol.get(row)[col].hasChanged = true;
                          RawScore rawScore = ol.get(row)[col].getScore();
-                         WorkSpace.instance.updateGrade(
-                               rawScore.getStudent(),
-                               rawScore.getAssignment(),
-                               Double.parseDouble(t.getNewValue()));
+                         try
+                         {
+                            WorkSpace.instance.updateGrade(
+                                    rawScore.getStudent(),
+                                    rawScore.getAssignment(),
+                                    Double.parseDouble(t.getNewValue()));
+                         } catch (Exception e) {
+                            update(null, null);
+                         }
                       }
                    }
              );
