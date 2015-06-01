@@ -27,6 +27,7 @@ public class SidebarController implements Initializable, Observer
     /** Workspace gradebook reference. */
     private Gradebook gradebook;
     private HashMap<String, HashMap<String, ArrayList<String>>> viewReference;
+    private boolean manualSelect = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -39,7 +40,7 @@ public class SidebarController implements Initializable, Observer
                     @Override
                     public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue)
                     {
-                        if (newValue != null)
+                        if (newValue != null && !manualSelect)
                         {
                             int level = tvCourses.getTreeItemLevel(newValue);
                             String course = null, section = null, group = null;
@@ -110,6 +111,7 @@ public class SidebarController implements Initializable, Observer
         tvCourses.setRoot(null);
         TreeItem<String> rootView = new TreeItem<String>();
         rootView.setValue("Courses");
+        TreeItem<String> pCourse = null, pSection = null, pGroup = null;
         if(WorkSpace.instance.course != null)
         {
             rootView.setExpanded(true);
@@ -132,12 +134,37 @@ public class SidebarController implements Initializable, Observer
                 {
                     TreeItem<String> groupItem = new TreeItem<String>(group);
                     section.getChildren().add(groupItem);
+                    if(WorkSpace.instance.group != null && groupItem.getValue().equals(WorkSpace.instance.
+                            group.groupName))
+                    {
+                        pGroup = groupItem;
+                    }
                 }
                 course.getChildren().add(section);
+                if(WorkSpace.instance.section != null && section.getValue().equals(WorkSpace.instance
+                        .section.sectionName))
+                {
+                    pSection = section;
+                }
             }
             rootView.getChildren().add(course);
+            if(WorkSpace.instance.course != null && course.getValue().equals(WorkSpace.instance.course.name))
+            {
+                pCourse = course;
+            }
         }
         tvCourses.setRoot(rootView);
+        tvCourses.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        manualSelect = true;
+        if(pGroup != null)
+            tvCourses.getSelectionModel().select(pGroup);
+        else if(pSection != null)
+            tvCourses.getSelectionModel().select(pSection);
+        else if(pCourse != null)
+            tvCourses.getSelectionModel().select(pCourse);
+        else
+            tvCourses.getSelectionModel().selectFirst();
+        manualSelect = false;
     }
 
     /**
