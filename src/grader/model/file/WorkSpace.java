@@ -522,6 +522,8 @@ public class WorkSpace extends Observable {
          // Revert score.
          scores.updateRawScore(student, assignment,
             gradebook.getScores().getRawScore(student, assignment));
+         setChanged();
+         notifyObservers();
       }
    }
 
@@ -566,6 +568,9 @@ public class WorkSpace extends Observable {
          // Reupdate score.
          scores.updateRawScore(redoneDelta.getStudent(),
             redoneDelta.getAssignment(), redoneDelta.getScore());
+
+         setChanged();
+         notifyObservers();
       }
    }
 
