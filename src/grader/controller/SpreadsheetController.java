@@ -5,6 +5,7 @@ import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
+import grader.model.items.Percentage;
 import grader.model.people.Student;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -38,7 +39,7 @@ public class SpreadsheetController implements Initializable, Observer
     @FXML HBox hbTable;
 
     static TableView<SpreadsheetCell[]> table = null;
-
+    private int totalGradeIndex;
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -98,6 +99,7 @@ public class SpreadsheetController implements Initializable, Observer
        for (int i = 0; i < headers.length; i++) {
           TableColumn tc = new TableColumn(headers[i]);
           tc.setEditable(i != 0);
+           tc.setEditable(i != totalGradeIndex);
           final int colNo = i;
           tc.setCellFactory(TextFieldTableCell.<SpreadsheetCell[]>forTableColumn());
 
@@ -114,7 +116,7 @@ public class SpreadsheetController implements Initializable, Observer
           table.getColumns().add(tc);
 
           // Make score cell columns editable.
-          if (i != 0) {
+          if (i != 0 || i != totalGradeIndex) {
              tc.setOnEditCommit(
                    new EventHandler<TableColumn.CellEditEvent<SpreadsheetCell[], String>>() {
                       @Override
@@ -175,10 +177,10 @@ public class SpreadsheetController implements Initializable, Observer
            Collections.sort(students);
            Scores scores = WorkSpace.instance.getScores();
 
-           SpreadsheetCell[][] grades = new SpreadsheetCell[students.size()][assignments.size() + 1];
-           String[] headers = new String[assignments.size() + 1];
+           SpreadsheetCell[][] grades = new SpreadsheetCell[students.size()][assignments.size() + 2];
+           String[] headers = new String[assignments.size() + 2];
            headers[0] = "Student";
-
+            headers[assignments.size() + 1] = "Total Grade";
            // Populate scores table
            for (int studentIndex = 0; studentIndex < students.size(); ++studentIndex)
            {
@@ -189,7 +191,15 @@ public class SpreadsheetController implements Initializable, Observer
                    grades[studentIndex][assignmentIndex + 1] =
                            new SpreadsheetCell(scores.getScoresMap(student).get(assignments.get(assignmentIndex)));
                }
+               for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex)
+               {
+                   grades[studentIndex][assignments.size() + 1] =
+                           new SpreadsheetCell(WorkSpace.instance.getAssignmentTree()
+                                   .calculatePercentage(WorkSpace.instance.getScores()
+                                           .getScoresMap(student)));
+               }
            }
+           totalGradeIndex = assignments.size() + 1;
 
            // Populate column headers
            for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex)
@@ -208,6 +218,7 @@ public class SpreadsheetController implements Initializable, Observer
       public Student student;
       public RawScore rawScore;
       public boolean hasChanged;
+       public Percentage percentage;
 
       public SpreadsheetCell(Student student) {
          this.student = student;
@@ -221,6 +232,13 @@ public class SpreadsheetController implements Initializable, Observer
          this.hasChanged = false;
       }
 
+       public SpreadsheetCell(Percentage percentage) {
+           this.rawScore = null;
+           this.student = null;
+           this.hasChanged = false;
+           this.percentage = percentage;
+       }
+
       public RawScore getScore() {
          return rawScore;
       }
@@ -228,6 +246,7 @@ public class SpreadsheetController implements Initializable, Observer
       public String toString() {
          if (student != null) return student.toString();
          if (rawScore != null) return "" + rawScore.getScore();
+          if(percentage != null) return Double.toString(percentage.getValue());
          return "";
       }
    }
