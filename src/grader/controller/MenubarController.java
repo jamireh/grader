@@ -33,6 +33,9 @@ public class MenubarController implements Observer
     @FXML MenuItem editStudentMenuItem;
     @FXML MenuItem undoMenuItem;
     @FXML MenuItem redoMenuItem;
+    @FXML MenuItem cutMenuItem;
+    @FXML MenuItem copyMenuItem;
+    @FXML MenuItem pasteMenuItem;
 
     @FXML
     public void initialize()
@@ -64,7 +67,10 @@ public class MenubarController implements Observer
         editStudentMenuItem.setDisable(true);
         undoMenuItem.setDisable(!WorkSpace.instance.canUndo());
         redoMenuItem.setDisable(!WorkSpace.instance.canRedo());
-        
+        cutMenuItem.setDisable(!WorkSpace.instance.canCopy());
+        copyMenuItem.setDisable(!WorkSpace.instance.canCopy());
+        pasteMenuItem.setDisable(!WorkSpace.instance.canPaste());
+
         if(WorkSpace.instance.course == null)
         {
             studentMenu.setDisable(true);

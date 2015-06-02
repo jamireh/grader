@@ -22,9 +22,9 @@
                <items>
                   <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" onAction="#editUndo" text="Undo" />
                   <MenuItem fx:id="redoMenuItem" mnemonicParsing="false" onAction="#editRedo" text="Redo" />
-                  <MenuItem mnemonicParsing="false" onAction="#editCut" text="Cut" />
-                  <MenuItem mnemonicParsing="false" onAction="#editCopy" text="Copy" />
-                  <MenuItem mnemonicParsing="false" onAction="#editPaste" text="Paste" />
+                  <MenuItem fx:id="cutMenuItem" mnemonicParsing="false" onAction="#editCut" text="Cut" />
+                  <MenuItem fx:id="copyMenuItem" mnemonicParsing="false" onAction="#editCopy" text="Copy" />
+                  <MenuItem fx:id="pasteMenuItem" mnemonicParsing="false" onAction="#editPaste" text="Paste" />
                   <MenuItem mnemonicParsing="false" onAction="#editFind" text="Find..." />
                </items>
             </Menu>

@@ -9,7 +9,6 @@ import grader.model.items.Percentage;
 import grader.model.people.Student;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -65,6 +64,9 @@ public class SpreadsheetController implements Initializable, Observer
                        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
                        SpreadsheetCell selectedCell = ((SpreadsheetCell[])selectionModel.getSelectedItem())[tablePosition.getColumn()];
 
+                       WorkSpace.instance.setSelectedScore(selectedCell.getScore());
+                       WorkSpace.instance.setSelectedStudent(selectedCell.getStudent());
+                       /*
                        Platform.runLater(new Runnable()
                        {
                           @Override
@@ -74,6 +76,7 @@ public class SpreadsheetController implements Initializable, Observer
                              WorkSpace.instance.setSelectedScore(selectedCell.getScore());
                           }
                        });
+                       */
                     }
                 }
             }
