@@ -62,26 +62,18 @@ public class SpreadsheetController implements Initializable, Observer
                     ObservableList selectedCells = selectionModel.getSelectedCells();
                     if(!selectedCells.isEmpty())
                     {
-                        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                        //System.out.println(WorkSpace.instance.getStudents().get(tablePosition.getRow()).name);
-                        StringProperty val = (StringProperty) table.getColumns().get(0).getCellObservableValue(tablePosition
-                                .getRow());
-                        String[] split = val.get().split(", ");
-                        for (Student s : WorkSpace.instance.getStudents())
-                        {
-                            if (s.name.getFirstName().equals(split[1]) && s.name.getLastName().equals(split[0]))
-                            {
-                                Platform.runLater(new Runnable()
-                                {
-                                    @Override
-                                    public void run()
-                                    {
-                                        WorkSpace.instance.setSelectedStudent(s);
-                                    }
-                                });
-                                break;
-                            }
-                        }
+                       TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+                       SpreadsheetCell selectedCell = ((SpreadsheetCell[])selectionModel.getSelectedItem())[tablePosition.getColumn()];
+
+                       Platform.runLater(new Runnable()
+                       {
+                          @Override
+                          public void run()
+                          {
+                             WorkSpace.instance.setSelectedStudent(selectedCell.getStudent());
+                             WorkSpace.instance.setSelectedScore(selectedCell.getScore());
+                          }
+                       });
                     }
                 }
             }
@@ -127,12 +119,13 @@ public class SpreadsheetController implements Initializable, Observer
                          RawScore rawScore = ol.get(row)[col].getScore();
                          try
                          {
-                            WorkSpace.instance.updateGrade(
-                                    rawScore.getStudent(),
-                                    rawScore.getAssignment(),
-                                    Double.parseDouble(t.getNewValue()));
+                            if (t.getOldValue() != t.getNewValue()) {
+                               WorkSpace.instance.updateGrade(
+                                     rawScore.getStudent(),
+                                     rawScore.getAssignment(),
+                                     Double.parseDouble(t.getNewValue()));
+                            }
                          } catch (Exception e) {
-                            update(null, null);
                          }
                       }
                    }
@@ -193,7 +186,7 @@ public class SpreadsheetController implements Initializable, Observer
                for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex)
                {
                    grades[studentIndex][assignments.size() + 1] =
-                           new SpreadsheetCell(WorkSpace.instance.getAssignmentTree()
+                           new SpreadsheetCell(student, WorkSpace.instance.getAssignmentTree()
                                    .calculatePercentage(WorkSpace.instance.getScores()
                                            .getScoresMap(student)));
                }
@@ -217,7 +210,7 @@ public class SpreadsheetController implements Initializable, Observer
       public Student student;
       public RawScore rawScore;
       public boolean hasChanged;
-       public Percentage percentage;
+      public Percentage percentage;
 
       public SpreadsheetCell(Student student) {
          this.student = student;
@@ -231,9 +224,9 @@ public class SpreadsheetController implements Initializable, Observer
          this.hasChanged = false;
       }
 
-       public SpreadsheetCell(Percentage percentage) {
+       public SpreadsheetCell(Student student, Percentage percentage) {
            this.rawScore = null;
-           this.student = null;
+           this.student = student;
            this.hasChanged = false;
            this.percentage = percentage;
        }
@@ -242,10 +235,16 @@ public class SpreadsheetController implements Initializable, Observer
          return rawScore;
       }
 
+      public Student getStudent() {
+         if (student == null)
+            return rawScore.getStudent();
+         return student;
+      }
+
       public String toString() {
+         if(percentage != null) return Double.toString(percentage.getValue());
          if (student != null) return student.toString();
          if (rawScore != null) return "" + rawScore.getScore();
-          if(percentage != null) return Double.toString(percentage.getValue());
          return "";
       }
    }

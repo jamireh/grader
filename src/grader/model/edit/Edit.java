@@ -69,6 +69,7 @@ public class Edit {
       && WorkSpace.instance.selectedContext'.empty();
     */
     public static void cut() {
+       WorkSpace.instance.cut();
     }
 
    /**
@@ -81,6 +82,7 @@ public class Edit {
       WorkSpace.instance.clipboard.equals(WorkSpace.instance.selectedContext);
     */
     public static void copy() {
+       WorkSpace.instance.copy();
     }
 
    /**
@@ -100,5 +102,6 @@ public class Edit {
       WorkSpace.instance.selectedContext.equals(WorkSpace.instance.clipboard);
     */
     public static void paste() {
+       WorkSpace.instance.paste();
     }
 }

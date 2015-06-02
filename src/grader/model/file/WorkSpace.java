@@ -71,20 +71,20 @@ public class WorkSpace extends Observable {
       addObserver(histogram);
    }
 
-	////////////////////////////////////
-	/* CLIPBOARD -- MOVE TO NEW CLASS */
-	////////////////////////////////////
-
-	/**
-	 * The value stored in the clipboard.
-	 * Will be null if cut/copy have not been called.
-	 */
-	public String clipboard;
+	/////////////////////
+	/* CLIPBOARD STUFF */
+	/////////////////////
 
 	/**
 	 * The contents of the currently selected item.
 	 */
-	public String selectedContext;
+	public RawScore selectedScore;
+
+   /**
+    * The most recently copied or cut score.
+    */
+   public double copiedScore;
+
 	////////////////////////////////////
 
 
@@ -311,6 +311,10 @@ public class WorkSpace extends Observable {
     {
         WorkSpace.instance.sidebarSelect(WorkSpace.instance.course, WorkSpace.instance.section, WorkSpace.instance.group);
     }
+
+   public void setSelectedScore(RawScore score) {
+      this.selectedScore = score;
+   }
 
     public void setSelectedStudent(Student s)
     {
@@ -596,6 +600,30 @@ public class WorkSpace extends Observable {
          return futureDeltas.get(futureDeltas.size() - 1);
       }
       return null;
+   }
+
+   /**
+    * Copies the value of the selected score to the clipboard.
+    */
+   public void copy() {
+      if (selectedScore != null)
+         this.copiedScore = selectedScore.getScore();
+   }
+
+   /**
+    * Cuts the selected score, updating the selected grade to zero.
+    */
+   public void cut() {
+      if (selectedScore != null) {
+         this.copiedScore = selectedScore.getScore();
+         updateGrade(selectedScore.getStudent(), selectedScore.getAssignment(), 0.0);
+      }
+   }
+
+   public void paste() {
+      if (selectedScore != null) {
+         updateGrade(selectedScore.getStudent(), selectedScore.getAssignment(), copiedScore);
+      }
    }
 
    /////////////////////
