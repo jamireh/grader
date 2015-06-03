@@ -106,7 +106,7 @@ public class StatsContainer implements Observer {
             statsTable[1][0] = "Average";
             statsTable[2][0] = "Min";
 
-            DecimalFormat format = new DecimalFormat("#.0#");
+            DecimalFormat format = new DecimalFormat("0.0");
 
             // populate stats table
             for (int i = 0; i < size; ++i) {

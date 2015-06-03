@@ -24,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.*;
 
 
@@ -227,12 +228,12 @@ public class SpreadsheetController implements Initializable, Observer
          this.hasChanged = false;
       }
 
-       public SpreadsheetCell(Student student, Percentage percentage) {
-           this.rawScore = null;
-           this.student = student;
-           this.hasChanged = false;
-           this.percentage = percentage;
-       }
+      public SpreadsheetCell(Student student, Percentage percentage) {
+         this.rawScore = null;
+         this.student = student;
+         this.hasChanged = false;
+         this.percentage = percentage;
+      }
 
       public RawScore getScore() {
          return rawScore;
@@ -245,7 +246,11 @@ public class SpreadsheetController implements Initializable, Observer
       }
 
       public String toString() {
-         if(percentage != null) return Double.toString(percentage.getValue());
+         if (percentage != null) {
+             DecimalFormat format = new DecimalFormat("0.0");
+
+             return format.format(percentage.getValue());
+         }
          if (student != null) return student.toString();
          if (rawScore != null) return "" + rawScore.getScore();
          return "";
