@@ -22,6 +22,13 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
+/**
+ * The Controller class for grade predictions. Links to the Prediction
+ * class in the model and prediction.fxml.
+ *
+ * @author Alexander Miller
+ * @author Quan Tran
+ */
 public class PredictionController {
     @FXML ComboBox cbCatParent;
     @FXML Label pStudentName;
@@ -31,7 +38,12 @@ public class PredictionController {
     @FXML Label pRequired;
     @FXML TextField pTfNewTotal;
 
+    // used to access the scores data
     private RawScore score;
+
+    /**
+     * Initializes the controller with required values.
+     */
     public void initialize()
     {
         ObservableList<String> parentOptions = FXCollections.observableArrayList();
@@ -55,6 +67,9 @@ public class PredictionController {
 
     }
 
+    /**
+     * Updates the required score upon requesting a prediction.
+     */
     public void updateRequiredScore() {
 
         DecimalFormat format = new DecimalFormat("0.0");

@@ -60,7 +60,7 @@
                   </Menu>
                   <MenuItem disable="true" mnemonicParsing="false" onAction="#gradesManage" text="Manage" />
                   <MenuItem disable="true" mnemonicParsing="false" onAction="#gradesPublish" text="Publish" />
-                   <MenuItem mnemonicParsing="false" onAction="#gradesPrediction" text="Prediction" />
+                  <MenuItem fx:id="predictionMenuItem" disable="true" mnemonicParsing="false" onAction="#gradesPrediction" text="Prediction" />
                </items>
             </Menu>
             <Menu fx:id="curveMenu" mnemonicParsing="false" text="Curve">

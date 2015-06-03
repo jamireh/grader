@@ -4,7 +4,14 @@ import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
 
-
+/**
+ * A Prediction calculates and provides a required grade for a particular
+ * student and a particular assignment for the given student to receive
+ * a target grade in the course.
+ *
+ * @author Quan Tran
+ * @author Alexander Miller
+ */
 public class Prediction {
     private final Student student;
     private final Assignment assignment;
@@ -24,7 +31,11 @@ public class Prediction {
         this.scores = WorkSpace.instance.getScores();
     }
 
-
+    /**
+     * Calculates and returns the required score of the prediction.
+     * NOTE: needs work
+     * @return the required grade for the prediction.
+     */
     public double getRequired() {
         // if weights are not set this gets a bit confusing..
         double weight = 1.0/8.0;

@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Controller for the top level menubar.
+ * @author Jon Amireh
+ */
 public class MenubarController implements Observer
 {
     private Stage lockedStage;
@@ -38,6 +42,7 @@ public class MenubarController implements Observer
     @FXML MenuItem cutMenuItem;
     @FXML MenuItem copyMenuItem;
     @FXML MenuItem pasteMenuItem;
+    @FXML MenuItem predictionMenuItem;
 
     @FXML
     public void initialize()
@@ -59,7 +64,6 @@ public class MenubarController implements Observer
 
     private void refreshItems()
     {
-
         fileMenu.setDisable(false);
         editMenu.setDisable(false);
         studentMenu.setDisable(false);
@@ -67,6 +71,7 @@ public class MenubarController implements Observer
         curveMenu.setDisable(false);
         editGroupMenuItem.setDisable(true);
         editStudentMenuItem.setDisable(true);
+        predictionMenuItem.setDisable(true);
         undoMenuItem.setDisable(!WorkSpace.instance.canUndo());
         redoMenuItem.setDisable(!WorkSpace.instance.canRedo());
         cutMenuItem.setDisable(!WorkSpace.instance.canCopy());
@@ -91,6 +96,10 @@ public class MenubarController implements Observer
         if(WorkSpace.instance.selectedStudent != null)
         {
             editStudentMenuItem.setDisable(false);
+        }
+        if(WorkSpace.instance.selectedScore != null)
+        {
+            predictionMenuItem.setDisable(false);
         }
     }
 
@@ -312,25 +321,11 @@ public class MenubarController implements Observer
     }
 
     /**
-     * Controller method for FART
+     * Controller method for Grades->Prediction.
      */
     public void gradesPrediction() throws IOException {
-
-        RawScore score = WorkSpace.instance.selectedScore;
-        if (score != null) {
-            Parent root = FXMLLoader.load(Main.predictionResource);
-            setStageWithFocus(root, "Prediction");
-        }
-        else {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Dialog");
-            alert.setHeaderText("Invalid Input");
-            //alert.setContentText(e.getMessage());
-            alert.setContentText("Student Assignment Not Selected");
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.showAndWait();
-        }
+        Parent root = FXMLLoader.load(Main.predictionResource);
+        setStageWithFocus(root, "Prediction");
     }
 
     /* CURVE MENU COMMANDS */

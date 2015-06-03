@@ -13,6 +13,7 @@ import java.util.List;
  * @author Quan Tran
  */
 public class Statistics {
+    // public for easy access without function call
     public final double min, max, mean;
 
     /**
