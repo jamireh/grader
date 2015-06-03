@@ -1,5 +1,6 @@
 package grader.controller;
 
+import grader.model.errors.ScoreOutOfRangeException;
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.scores.Prediction;
 import grader.model.gradebook.scores.RawScore;
@@ -46,45 +47,46 @@ public class PredictionController {
      */
     public void initialize()
     {
-        ObservableList<String> parentOptions = FXCollections.observableArrayList();
-        parentOptions.add(WorkSpace.instance.getCourse().name);
-        for(Category c : WorkSpace.instance.getCourse().categories)
-        {
-            parentOptions.add(c.name);
-        }
-
         score = WorkSpace.instance.selectedScore;
-        // whatever display method
+        // set the default display label text
         DecimalFormat format = new DecimalFormat("0.0");
         pStudentName.setText(score.getStudent().toString());
         pAssignment.setText(score.getAssignment().toString());
         pAssignmentGrade.setText(format.format(score.getScore()));
-
         pCurTotal.setText(format.format(WorkSpace.instance.getAssignmentTree()
                 .calculatePercentage(WorkSpace.instance.getScores()
                         .getScoresMap(score.getStudent())).getValue()));
         pRequired.setText("??");
-
     }
 
     /**
      * Updates the required score upon requesting a prediction.
+     * Catches exceptions thrown by the model.
      */
     public void updateRequiredScore() {
-
         DecimalFormat format = new DecimalFormat("0.0");
+
         try {
             Prediction prediction = new Prediction(score.getStudent(), score.getAssignment(), Double.parseDouble(pTfNewTotal.getText()));
             pRequired.setText(format.format(prediction.getRequired()));
-        } catch (Exception e) {
+        }
+        // catch an invalid input string
+        catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
-            alert.setHeaderText("Invalid Input");
+            alert.setHeaderText("Invalid target score input");
             alert.setContentText(e.getMessage());
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
         }
-
-
+        // catch a negative target score
+        catch (ScoreOutOfRangeException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Target score is negative");
+            alert.setContentText(e.getMessage());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package grader.model.gradebook.scores;
 
+import grader.model.errors.ScoreOutOfRangeException;
 import grader.model.file.WorkSpace;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
@@ -24,9 +25,12 @@ public class Prediction {
      * @param student the student
      * @param assignment the assignment
      */
-    public Prediction(Student student, Assignment assignment, double target) {
+    public Prediction(Student student, Assignment assignment, double target)
+            throws ScoreOutOfRangeException {
         this.student = student;
         this.assignment = assignment;
+        if (target < 0.0)
+            throw new ScoreOutOfRangeException(target);
         this.target = target;
         this.scores = WorkSpace.instance.getScores();
     }

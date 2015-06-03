@@ -56,7 +56,7 @@ public class SpreadsheetController implements Initializable, Observer
             @Override
             public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
                 //Check whether item is selected and set value of selected item to Label
-                if(table.getSelectionModel().getSelectedItem() != null && WorkSpace.instance.section != null)
+                if(table.getSelectionModel().getSelectedItem() != null)
                 {
                     TableView.TableViewSelectionModel selectionModel = table.getSelectionModel();
                     ObservableList selectedCells = selectionModel.getSelectedCells();
@@ -67,17 +67,6 @@ public class SpreadsheetController implements Initializable, Observer
 
                        WorkSpace.instance.setSelectedScore(selectedCell.getScore());
                        WorkSpace.instance.setSelectedStudent(selectedCell.getStudent());
-                       /*
-                       Platform.runLater(new Runnable()
-                       {
-                          @Override
-                          public void run()
-                          {
-                             WorkSpace.instance.setSelectedStudent(selectedCell.getStudent());
-                             WorkSpace.instance.setSelectedScore(selectedCell.getScore());
-                          }
-                       });
-                       */
                     }
                 }
             }
