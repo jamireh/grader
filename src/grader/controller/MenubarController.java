@@ -151,35 +151,35 @@ public class MenubarController implements Observer
      * Controller method for Edit->Undo.
      */
     public void editUndo() {
-        Edit.undo();
+        WorkSpace.instance.undo();
     }
 
     /**
      * Controller method for Edit->Redo.
      */
     public void editRedo() {
-        Edit.redo();
+        WorkSpace.instance.redo();
     }
 
     /**
      * Controller method for Edit->Cut.
      */
     public void editCut() {
-        Edit.cut();
+        WorkSpace.instance.cut();
     }
 
     /**
      * Controller method for Edit->Copy.
      */
     public void editCopy() {
-        Edit.copy();
+        WorkSpace.instance.copy();
     }
 
     /**
      * Controller method for Edit->Paste.
      */
     public void editPaste() {
-        Edit.paste();
+        WorkSpace.instance.paste();
     }
 
     /**
