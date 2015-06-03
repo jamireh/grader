@@ -5,10 +5,12 @@ import grader.model.edit.Edit;
 import grader.model.file.File;
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.Course;
+import grader.model.gradebook.scores.RawScore;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
@@ -18,6 +20,10 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Controller for the top level menubar.
+ * @author Jon Amireh
+ */
 public class MenubarController implements Observer
 {
     private Stage lockedStage;
@@ -36,6 +42,7 @@ public class MenubarController implements Observer
     @FXML MenuItem cutMenuItem;
     @FXML MenuItem copyMenuItem;
     @FXML MenuItem pasteMenuItem;
+    @FXML MenuItem predictionMenuItem;
 
     @FXML
     public void initialize()
@@ -57,7 +64,6 @@ public class MenubarController implements Observer
 
     private void refreshItems()
     {
-
         fileMenu.setDisable(false);
         editMenu.setDisable(false);
         studentMenu.setDisable(false);
@@ -65,6 +71,7 @@ public class MenubarController implements Observer
         curveMenu.setDisable(false);
         editGroupMenuItem.setDisable(true);
         editStudentMenuItem.setDisable(true);
+        predictionMenuItem.setDisable(true);
         undoMenuItem.setDisable(!WorkSpace.instance.canUndo());
         redoMenuItem.setDisable(!WorkSpace.instance.canRedo());
         cutMenuItem.setDisable(!WorkSpace.instance.canCopy());
@@ -89,6 +96,10 @@ public class MenubarController implements Observer
         if(WorkSpace.instance.selectedStudent != null)
         {
             editStudentMenuItem.setDisable(false);
+        }
+        if(WorkSpace.instance.selectedScore != null)
+        {
+            predictionMenuItem.setDisable(false);
         }
     }
 
@@ -307,6 +318,14 @@ public class MenubarController implements Observer
      * Controller method for Grades->Publish.
      */
     public void gradesPublish() {
+    }
+
+    /**
+     * Controller method for Grades->Prediction.
+     */
+    public void gradesPrediction() throws IOException {
+        Parent root = FXMLLoader.load(Main.predictionResource);
+        setStageWithFocus(root, "Prediction");
     }
 
     /* CURVE MENU COMMANDS */

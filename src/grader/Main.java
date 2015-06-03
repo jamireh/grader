@@ -20,6 +20,7 @@ public class Main extends Application {
     public static URL studentsResource = Main.class.getResource("view/students.fxml");
     public static URL groupsResource = Main.class.getResource("view/groups.fxml");
     public static URL findResource = Main.class.getResource("view/find.fxml");
+    public static URL predictionResource = Main.class.getResource("view/prediction.fxml");
 
     @Override
     public void start(Stage primaryStage) throws Exception{

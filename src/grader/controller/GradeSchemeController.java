@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -163,7 +164,7 @@ public class GradeSchemeController implements Observer {
             Percentage percent = new Percentage(textField.getCharacters().toString());
             gradeScheme.updateGradeRange(LetterGrade.valueOfFromID(textField.getId()), percent);
         }
-        catch (PercentageFormatException percentExcept) {
+        catch (PercentageFormatException | IllegalArgumentException percentExcept) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
             alert.setHeaderText("Incorrect Input");

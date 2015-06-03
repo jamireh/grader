@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.controller.PredictionController">
+    <children>
+        <VBox prefHeight="300.0" prefWidth="400.0">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Student:">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                    <Label fx:id="pStudentName">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Assignment:">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                    <Label fx:id="pAssignment">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Assignment Grade:">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                    <Label fx:id="pAssignmentGrade">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Current Total Grade:">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                    <Label fx:id="pCurTotal">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Enter Targeted Total Grade:">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                    <TextField fx:id="pTfNewTotal" promptText="Enter Targeted Total Grade" />
+                </HBox>
+                <Button fx:id="bPredict" mnemonicParsing="false" onAction="#updateRequiredScore" text="Calculate Required Score"></Button>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Required Assignment Grade:">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                    <Label fx:id="pRequired">
+                        <HBox.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</Pane>
