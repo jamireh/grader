@@ -5,10 +5,12 @@ import grader.model.edit.Edit;
 import grader.model.file.File;
 import grader.model.file.WorkSpace;
 import grader.model.gradebook.Course;
+import grader.model.gradebook.scores.RawScore;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
@@ -307,6 +309,28 @@ public class MenubarController implements Observer
      * Controller method for Grades->Publish.
      */
     public void gradesPublish() {
+    }
+
+    /**
+     * Controller method for FART
+     */
+    public void gradesPrediction() throws IOException {
+
+        RawScore score = WorkSpace.instance.selectedScore;
+        if (score != null) {
+            Parent root = FXMLLoader.load(Main.predictionResource);
+            setStageWithFocus(root, "Prediction");
+        }
+        else {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Invalid Input");
+            //alert.setContentText(e.getMessage());
+            alert.setContentText("Student Assignment Not Selected");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+        }
     }
 
     /* CURVE MENU COMMANDS */
