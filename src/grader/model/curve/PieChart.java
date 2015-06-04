@@ -1,6 +1,6 @@
 package grader.model.curve;
 
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.gradescheme.GradeRange;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.scores.RawScore;

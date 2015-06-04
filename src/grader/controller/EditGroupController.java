@@ -1,7 +1,7 @@
 package grader.controller;
 
 import grader.model.errors.MissingInputException;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.people.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +20,7 @@ import javax.naming.InvalidNameException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static grader.model.file.WorkSpace.instance;
+import static grader.model.gradebook.WorkSpace.instance;
 
 /**
  * Controller for the group forming view.

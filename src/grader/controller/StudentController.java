@@ -3,7 +3,7 @@ package grader.controller;
 import grader.model.errors.InvalidPhoneNumberException;
 import grader.model.errors.InvalidUserIDException;
 import grader.model.errors.NameFormatException;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.people.Name;
 import grader.model.people.Student;
 import javafx.event.ActionEvent;

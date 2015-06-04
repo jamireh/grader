@@ -1,7 +1,7 @@
 package grader.model.gradebook.stats;
 
 import grader.controller.StatsController;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;

@@ -1,12 +1,9 @@
-package grader.model.file;
+package grader.model.gradebook;
 
 import grader.controller.SidebarController;
 import grader.controller.SpreadsheetController;
 import grader.model.curve.Histogram;
 import grader.model.curve.PieChart;
-import grader.model.gradebook.Course;
-import grader.model.gradebook.Gradebook;
-import grader.model.gradebook.Section;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;

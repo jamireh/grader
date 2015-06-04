@@ -1,6 +1,6 @@
 package grader.controller;
 
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.Course;
 import grader.model.gradebook.Gradebook;
 import grader.model.gradebook.Section;

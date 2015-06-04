@@ -1,27 +1,17 @@
 package grader.controller;
 
 import grader.model.errors.ScoreOutOfRangeException;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.scores.Prediction;
 import grader.model.gradebook.scores.RawScore;
-import grader.model.items.Category;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ResourceBundle;
 
 /**
  * The Controller class for grade predictions. Links to the Prediction

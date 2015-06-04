@@ -1,7 +1,7 @@
 package grader.model.gradebook.scores;
 
 import grader.model.errors.ScoreOutOfRangeException;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.items.Assignment;
 import grader.model.people.Student;
 
