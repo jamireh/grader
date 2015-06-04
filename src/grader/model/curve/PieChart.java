@@ -18,7 +18,7 @@ import java.util.Observer;
  * 
  * Derived from the requirements documentation regarding visuals.
  */
-public class PieChart extends AbstractGraph implements Observer
+public class PieChart implements Observer
 {
 
     private int aPlus = 0;

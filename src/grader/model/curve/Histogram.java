@@ -24,7 +24,7 @@ import java.util.Observer;
  *
  * Derived from the requirements documentation regarding visuals.
  */
-public class Histogram extends AbstractGraph implements Observer
+public class Histogram implements Observer
 {
 
     private Hashtable<Double, Integer> vals = new Hashtable<Double, Integer>();
@@ -35,47 +35,7 @@ public class Histogram extends AbstractGraph implements Observer
      */
     GradeScheme tempGradeScheme;
 
-    /**
-     * Given a particular letter grade and new lowerbound, this method will apply
-     * them to the temporary GradeScheme.
-     *
-     * @param letterGrade The LetterGrade that has been changed
-     * @param newLowerBound The new Percentage that denotes the LetterGrade's new
-     * lower bound.
-     * <pre>
-    post:
-    //The LetterGrade and Percentage have been properly applied to the
-    //tempGradeScheme and no other changes have been made
-    forall (GradeRange divisionBar;
-    tempGradeScheme'.divisions.contains(divisionBar) iff
-    (divisionBar.letterGrade.equals(letterGrade) && divisionBar.low.equals(newLowerBound))
-    ||
-    tempGradeScheme.divisions.contains(divisionBar));
-     */
-    public void adjustCurve(LetterGrade letterGrade, Percentage newLowerBound) {}
 
-    /**
-     * Changes made via the GUI manipulations will be pushed over to the full
-     * model.
-     post:
-     //The GradeScheme of the Section must be identical to the tempGradeScheme.
-     forall (GradeRange divisionBar;
-     tempGradeScheme.contains(divisionBar);
-     exists(GradeRange sDivisionBar;
-     section'.gradeScheme.divisions.contains(sDivisionBar);
-     divisionBar.equals(sDivisionBar)));
-     */
-
-    /**
-     * Uses the Section to find the Scores necessary to draw the chart as well
-     * as categorizes them into numScores.
-     * <pre>
-     post:
-     //Ensure that the numScores list is correct by summing the contents of the
-     //list and verifying that it is the same size as the number of students.
-     countCollection(numScores) == countStudents(sections);
-     */
-    public void categorizeScores() {}
 
     /**
      * Updates current gradescheme to temp section gradescheme.
@@ -117,6 +77,15 @@ public class Histogram extends AbstractGraph implements Observer
             Percentage percent = WorkSpace.instance.getAssignmentTree().calculatePercentage(map);
 
             double tempPercent = Math.ceil(percent.getValue());
+            if (tempPercent > 100.0)
+            {
+                tempPercent = 100.0;
+            }
+            else if (tempPercent < 0.0)
+            {
+                tempPercent = 0.0;
+            }
+
             Integer temp = vals.get(tempPercent);
             vals.replace(tempPercent, ++temp);
 
@@ -124,6 +93,12 @@ public class Histogram extends AbstractGraph implements Observer
 
     }
 
+    /**
+     * Adjust histogram automatically.
+     * @param oldPercent original percent for letter.
+     * @param newPercent new percent for letter.
+     * @param letter letter to move.
+     */
     public void adjustHistogram(double oldPercent, double newPercent, String letter)
     {
 
