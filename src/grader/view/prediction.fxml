@@ -125,7 +125,7 @@
             <children>
                 <Button alignment="CENTER" layoutX="107.0" layoutY="7.0" mnemonicParsing="false" onAction="#updateRequiredScore" text="Predict" textAlignment="CENTER">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                     </font>
                 </Button>
             </children>
