@@ -33,18 +33,6 @@ public class StatsContainer implements Observer {
     private Statistics totalGradeStats;
 
     /**
-     * Gets the list of Assignments used by this container.
-     * @return the list of Assignments
-     */
-    public List<Assignment> getAssignments() { return assignments; }
-
-    /**
-     * Gets the map of Statistics in this container.
-     * @return the Assignments->Statistics map
-     */
-    public Map<Assignment, Statistics> getMap() { return stats; }
-
-    /**
      * Sets the controller for this StatsContainer.
      * @param controller the controller to use
      */

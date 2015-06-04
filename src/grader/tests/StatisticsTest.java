@@ -12,12 +12,25 @@ import static org.junit.Assert.*;
 
 /**
  * Test class for the Statistics class.
+ * It implements the following module test plan:
+ *
+ *    Phase 1: Unit test the constructor.
+ *
+ *    Phase 2: Unit test min value access and computation.
+ *
+ *    Phase 3: Unit test max value access and computation.
+ *
+ *    Phase 4: Unit test mean value access and computation.
+ *
+ *    Phase 5: Stress test with expected input * 10.
+ *
  * @author Quan Tran
  */
 public class StatisticsTest {
     private static final double DELTA = 1e-12;
     private static final int LIST_A_SIZE = 11;
     private static final int LIST_B_SIZE = 100;
+    private static final int STRESS_COUNT = 10000;
 
     private List<Double> listA, listB;
     private double aMax, aMean, aMin, bMax, bMean, bMin;
@@ -61,7 +74,7 @@ public class StatisticsTest {
     }
 
     /**
-     * Test the constructor.
+     * 1. Test the constructor.
      */
     @Test
     public void testConstructor() {
@@ -73,7 +86,7 @@ public class StatisticsTest {
     }
 
     /**
-     * Test the minimum values.
+     * 2. Test the minimum values.
      */
     @Test
     public void testMin() {
@@ -85,7 +98,7 @@ public class StatisticsTest {
     }
 
     /**
-     * Test the maximum values.
+     * 3. Test the maximum values.
      */
     @Test
     public void testMax() {
@@ -97,7 +110,7 @@ public class StatisticsTest {
     }
 
     /**
-     * Test the mean values.
+     * 4. Test the mean values.
      */
     @Test
     public void testMean() {
@@ -109,12 +122,10 @@ public class StatisticsTest {
     }
 
     /**
-     * Stress test values.
+     * 5. Stress test values.
      */
     @Test
     public void stressTest() {
-        final int STRESS_COUNT = 10000;
-
         Statistics[] stats = new Statistics[STRESS_COUNT];
         for (int i = 0; i < STRESS_COUNT; ++i)
             stats[i] = new Statistics(listB);

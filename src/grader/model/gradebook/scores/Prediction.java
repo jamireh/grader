@@ -3,6 +3,7 @@ package grader.model.gradebook.scores;
 import grader.model.errors.ScoreOutOfRangeException;
 import grader.model.gradebook.WorkSpace;
 import grader.model.items.Assignment;
+import grader.model.items.AssignmentTree;
 import grader.model.people.Student;
 
 /**
@@ -18,7 +19,6 @@ public class Prediction {
     private final Assignment assignment;
     private final Scores scores;
     private final double target;
-
 
     /**
      * Constructs a new Prediction container for the given student on the given assignment.
@@ -37,19 +37,47 @@ public class Prediction {
 
     /**
      * Calculates and returns the required score of the prediction.
-     * NOTE: needs work
      * @return the required grade for the prediction.
      */
     public double getRequired() {
-        // if weights are not set this gets a bit confusing..
-        double weight = 1.0/8.0;
-        /*(required - oldScore) * weight
-                =
-        (newTotal - oldTotal)*/
-        double oldTotal = WorkSpace.instance.getAssignmentTree().calculatePercentage(WorkSpace.instance.getScores()
-                        .getScoresMap(WorkSpace.instance.selectedScore.getStudent())).getValue();
-        double required = ((target - oldTotal) / weight) + scores.getRawScore(student, assignment);
+        double oldTotal =
+                WorkSpace.instance.getAssignmentTree().calculatePercentage
+                        (WorkSpace.instance.getScores().getScoresMap(
+                                WorkSpace.instance.selectedScore.getStudent())).getValue();
+        double required;
+
+        // calculation for if the assignment has a weight
+        if (assignment.hasWeight) {
+            required = (target - oldTotal) / assignment.weight.getValue()
+                    + scores.getRawScore(student, assignment);
+        }
+        // otherwise assume equal distribution of assignment weight
+        else {
+            double weight = 1.0/countAssignments();
+            required = (target - oldTotal) / weight
+                    + scores.getRawScore(student, assignment);
+        }
+
         return required;
     }
 
+    /**
+     * Counts the number of assignments in the assignment tree
+     * for prediction calculation.
+     * @return the number of assignments in the tree
+     */
+    private int countAssignments() {
+        AssignmentTree.AssignmentIterator itr =
+                WorkSpace.instance.getAssignmentTree().getAssignmentIterator();
+
+        int count = 0;
+
+        // iterate through all assignments and count
+        while (itr.hasNext()) {
+            itr.next();
+            ++count;
+        }
+
+        return count;
+    }
 }
