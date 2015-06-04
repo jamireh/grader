@@ -1,6 +1,5 @@
 package grader;
 
-import grader.model.gradebook.scores.Prediction;
 import grader.tests.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -12,6 +11,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ AssignmentTest.class, CategoryTest.class, GradeRangeTest.class, GradeSchemeTest.class, GroupTest.class, NameTest.class, LetterGradeTest.class,
-        PercentageTest.class, StatisticsTest.class, StudentTest.class, WorkSpaceTest.class, PredictionTest.class} )
+@Suite.SuiteClasses({ AssignmentTest.class, CategoryTest.class, GradeRangeTest.class, GradeSchemeTest.class, GroupTest.class, HistogramTest.class,
+        NameTest.class, LetterGradeTest.class, PercentageTest.class, PieChartTest.class, StatisticsTest.class, StudentTest.class, WorkSpaceTest.class, PredictionTest.class} )
 public final class TestSuite {}

@@ -66,7 +66,7 @@ public class Prediction {
      * for prediction calculation.
      * @return the number of assignments in the tree
      */
-    private int countAssignments() {
+    public int countAssignments() {
         AssignmentTree.AssignmentIterator itr =
                 WorkSpace.instance.getAssignmentTree().getAssignmentIterator();
 
