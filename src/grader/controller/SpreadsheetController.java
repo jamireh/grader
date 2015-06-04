@@ -1,13 +1,12 @@
 package grader.controller;
 
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.scores.RawScore;
 import grader.model.gradebook.scores.Scores;
 import grader.model.items.Assignment;
 import grader.model.items.AssignmentTree;
 import grader.model.items.Percentage;
 import grader.model.people.Student;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

@@ -26,7 +26,7 @@ public class Course
 	public String name;
 
 	/**
-	*Collectiion of sections of this course taught by the Instructor associated with this Gradebook.
+	*Collection of sections of this course taught by the Instructor associated with this Gradebook.
 	*/
 	public ArrayList<Section> sections;
 

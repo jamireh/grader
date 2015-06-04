@@ -6,7 +6,7 @@ package grader.controller;
 
 import grader.model.curve.Entry;
 import grader.model.curve.Histogram;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.Section;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

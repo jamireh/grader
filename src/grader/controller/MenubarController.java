@@ -1,16 +1,12 @@
 package grader.controller;
 
 import grader.Main;
-import grader.model.edit.Edit;
-import grader.model.file.File;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.Course;
-import grader.model.gradebook.scores.RawScore;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
@@ -124,28 +120,24 @@ public class MenubarController implements Observer
      * Controller method for File->Export.
      */
     public void fileExport() {
-        File.exportGradebook();
     }
 
     /**
      * Controller method for File->Import.
      */
     public void fileImport() {
-        File.importGradebook();
     }
 
     /**
      * Controller method for File->Print.
      */
     public void filePrint() {
-        File.print();
     }
 
     /**
      * Controller method for File->Logout.
      */
     public void fileLogout() {
-        File.logout();
     }
 
     /**
@@ -153,7 +145,7 @@ public class MenubarController implements Observer
      * Exits the application.
      */
     public void fileQuit() {
-        File.quit();
+        System.exit(0);
     }
 
     /* EDIT MENU COMMANDS */
@@ -162,35 +154,35 @@ public class MenubarController implements Observer
      * Controller method for Edit->Undo.
      */
     public void editUndo() {
-        Edit.undo();
+        WorkSpace.instance.undo();
     }
 
     /**
      * Controller method for Edit->Redo.
      */
     public void editRedo() {
-        Edit.redo();
+        WorkSpace.instance.redo();
     }
 
     /**
      * Controller method for Edit->Cut.
      */
     public void editCut() {
-        Edit.cut();
+        WorkSpace.instance.cut();
     }
 
     /**
      * Controller method for Edit->Copy.
      */
     public void editCopy() {
-        Edit.copy();
+        WorkSpace.instance.copy();
     }
 
     /**
      * Controller method for Edit->Paste.
      */
     public void editPaste() {
-        Edit.paste();
+        WorkSpace.instance.paste();
     }
 
     /**

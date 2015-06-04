@@ -1,6 +1,6 @@
 package grader.controller;
 
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.items.Assignment;
 import grader.model.items.Category;
 import javafx.collections.FXCollections;

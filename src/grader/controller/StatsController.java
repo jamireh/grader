@@ -1,6 +1,6 @@
 package grader.controller;
 
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.stats.StatsContainer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

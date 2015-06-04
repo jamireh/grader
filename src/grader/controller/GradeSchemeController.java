@@ -2,7 +2,7 @@ package grader.controller;
 
 import grader.model.errors.OverlappingRangeException;
 import grader.model.errors.PercentageFormatException;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.gradebook.gradescheme.GradeRange;
 import grader.model.gradebook.gradescheme.GradeScheme;
 import grader.model.gradebook.gradescheme.LetterGrade;
@@ -16,7 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;

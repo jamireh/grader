@@ -3,7 +3,7 @@ package grader.controller;
 import grader.model.errors.InvalidPhoneNumberException;
 import grader.model.errors.InvalidUserIDException;
 import grader.model.errors.NameFormatException;
-import grader.model.file.WorkSpace;
+import grader.model.gradebook.WorkSpace;
 import grader.model.people.Name;
 import grader.model.people.Student;
 import javafx.event.ActionEvent;
@@ -11,12 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
-import javax.naming.InvalidNameException;
 
 /**
  * Controls the Add Student manually view.
