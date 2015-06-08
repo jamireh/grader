@@ -65,6 +65,21 @@ public class WorkSpaceTest {
     /**
      * Phase 2 testing: Sidebar control.
      * Ensure that the scope is properly changed by the sidebarSelect method.
+     *
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input            Output             Remarks
+     * ====================================================================
+     *   1      valid course     null               getter methods should
+     *          valid section                       return input values
+     *          null group                          (getGroup() == null)
+     *   2      valid course     null               getter methods should
+     *          valid section                       return input values
+     *          valid group                         (none should be null)
+     *   3      null course      null               getter methods should
+     *          null section                        return input values
+     *          null group                          (all should be null)
+     *
      */
     @org.junit.Test
     public void testSidebarSelect() throws Exception {
@@ -96,6 +111,19 @@ public class WorkSpaceTest {
     /**
      * Phase 3 testing: Scope related data.
      * Ensure that scope related data is properly updated with scope changes.
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input            Output             Remarks
+     * ====================================================================
+     *   1      null course      empty students     students list should be
+     *          null section                        empty
+     *          null group
+     *   2      valid course     course students    students list should
+     *          null section                        contain course students
+     *          null group
+     *   3      valid course     section students   students list should
+     *          valid section                       contain section students
+     *          null group                          only
      */
     @org.junit.Test
     public void testScopedData() {
@@ -114,14 +142,28 @@ public class WorkSpaceTest {
 
         assert (WorkSpace.instance.getAssignmentTree().equals(course.getAssignmentTree()));
         assert (WorkSpace.instance.getGradeScheme() != null);
-
-        // TODO: Test scores object.
     }
 
     /**
      * Phase 4 testing: GradeScheme updating.
      * Ensure that updating the GradeScheme changes the scoped section's
      * GradeScheme.
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input            Output             Remarks
+     * ====================================================================
+     *   1      valid course      null              gradescheme should be null
+     *          null section                        since gradeschemes are
+     *          null group                          section specific
+     *   2      valid course      section           gradescheme should not
+     *          valid section     grade scheme      be null
+     *          null group
+     *   3      valid section     true              gradeSchemeChanged == true
+     *          change grade      gradeSchemeChanged
+     *          scheme
+     *   4      valid section     false             gradeSchemeChanged == false
+     *          update grade      gradeSchemeChanged
+     *          scheme
      */
     @org.junit.Test
     public void testGradeScheme() {
@@ -152,6 +194,67 @@ public class WorkSpaceTest {
     /**
      * Phase 5 testing: Score updating.
      * Test updating scores by exercising the deltas and futureDeltas.
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input            Output             Remarks
+     * ====================================================================
+     *   1      valid student     null              update accepted
+     *          valid assignment                    canUndo == true
+     *          score1
+     *   2      valid student     null              update accepted
+     *          valid assignment                    canUndo == true
+     *          score2
+     *   3      null              null              deltas size == 2,
+     *                                              future deltas size == 0,
+     *                                              detlas.get(0) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw1,
+     *                                              detlas.get(1) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw2.
+     *   4      undo              null              deltas size == 1,
+     *                                              future deltas size == 1,
+     *                                              detlas.get(0) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw1
+     *                                              futureDeltas.get(0) corresponds,
+     *                                              to input student, assignment,
+     *                                              and has score raw2,
+     *                                              canRedo == true.
+     *   5      undo              null              deltas size == 0,
+     *                                              future deltas size == 2,
+     *                                              futureDeltas.get(1) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw1,
+     *                                              futureDeltas.get(0) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw2,
+     *                                              canRedo == true.
+     *   6      redo twice        null              deltas size == 2,
+     *                                              future deltas size == 0,
+     *                                              deltas.get(0) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw1,
+     *                                              deltas.get(1) corresponds
+     *                                              to input student, assignment,
+     *                                              and has score raw2,
+     *                                              canRedo == false.
+     *   7      save grades       null              deltas size == 0,
+     *                                              future deltas size == 0,
+     *                                              canRedo == false,
+     *                                              canUndo == false,
+     *                                              getRawScore(student, assignment)
+     *                                                == score2.
+     *   8      update grade      null              deltas size == 1,
+     *          to score1                           future deltas size == 0,
+     *                                              getLatestChange() corresponds
+     *                                                to student, assignment, score1
+     *   9      undo              null              getLatestUndo() corresponds
+     *                                                to student, assignment, score1
+     *   10     revert grades     null              canUndo == false,
+     *                                              canRedo == false,
+     *                                              getLatestChange() == null,
+     *                                              getLatestUndo() == null.
      */
     @org.junit.Test
     public void testGradeChanges() {
@@ -160,7 +263,6 @@ public class WorkSpaceTest {
         Section section = course.sections.get(0);
         Student student = section.getStudents().get(0);
         Assignment assignment = course.getAssignmentTree().getAssignmentIterator().next();
-        double score0 = canned.getScores().getRawScore(student, assignment);
         double score1 = 99.9;
         double score2 = 88.8;
 
@@ -259,6 +361,24 @@ public class WorkSpaceTest {
      * Phase 6 testing: Adding a Student and Assignment
      * Test adding a student when a section is selected and when one isn't.
      * Test adding an assignment when a course is selected and when one isn't.
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input            Output             Remarks
+     * ====================================================================
+     *   1      add new student     null            getStudents returns empty
+     *          when no course                      list
+     *          section or group
+     *          is selected
+     *   2      add new assignment  null            getAssignmentTree returns
+     *          when no course is                   empty tree
+     *          selected
+     *   3      add new student     null            getStudents contains the
+     *          when a valid course                 added student
+     *          and section is
+     *          selected
+     *   4      add new assignment  null            getAssignmentTree contains
+     *          when a valid course                 added assignment
+     *          is selected
      */
     @org.junit.Test
     public void testAdd() {
@@ -299,6 +419,25 @@ public class WorkSpaceTest {
 
     /**
      * Phase 7 testing: Selecting score scope, cutting, copying, and pasting.
+     *                                                                    <pre>
+     *  Test
+     *  Case    Input            Output             Remarks
+     * ====================================================================
+     *   1      set selected     null               selectedStudent == student
+     *          student
+     *   2      set selected     null               canCopy() == false,
+     *          score to null                       canPaste() == false,
+     *                                              validCopy == false
+     *   3      set selected     null               copiedScore == score
+     *          score to valid
+     *          score and copy
+     *   4      set selected     null               score should be updated
+     *          score, copy score,                  for second selected score
+     *          set selected score                  to the first score
+     *          to a different score,
+     *          and paste
+     *   5      cut score        null               selectedScore.getScore() == 0.0,
+     *                                              copiedScore = score
      */
     @org.junit.Test
     public void testCopyPaste() {
