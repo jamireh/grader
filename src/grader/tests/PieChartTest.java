@@ -99,6 +99,8 @@ public class PieChartTest {
         pie.addToGrade(new Percentage(91.0));
         pie.addToGrade(new Percentage(89.0));
         pie.addToGrade(new Percentage(85.0));
+        pie.addToGrade(new Percentage(83.0));
+        pie.addToGrade(new Percentage(78.0));
 
 
     }
