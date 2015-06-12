@@ -38,8 +38,13 @@ public class Entry {
         return star.get();
     }
 
-    public boolean equals(Entry e)
+    public boolean equals(Object e)
     {
-        return e.getLetter().equals(letter) && e.getPercent().equals(percent) && e.getStar().equals(star);
+        if (e instanceof Entry) {
+            Entry temp = (Entry) e;
+            return temp.getLetter().equals(letter.get()) && temp.getPercent().equals(percent.get()) && temp.getStar().equals(star.get());
+        }
+        else
+            return false;
     }
 }

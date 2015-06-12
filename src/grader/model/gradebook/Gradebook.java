@@ -148,8 +148,15 @@ public class Gradebook {
 
          while (itr.hasNext()) {
             Assignment assignment = itr.next();
-            double randomScore = rand.nextInt(assignment.rawPoints / 2) + (assignment.rawPoints / 2);
-            cannedGradebook.scores.addRawScore(student, assignment, randomScore);
+             if (number.equals("02"))
+             {
+                 double randomScore = assignment.rawPoints - 1;
+                 cannedGradebook.scores.addRawScore(student, assignment, randomScore);
+             }
+             else {
+                 double randomScore = rand.nextInt(assignment.rawPoints / 2) + (assignment.rawPoints / 2);
+                 cannedGradebook.scores.addRawScore(student, assignment, randomScore);
+             }
          }
       }
    }

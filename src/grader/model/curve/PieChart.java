@@ -40,22 +40,28 @@ public class PieChart implements Observer
 
 
 
-    /**
-     * To be expanded once GradeScheme is complete.
-     */
-    public void categorizeScores() {}
 
    /**
     * Updates the Pie Chart.
     */
    public void update(Observable obj, Object args)
    {
+
        if (WorkSpace.instance.getGradeScheme() != null)
        {
+
+           aPlus = 0;
            aS = 0;
+           aMinus = 0;
+           bPlus = 0;
            bS = 0;
+           bMinus = 0;
+           cPlus = 0;
            cS = 0;
+           cMinus = 0;
+           dPlus = 0;
            dS = 0;
+           dMinus = 0;
            fS = 0;
 
            students = WorkSpace.instance.getStudents();
@@ -192,7 +198,7 @@ public class PieChart implements Observer
      * Adds to grade variables.
      * @param percent of grade
      */
-    private void addToGrade(Percentage percent)
+    public void addToGrade(Percentage percent)
     {
 
         GradeScheme current = WorkSpace.instance.getGradeScheme();
